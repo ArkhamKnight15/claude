@@ -13,13 +13,14 @@ export function Hero() {
     <section id="inicio" aria-labelledby="inicio-titulo" className="relative isolate overflow-x-clip pt-28 sm:pt-36 lg:pt-40">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_70%_0%,black_10%,transparent_65%)]" />
-        <div className="absolute -top-48 right-[-15%] h-[42rem] w-[42rem] rounded-full bg-accent-200/40 blur-3xl" />
+        <div className="absolute -top-48 right-[-15%] h-[42rem] w-[42rem] rounded-full bg-accent-500/[0.14] blur-3xl" />
+        <div className="absolute top-1/3 -left-40 h-[28rem] w-[28rem] rounded-full bg-accent-300/[0.05] blur-3xl" />
       </div>
 
       <Container className="grid items-center gap-20 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-6">
-          <p className="enter inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-navy-800 shadow-soft ring-1 ring-navy-950/5">
-            <span className="rounded-full bg-navy-950 px-2.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.1em] whitespace-nowrap text-white uppercase">
+          <p className="enter inline-flex items-center gap-2.5 rounded-full bg-white/[0.04] py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-body ring-1 ring-white/10 backdrop-blur">
+            <span className="rounded-full bg-accent-300 px-2.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.1em] whitespace-nowrap text-navy-950 uppercase">
               Jardins · SP
             </span>
             <span className="whitespace-nowrap">
@@ -32,7 +33,7 @@ export function Hero() {
             style={enterDelay(80)}
             className="enter mt-7 font-serif text-[3.1rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.5rem] lg:text-[4.25rem] xl:text-[5.5rem]"
           >
-            Seu sorriso merece um cuidado <em className="text-accent-600">extraordinário.</em>
+            Seu sorriso merece um cuidado <em className="text-accent-300">extraordinário.</em>
           </h1>
 
           <p style={enterDelay(160)} className="enter mt-7 max-w-xl text-lg leading-relaxed text-body sm:text-xl sm:leading-relaxed">
@@ -51,11 +52,11 @@ export function Hero() {
 
           <ul style={enterDelay(320)} className="enter mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-body">
             <li className="flex items-center gap-2.5">
-              <ScanLine aria-hidden="true" className="size-5 text-accent-600" />
+              <ScanLine aria-hidden="true" className="size-5 text-accent-300" />
               Diagnóstico com escaneamento 3D
             </li>
             <li className="flex items-center gap-2.5">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-accent-500" />
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-accent-300" />
               Retorno em até {clinic.responseTime}
             </li>
           </ul>

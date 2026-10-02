@@ -20,22 +20,22 @@ function TechnologyCard({ item }: { item: Differential }) {
     <article className={`${cardClasses} grid gap-10 p-7 sm:p-9 md:grid-cols-2 md:gap-8`}>
       <div className="flex flex-col">
         <IconTile icon={item.icon} />
-        <h3 className="mt-7 text-2xl font-semibold tracking-[-0.01em] text-white">{item.title}</h3>
-        <p className="mt-3 leading-relaxed text-navy-200">{item.description}</p>
+        <h3 className="mt-7 text-2xl font-semibold tracking-[-0.01em]">{item.title}</h3>
+        <p className="mt-3 leading-relaxed text-body">{item.description}</p>
         <p className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-accent-200">
           <span aria-hidden="true" className="size-1.5 rounded-full bg-accent-300" />
           Fluxo 100% digital, do diagnóstico à entrega
         </p>
       </div>
-      <ul className="divide-y divide-white/10 rounded-2xl bg-navy-900/60 px-5 ring-1 ring-white/10 ring-inset">
+      <ul className="divide-y divide-white/10 rounded-2xl bg-canvas/60 px-5 ring-1 ring-white/10 ring-inset">
         {equipment.map(({ name, description, icon: Icon }) => (
           <li key={name} className="flex items-center gap-4 py-4">
             <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-accent-200">
               <Icon aria-hidden="true" className="size-[1.125rem]" strokeWidth={1.6} />
             </span>
             <div className="min-w-0">
-              <p className="text-[0.9375rem] font-semibold text-white">{name}</p>
-              <p className="text-[0.8125rem] leading-snug text-navy-300">{description}</p>
+              <p className="text-[0.9375rem] font-semibold text-ink">{name}</p>
+              <p className="text-[0.8125rem] leading-snug text-muted">{description}</p>
             </div>
           </li>
         ))}
@@ -48,8 +48,8 @@ function DifferentialCard({ item }: { item: Differential }) {
   return (
     <article className={`${cardClasses} flex flex-col p-7 sm:p-8`}>
       <IconTile icon={item.icon} />
-      <h3 className="mt-6 text-xl font-semibold tracking-[-0.01em] text-white sm:mt-7">{item.title}</h3>
-      <p className="mt-3 leading-relaxed text-navy-200">{item.description}</p>
+      <h3 className="mt-6 text-xl font-semibold tracking-[-0.01em] sm:mt-7">{item.title}</h3>
+      <p className="mt-3 leading-relaxed text-body">{item.description}</p>
       {item.detail && (
         <p className="mt-auto pt-7">
           <span className="inline-flex rounded-full bg-white/[0.06] px-3 py-1 text-xs font-semibold text-accent-200 ring-1 ring-white/10 ring-inset">
@@ -68,7 +68,7 @@ export function Differentials() {
     <section
       id="diferenciais"
       aria-labelledby="diferenciais-titulo"
-      className="grain relative overflow-hidden bg-navy-950 py-24 sm:py-32"
+      className="grain relative overflow-hidden border-y border-line bg-canvas-alt py-24 sm:py-32"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="absolute -top-56 left-[10%] h-[30rem] w-[30rem] rounded-full bg-accent-500/15 blur-3xl" />
@@ -79,7 +79,6 @@ export function Differentials() {
       <Container className="relative">
         <SectionHeader
           id="diferenciais-titulo"
-          tone="light"
           layout="split"
           eyebrow="Diferenciais"
           title={

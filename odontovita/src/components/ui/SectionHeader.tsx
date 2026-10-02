@@ -10,7 +10,6 @@ interface SectionHeaderProps {
   description?: ReactNode
   /** `split` coloca título e descrição lado a lado em telas grandes. */
   layout?: 'stacked' | 'split' | 'center'
-  tone?: 'dark' | 'light'
   className?: string
   children?: ReactNode
 }
@@ -23,12 +22,9 @@ export function SectionHeader({
   title,
   description,
   layout = 'stacked',
-  tone = 'dark',
   className,
   children,
 }: SectionHeaderProps) {
-  const isLight = tone === 'light'
-
   return (
     <div
       className={cn(
@@ -39,17 +35,17 @@ export function SectionHeader({
       )}
     >
       <Reveal className={cn(layout === 'split' && 'lg:col-span-7')}>
-        <Eyebrow tone={tone} className={cn(layout === 'center' && 'justify-center')}>
+        <Eyebrow className={cn(layout === 'center' && 'justify-center')}>
           {eyebrow}
         </Eyebrow>
-        <h2 id={id} className={cn(headingClasses, 'mt-5', isLight && 'text-white')}>
+        <h2 id={id} className={cn(headingClasses, 'mt-5')}>
           {title}
         </h2>
       </Reveal>
       {(description || children) && (
         <Reveal delay={120} className={cn(layout === 'split' ? 'lg:col-span-5 lg:pb-2' : 'mt-6')}>
           {description && (
-            <p className={cn('text-[1.0625rem] leading-relaxed sm:text-lg', isLight ? 'text-navy-200' : 'text-body')}>
+            <p className="text-[1.0625rem] leading-relaxed text-body sm:text-lg">
               {description}
             </p>
           )}

@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 
-type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'outline-light' | 'ghost'
+type ButtonVariant = 'primary' | 'secondary' | 'ghost'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 interface ButtonStyleProps {
@@ -18,13 +18,9 @@ const baseClasses =
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-navy-950 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_10px_24px_-12px_rgb(10_22_40/0.55)] hover:bg-navy-800 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_16px_32px_-14px_rgb(10_22_40/0.6)]',
-  secondary:
-    'bg-white text-navy-950 shadow-soft ring-1 ring-inset ring-navy-950/10 hover:ring-navy-950/25',
-  accent:
-    'bg-accent-300 text-navy-950 shadow-[inset_0_1px_0_rgb(255_255_255/0.4),0_12px_30px_-14px_rgb(155_201_238/0.7)] hover:bg-accent-200',
-  'outline-light': 'text-white ring-1 ring-inset ring-white/20 hover:bg-white/[0.06] hover:ring-white/40',
-  ghost: 'text-navy-950 hover:bg-navy-950/5',
+    'bg-accent-300 text-navy-950 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_10px_28px_-12px_rgb(155_201_238/0.5)] hover:bg-accent-200 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.5),0_14px_34px_-12px_rgb(155_201_238/0.6)]',
+  secondary: 'bg-white/[0.04] text-ink ring-1 ring-inset ring-white/15 hover:bg-white/[0.08] hover:ring-white/30',
+  ghost: 'text-ink hover:bg-white/[0.06]',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

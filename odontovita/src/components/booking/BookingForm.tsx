@@ -131,7 +131,7 @@ export function BookingForm({
     const firstName = values.name.trim().split(/\s+/)[0]
     return (
       <div className={cn('my-auto flex flex-col items-center py-4 text-center', className)} aria-live="polite">
-        <svg viewBox="0 0 52 52" className="check-draw size-16 text-success-500" aria-hidden="true">
+        <svg viewBox="0 0 52 52" className="check-draw size-16 text-success" aria-hidden="true">
           <circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" strokeWidth="2" />
           <path d="m16 27 7 7 13-15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -140,10 +140,10 @@ export function BookingForm({
         </h3>
         <p className="mt-3 max-w-sm text-[0.9375rem] leading-relaxed text-body">
           Obrigado, {firstName}. Nossa equipe vai entrar em contato pelo número{' '}
-          <strong className="font-semibold text-navy-950">{values.phone}</strong> em até {clinic.responseTime} para
+          <strong className="font-semibold text-ink">{values.phone}</strong> em até {clinic.responseTime} para
           confirmar o dia e o horário da sua consulta.
         </p>
-        <dl className="mt-7 w-full max-w-sm divide-y divide-line rounded-2xl bg-ivory px-5 text-left text-sm ring-1 ring-inset ring-line">
+        <dl className="mt-7 w-full max-w-sm divide-y divide-line rounded-2xl bg-white/[0.03] px-5 text-left text-sm ring-1 ring-inset ring-line">
           {[
             ['Protocolo', confirmation.protocol],
             ['Tratamento', getTreatmentLabel(values.treatment)],
@@ -151,7 +151,7 @@ export function BookingForm({
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-3">
               <dt className="text-muted">{label}</dt>
-              <dd className="text-right font-semibold text-navy-950">{value}</dd>
+              <dd className="text-right font-semibold text-ink">{value}</dd>
             </div>
           ))}
         </dl>
@@ -219,7 +219,7 @@ export function BookingForm({
               Selecione uma opção
             </option>
             {bookingTreatmentOptions.map((option) => (
-              <option key={option.value} value={option.value} className="text-navy-950">
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -229,16 +229,16 @@ export function BookingForm({
       </FormField>
 
       <fieldset aria-describedby={errors.period ? `${fieldId('period')}-error` : undefined}>
-        <legend className="mb-2 text-sm font-semibold text-navy-900">Período de preferência</legend>
+        <legend className="mb-2 text-sm font-semibold text-ink">Período de preferência</legend>
         <div className="grid grid-cols-3 gap-2">
           {periodOptions.map((option) => (
             <label
               key={option.value}
               className={cn(
-                'relative flex cursor-pointer flex-col items-center justify-center rounded-xl bg-white px-2 py-2.5 text-center ring-1 ring-inset transition-[box-shadow,background-color,color] duration-200',
-                'hover:ring-navy-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent-500',
-                'has-[:checked]:bg-navy-950 has-[:checked]:text-white has-[:checked]:ring-navy-950',
-                errors.period ? 'ring-danger-600/70' : 'ring-line',
+                'relative flex cursor-pointer flex-col items-center justify-center rounded-xl bg-white/[0.03] px-2 py-2.5 text-center text-ink ring-1 ring-inset transition-[box-shadow,background-color,color] duration-200',
+                'hover:ring-navy-500 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent-300',
+                'has-[:checked]:bg-accent-300 has-[:checked]:text-navy-950 has-[:checked]:ring-accent-300',
+                errors.period ? 'ring-danger/70' : 'ring-line-strong',
               )}
             >
               <input
@@ -263,7 +263,7 @@ export function BookingForm({
         optional
         error={errors.message}
         hint={
-          <span className={cn('text-xs tabular-nums', messageLength > MESSAGE_MAX_LENGTH ? 'text-danger-600' : 'text-muted')}>
+          <span className={cn('text-xs tabular-nums', messageLength > MESSAGE_MAX_LENGTH ? 'text-danger' : 'text-muted')}>
             {messageLength}/{MESSAGE_MAX_LENGTH}
           </span>
         }
@@ -285,7 +285,7 @@ export function BookingForm({
             type="checkbox"
             checked={values.consent}
             onChange={(event) => updateField('consent', event.target.checked)}
-            className="mt-0.5 size-[1.125rem] shrink-0 cursor-pointer rounded accent-navy-950"
+            className="mt-0.5 size-[1.125rem] shrink-0 cursor-pointer rounded accent-accent-300"
           />
           <span>
             Autorizo a {clinic.name} a entrar em contato por telefone, WhatsApp ou e-mail para agendar minha consulta,
@@ -296,7 +296,7 @@ export function BookingForm({
       </div>
 
       {status === 'error' && (
-        <div role="alert" className="flex gap-3 rounded-xl bg-[#fff4ed] p-4 text-sm text-[#9a3412] ring-1 ring-inset ring-[#fed7aa]">
+        <div role="alert" className="flex gap-3 rounded-xl bg-danger/10 p-4 text-sm text-[#ffd3cb] ring-1 ring-inset ring-danger/30">
           <RotateCcw aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
           <p>
             <strong className="font-semibold">Não foi possível enviar sua solicitação.</strong> Verifique sua conexão e

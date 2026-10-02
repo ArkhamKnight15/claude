@@ -48,7 +48,7 @@ export function MobileMenu({ open, onClose, activeId }: MobileMenuProps) {
       id="menu-mobile"
       inert={!open}
       className={cn(
-        'fixed inset-0 z-40 bg-ivory transition-[opacity,visibility] duration-500 ease-out-expo lg:hidden',
+        'fixed inset-0 z-40 bg-canvas transition-[opacity,visibility] duration-500 ease-out-expo lg:hidden',
         open ? 'visible opacity-100' : 'invisible opacity-0',
       )}
     >
@@ -61,15 +61,15 @@ export function MobileMenu({ open, onClose, activeId }: MobileMenuProps) {
                   href={`#${item.id}`}
                   onClick={onClose}
                   aria-current={activeId === item.id ? 'location' : undefined}
-                  className="group flex items-center justify-between border-b border-line py-4 font-serif text-[2rem] leading-none text-navy-950"
+                  className="group flex items-center justify-between border-b border-line py-4 font-serif text-[2rem] leading-none text-ink"
                 >
                   <span className="flex items-center gap-3">
                     {item.label}
-                    {activeId === item.id && <span aria-hidden="true" className="size-1.5 rounded-full bg-accent-500" />}
+                    {activeId === item.id && <span aria-hidden="true" className="size-1.5 rounded-full bg-accent-300" />}
                   </span>
                   <ArrowUpRight
                     aria-hidden="true"
-                    className="size-5 text-navy-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-navy-950"
+                    className="size-5 text-muted transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink"
                   />
                 </a>
               </li>
@@ -94,7 +94,7 @@ export function MobileMenu({ open, onClose, activeId }: MobileMenuProps) {
             variant="secondary"
             size="lg"
             className="w-full"
-            leadingIcon={<Phone aria-hidden="true" className="size-4 text-accent-600" />}
+            leadingIcon={<Phone aria-hidden="true" className="size-4 text-accent-300" />}
           >
             {clinic.phone.display}
           </ButtonLink>

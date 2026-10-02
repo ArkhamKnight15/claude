@@ -14,7 +14,7 @@ function CompareSlider({ item }: { item: ResultCase }) {
   const [position, setPosition] = useState(50)
 
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-navy-950 shadow-elevated select-none sm:aspect-[16/11]">
+    <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-surface shadow-elevated ring-1 ring-white/10 select-none sm:aspect-[16/11]">
       <SmileIllustration
         preset={item.after}
         preserveAspectRatio="xMidYMid slice"
@@ -86,7 +86,7 @@ export function Results() {
   }
 
   return (
-    <section id="resultados" aria-labelledby="resultados-titulo" className="bg-white py-24 sm:py-32">
+    <section id="resultados" aria-labelledby="resultados-titulo" className="py-24 sm:py-32">
       <Container>
         <SectionHeader
           id="resultados-titulo"
@@ -94,7 +94,7 @@ export function Results() {
           eyebrow="Antes e depois"
           title={
             <>
-              Resultados que <em className="text-accent-600">falam por si</em>.
+              Resultados que <em className="text-accent-300">falam por si</em>.
             </>
           }
           description="Conheça simulações de casos típicos tratados na clínica. Arraste o controle sobre a imagem para comparar o antes e o depois."
@@ -104,7 +104,7 @@ export function Results() {
           <div
             role="tablist"
             aria-label="Casos de antes e depois"
-            className="grid grid-cols-3 gap-1 rounded-full bg-ivory p-1 ring-1 ring-line ring-inset sm:inline-grid sm:grid-flow-col sm:auto-cols-max"
+            className="grid grid-cols-3 gap-1 rounded-full bg-white/[0.03] p-1 ring-1 ring-line ring-inset sm:inline-grid sm:grid-flow-col sm:auto-cols-max"
           >
             {resultCases.map((item, index) => {
               const selected = item.id === active.id
@@ -125,8 +125,8 @@ export function Results() {
                   className={cn(
                     'rounded-full px-3 py-2.5 text-sm font-semibold transition-[background-color,color,box-shadow] duration-300 sm:px-6',
                     selected
-                      ? 'bg-navy-950 text-white shadow-[0_8px_20px_-10px_rgb(10_22_40/0.6)]'
-                      : 'text-navy-700 hover:bg-white hover:text-navy-950',
+                      ? 'bg-accent-300 text-navy-950 shadow-glow'
+                      : 'text-body hover:bg-white/[0.06] hover:text-ink',
                   )}
                 >
                   {item.label}
@@ -148,14 +148,14 @@ export function Results() {
 
           <Reveal delay={120} className="lg:col-span-5">
             <div key={active.id} className="enter">
-              <p className="text-sm font-semibold text-accent-700">{active.patient}</p>
+              <p className="text-sm font-semibold text-accent-300">{active.patient}</p>
               <h3 className="mt-2 font-serif text-[2rem] leading-tight sm:text-[2.25rem]">{active.title}</h3>
               <p className="mt-4 text-[1.0625rem] leading-relaxed text-body">{active.summary}</p>
-              <dl className="mt-8 grid grid-cols-3 divide-x divide-line rounded-2xl bg-ivory ring-1 ring-line ring-inset">
+              <dl className="mt-8 grid grid-cols-3 divide-x divide-line rounded-2xl bg-surface ring-1 ring-line ring-inset">
                 {active.facts.map((fact) => (
                   <div key={fact.label} className="px-4 py-4 sm:px-5">
                     <dt className="text-xs font-medium tracking-[0.08em] text-muted uppercase">{fact.label}</dt>
-                    <dd className="mt-1.5 text-[0.9375rem] font-semibold text-navy-950">{fact.value}</dd>
+                    <dd className="mt-1.5 text-[0.9375rem] font-semibold text-ink">{fact.value}</dd>
                   </div>
                 ))}
               </dl>

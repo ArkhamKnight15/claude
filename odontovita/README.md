@@ -57,7 +57,7 @@ src/
 
 **Conteúdo:** todos os textos e dados ficam em `src/data/`. Comece por `clinic.ts`, que reúne nome, telefone, endereço, horários e redes sociais.
 
-**Identidade visual:** as cores, fontes, sombras e animações são tokens no bloco `@theme` de `src/index.css`.
+**Identidade visual:** o site usa tema escuro. As cores são tokens semânticos (`canvas`, `surface`, `ink`, `body`, `muted`, `line`) no bloco `@theme` de `src/index.css`, junto com fontes, sombras e animações. Para ajustar a paleta, basta alterar esses tokens.
 
 **Fotos:** a página usa ilustrações e placeholders elegantes no lugar de fotos. Para usar imagens reais:
 

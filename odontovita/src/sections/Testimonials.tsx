@@ -21,22 +21,22 @@ function TestimonialCard({ testimonial, index, featured = false }: TestimonialCa
       className={cn(
         'flex h-full flex-col rounded-[1.75rem] p-7 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 sm:p-9',
         featured
-          ? 'grain relative overflow-hidden bg-navy-950 text-white shadow-elevated'
-          : 'bg-white shadow-soft ring-1 ring-line ring-inset hover:shadow-card',
+          ? 'relative overflow-hidden bg-gradient-to-br from-[#15294a] via-surface to-surface shadow-elevated ring-1 ring-accent-300/20 ring-inset'
+          : 'bg-surface ring-1 ring-line ring-inset hover:shadow-card hover:ring-line-strong',
       )}
     >
       {featured && (
         <div aria-hidden="true" className="absolute -top-24 -right-24 size-72 rounded-full bg-accent-500/20 blur-3xl" />
       )}
       <div className="relative flex items-center justify-between">
-        <StarRating rating={testimonial.rating} className={featured ? 'text-accent-300' : 'text-accent-500'} />
+        <StarRating rating={testimonial.rating} className="text-accent-300" />
         {featured && <Quote aria-hidden="true" className="size-10 text-accent-300/40" strokeWidth={1.25} />}
       </div>
       <blockquote
         className={cn(
           'relative mt-6',
           featured && 'mb-8',
-          featured ? 'font-serif text-[1.625rem] leading-snug text-white sm:text-[1.875rem]' : 'text-[1.0625rem] leading-relaxed text-navy-900',
+          featured ? 'font-serif text-[1.625rem] leading-snug text-ink sm:text-[1.875rem]' : 'text-[1.0625rem] leading-relaxed text-ink',
         )}
       >
         <p>“{testimonial.quote}”</p>
@@ -46,8 +46,8 @@ function TestimonialCard({ testimonial, index, featured = false }: TestimonialCa
       >
         <Monogram name={testimonial.name} index={index} className="size-12" />
         <div>
-          <p className={cn('font-semibold', featured ? 'text-white' : 'text-navy-950')}>{testimonial.name}</p>
-          <p className={cn('text-sm', featured ? 'text-navy-200' : 'text-muted')}>
+          <p className="font-semibold text-ink">{testimonial.name}</p>
+          <p className="text-sm text-muted">
             {testimonial.treatment} · {testimonial.since}
           </p>
         </div>
@@ -60,7 +60,7 @@ export function Testimonials() {
   const [featured, ...others] = testimonials
 
   return (
-    <section id="depoimentos" aria-labelledby="depoimentos-titulo" className="py-24 sm:py-32">
+    <section id="depoimentos" aria-labelledby="depoimentos-titulo" className="border-y border-line bg-canvas-alt py-24 sm:py-32">
       <Container>
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeader
@@ -68,15 +68,15 @@ export function Testimonials() {
             eyebrow="Depoimentos"
             title={
               <>
-                Histórias de quem voltou a <em className="text-accent-600">sorrir</em>.
+                Histórias de quem voltou a <em className="text-accent-300">sorrir</em>.
               </>
             }
           />
           <Reveal delay={120} className="shrink-0">
-            <div className="inline-flex items-center gap-5 rounded-[1.25rem] bg-white py-4 pr-6 pl-5 shadow-soft ring-1 ring-line ring-inset">
-              <p className="font-serif text-5xl leading-none text-navy-950">{clinic.rating.score.toLocaleString('pt-BR')}</p>
+            <div className="inline-flex items-center gap-5 rounded-[1.25rem] bg-surface py-4 pr-6 pl-5 ring-1 ring-line ring-inset">
+              <p className="font-serif text-5xl leading-none text-ink">{clinic.rating.score.toLocaleString('pt-BR')}</p>
               <div>
-                <StarRating rating={clinic.rating.score} className="text-accent-500" />
+                <StarRating rating={clinic.rating.score} className="text-accent-300" />
                 <p className="mt-1.5 text-sm text-muted">
                   Média de +{clinic.rating.reviews} avaliações
                   <br />
