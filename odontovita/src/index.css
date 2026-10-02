@@ -7,7 +7,7 @@
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
 
-  /* Azul-marinho: base institucional e superfícies */
+  /* Azul-marinho: base institucional, texto e superfícies escuras */
   --color-navy-50: #f2f5f9;
   --color-navy-100: #e3e9f1;
   --color-navy-200: #c6d2e2;
@@ -21,33 +21,31 @@
   --color-navy-950: #0a1628;
 
   /* Azul claro: cor de destaque */
+  --color-accent-50: #f0f7fd;
   --color-accent-100: #deedfa;
   --color-accent-200: #c2def5;
   --color-accent-300: #9bc9ee;
   --color-accent-400: #73b0e4;
   --color-accent-500: #4f93d4;
+  --color-accent-600: #3a77ba;
+  --color-accent-700: #305f96;
 
-  /* Tokens semânticos do tema escuro */
-  --color-canvas: #060d19;
-  --color-canvas-alt: #08111f;
-  --color-surface: #0c172a;
-  --color-surface-raised: #112038;
-  --color-line: #1a283f;
-  --color-line-strong: #2a3c5a;
-  --color-ink: #f2f5f9;
-  --color-body: #b3c0d1;
-  --color-muted: #8494ab;
+  /* Neutros */
+  --color-ivory: #f8f6f2;
+  --color-mist: #eef3f8;
+  --color-line: #e5e8ed;
+  --color-body: #47566c;
+  --color-muted: #5d6b80;
 
-  --color-success: #5ad19b;
-  --color-danger: #ff9a8b;
+  --color-success-500: #2f9e6e;
+  --color-danger-600: #c2410c;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 28px -16px rgb(0 0 0 / 0.55);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35), 0 24px 48px -24px rgb(0 0 0 / 0.7);
-  --shadow-elevated: 0 2px 8px rgb(0 0 0 / 0.35), 0 40px 80px -28px rgb(0 0 0 / 0.85);
-  --shadow-glow: 0 12px 32px -12px rgb(155 201 238 / 0.45);
+  --shadow-soft: 0 1px 2px rgb(10 22 40 / 0.04), 0 8px 24px -12px rgb(10 22 40 / 0.1);
+  --shadow-card: 0 1px 2px rgb(10 22 40 / 0.04), 0 18px 40px -20px rgb(10 22 40 / 0.18);
+  --shadow-elevated: 0 2px 6px rgb(10 22 40 / 0.05), 0 32px 64px -24px rgb(10 22 40 / 0.28);
 
   --animate-float: float 8s ease-in-out infinite;
   --animate-float-delayed: float 8s ease-in-out -4s infinite;
@@ -95,7 +93,6 @@
 
 @layer base {
   html {
-    color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     scrollbar-gutter: stable;
@@ -104,7 +101,7 @@
   }
 
   body {
-    background-color: var(--color-canvas);
+    background-color: var(--color-ivory);
     color: var(--color-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -116,7 +113,7 @@
   h2,
   h3,
   h4 {
-    color: var(--color-ink);
+    color: var(--color-navy-950);
     text-wrap: balance;
   }
 
@@ -125,12 +122,12 @@
   }
 
   ::selection {
-    background-color: var(--color-accent-300);
+    background-color: var(--color-accent-200);
     color: var(--color-navy-950);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-300);
+    outline: 2px solid var(--color-accent-500);
     outline-offset: 3px;
   }
 
@@ -216,8 +213,8 @@
   /* Grade fina usada como fundo decorativo */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgb(10 22 40 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(10 22 40 / 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 
@@ -242,7 +239,7 @@
   }
 
   .booking-dialog::backdrop {
-    background-color: rgb(2 6 12 / 0.72);
+    background-color: rgb(6 13 25 / 0.55);
     backdrop-filter: blur(6px);
     animation: backdrop-in 0.4s ease;
   }

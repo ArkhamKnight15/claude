@@ -16,10 +16,10 @@ export function HeroVisual() {
     <div className="relative mx-auto w-full max-w-[36rem] lg:max-w-none">
       <div
         aria-hidden="true"
-        className="absolute -inset-x-4 -top-8 -bottom-6 rounded-[2.75rem] bg-gradient-to-br from-accent-400/[0.12] via-white/[0.02] to-transparent ring-1 ring-white/[0.04] sm:-inset-x-8"
+        className="absolute -inset-x-4 -top-8 -bottom-6 rounded-[2.75rem] bg-gradient-to-br from-accent-100 via-mist to-transparent sm:-inset-x-8"
       />
 
-      <figure className="grain relative overflow-hidden rounded-[2rem] bg-surface p-4 shadow-elevated ring-1 ring-white/10 sm:p-6">
+      <figure className="grain relative overflow-hidden rounded-[2rem] bg-navy-950 p-4 shadow-elevated sm:p-6">
         <div
           aria-hidden="true"
           className="bg-grid-light absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
@@ -44,7 +44,7 @@ export function HeroVisual() {
         </div>
 
         <div className="relative mt-4 border-t border-white/10 px-1 pt-4 sm:mt-5">
-          <p className="flex items-center gap-2 text-xs font-medium text-body sm:text-[0.8125rem]">
+          <p className="flex items-center gap-2 text-xs font-medium text-navy-200 sm:text-[0.8125rem]">
             <span className="relative flex size-2">
               <span className="absolute inset-0 animate-pulse-ring rounded-full bg-accent-300" />
               <span className="relative size-2 rounded-full bg-accent-300" />
@@ -54,8 +54,8 @@ export function HeroVisual() {
           <dl className="mt-4 grid grid-cols-3 gap-2">
             {metrics.map((metric) => (
               <div key={metric.label}>
-                <dt className="text-[0.6875rem] font-medium tracking-[0.12em] text-muted uppercase">{metric.label}</dt>
-                <dd className="mt-1 font-serif text-2xl leading-none text-ink sm:text-[1.75rem]">{metric.value}</dd>
+                <dt className="text-[0.6875rem] font-medium tracking-[0.12em] text-navy-300 uppercase">{metric.label}</dt>
+                <dd className="mt-1 font-serif text-2xl leading-none text-white sm:text-[1.75rem]">{metric.value}</dd>
               </div>
             ))}
           </dl>
@@ -65,26 +65,26 @@ export function HeroVisual() {
         </figcaption>
       </figure>
 
-      <div className="animate-float absolute -top-7 -left-3 flex items-center gap-3 rounded-2xl bg-surface-raised/90 py-3 pr-5 pl-3 shadow-card ring-1 ring-white/10 backdrop-blur sm:-left-10">
-        <span className="flex size-10 items-center justify-center rounded-xl bg-accent-300/15 text-accent-300">
+      <div className="animate-float absolute -top-7 -left-3 flex items-center gap-3 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-left-10">
+        <span className="flex size-10 items-center justify-center rounded-xl bg-accent-50 text-accent-700">
           <CalendarCheck2 aria-hidden="true" className="size-5" />
         </span>
         <div>
           <p className="text-[0.6875rem] font-semibold tracking-[0.12em] text-muted uppercase">Próximo horário</p>
-          <p className="text-sm font-semibold text-ink">Amanhã, às 9h30</p>
+          <p className="text-sm font-semibold text-navy-950">Amanhã, às 9h30</p>
         </div>
       </div>
 
-      <div className="animate-float-delayed absolute -right-2 -bottom-16 flex items-center gap-3.5 rounded-2xl bg-surface-raised/90 py-3 pr-5 pl-3 shadow-card ring-1 ring-white/10 backdrop-blur sm:-right-8 sm:-bottom-10">
+      <div className="animate-float-delayed absolute -right-2 -bottom-16 flex sm:-bottom-10 items-center gap-3.5 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-right-8">
         <div className="flex -space-x-2.5">
           {['Camila Andrade', 'Ricardo Menezes', 'Juliana Prado'].map((name, index) => (
-            <Monogram key={name} name={name} index={index} className="size-9 text-sm ring-2 ring-surface-raised" />
+            <Monogram key={name} name={name} index={index} className="size-9 text-sm ring-2 ring-white" />
           ))}
         </div>
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="text-sm font-semibold text-ink">{clinic.rating.score.toLocaleString('pt-BR')}</span>
-            <StarRating rating={clinic.rating.score} className="text-accent-300" starClassName="size-3.5" />
+            <span className="text-sm font-semibold text-navy-950">{clinic.rating.score.toLocaleString('pt-BR')}</span>
+            <StarRating rating={clinic.rating.score} className="text-accent-500" starClassName="size-3.5" />
           </div>
           <p className="text-xs text-muted">+{clinic.rating.reviews} avaliações</p>
         </div>

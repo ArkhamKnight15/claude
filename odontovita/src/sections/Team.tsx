@@ -13,20 +13,20 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
     <article className="group">
       <MediaFrame
         asset={{ src: member.photo, alt: `Retrato de ${member.name}` }}
-        className="aspect-[4/5] rounded-[1.5rem] ring-1 ring-white/10"
+        className="aspect-[4/5] rounded-[1.5rem] ring-1 ring-navy-950/5"
         imageClassName={zoomOnHover}
         fallback={<PortraitPlaceholder name={member.name} index={index} className={zoomOnHover} />}
       />
       <div className="mt-6">
-        <p className="text-xs font-semibold tracking-[0.16em] text-accent-300 uppercase">{member.role}</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-accent-700 uppercase">{member.role}</p>
         <h3 className="mt-2 text-xl font-semibold tracking-[-0.01em]">{member.name}</h3>
-        <p className="mt-1 text-[0.9375rem] font-medium text-body">{member.specialty}</p>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{member.bio}</p>
+        <p className="mt-1 text-[0.9375rem] font-medium text-navy-700">{member.specialty}</p>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-body">{member.bio}</p>
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Formação">
           {member.credentials.map((credential) => (
             <li
               key={credential}
-              className="rounded-full bg-white/[0.04] px-3 py-1 text-xs font-medium text-body ring-1 ring-line-strong ring-inset"
+              className="rounded-full bg-ivory px-3 py-1 text-xs font-medium text-navy-700 ring-1 ring-line ring-inset"
             >
               {credential}
             </li>
@@ -39,7 +39,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export function Team() {
   return (
-    <section id="equipe" aria-labelledby="equipe-titulo" className="overflow-x-clip py-24 sm:py-32">
+    <section id="equipe" aria-labelledby="equipe-titulo" className="overflow-x-clip bg-white py-24 sm:py-32">
       <Container>
         <SectionHeader
           id="equipe-titulo"
@@ -47,7 +47,7 @@ export function Team() {
           eyebrow="Equipe"
           title={
             <>
-              Especialistas que unem técnica e <em className="text-accent-300">sensibilidade</em>.
+              Especialistas que unem técnica e <em className="text-accent-600">sensibilidade</em>.
             </>
           }
           description="Um corpo clínico formado por mestres e especialistas que discutem cada caso em conjunto para chegar ao plano de tratamento ideal."

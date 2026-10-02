@@ -2,10 +2,10 @@ import { cn } from '../../lib/cn'
 import { getInitials } from '../../lib/initials'
 
 const tones = [
-  'bg-accent-300/15 text-accent-200',
-  'bg-[#1c2a40] text-ink',
-  'bg-[#2a2620] text-[#eadfca]',
-  'bg-accent-500/25 text-accent-100',
+  'bg-accent-100 text-navy-800',
+  'bg-navy-100 text-navy-800',
+  'bg-[#efe9df] text-navy-800',
+  'bg-accent-200 text-navy-900',
 ] as const
 
 interface MonogramProps {

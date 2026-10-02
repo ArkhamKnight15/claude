@@ -17,23 +17,23 @@ export function About() {
         <Reveal className="relative mx-auto w-full max-w-lg lg:col-span-6 lg:max-w-none">
           <MediaFrame
             asset={media.aboutMain}
-            className="aspect-[4/5] rounded-[2rem] shadow-elevated ring-1 ring-white/10"
+            className="aspect-[4/5] rounded-[2rem] shadow-elevated ring-1 ring-navy-950/5"
             fallback={<ClinicInterior className="absolute inset-0 size-full" />}
           />
 
-          <div className="absolute top-6 -left-3 flex items-center gap-3 rounded-2xl bg-surface-raised/90 px-4 py-3 shadow-card ring-1 ring-white/10 backdrop-blur sm:top-10 sm:-left-8">
-            <span className="flex size-10 items-center justify-center rounded-xl bg-accent-300/15 text-accent-300">
+          <div className="absolute top-6 -left-3 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:top-10 sm:-left-8">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-accent-50 text-accent-700">
               <Sparkles aria-hidden="true" className="size-5" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-ink">620 m² de estrutura</p>
+              <p className="text-sm font-semibold text-navy-950">620 m² de estrutura</p>
               <p className="text-xs text-muted">8 consultórios privativos</p>
             </div>
           </div>
 
-          <div className="absolute -right-3 -bottom-10 w-48 rounded-[1.5rem] bg-accent-300 p-5 text-navy-950 shadow-elevated sm:-right-8 sm:w-64 sm:p-7">
+          <div className="grain absolute -right-3 -bottom-10 w-48 rounded-[1.5rem] bg-navy-950 p-5 text-white shadow-elevated sm:-right-8 sm:w-64 sm:p-7">
             <p className="font-serif text-5xl leading-none tracking-[-0.02em] sm:text-6xl">{clinic.foundedYear}</p>
-            <p className="mt-3 text-[0.8125rem] leading-relaxed text-navy-800 sm:text-sm">
+            <p className="mt-3 text-[0.8125rem] leading-relaxed text-navy-200 sm:text-sm">
               Mais de uma década transformando sorrisos nos Jardins, em São Paulo.
             </p>
           </div>
@@ -43,7 +43,7 @@ export function About() {
           <Reveal>
             <Eyebrow>Sobre nós</Eyebrow>
             <h2 id="sobre-titulo" className={cn(headingClasses, 'mt-5')}>
-              Uma clínica criada para quem valoriza cada <em className="text-accent-300">detalhe</em>.
+              Uma clínica criada para quem valoriza cada <em className="text-accent-600">detalhe</em>.
             </h2>
           </Reveal>
 
@@ -62,11 +62,11 @@ export function About() {
 
           <Reveal delay={160}>
             <figure className="mt-9 border-l-2 border-accent-300 pl-6">
-              <blockquote className="font-serif text-[1.625rem] leading-snug text-ink">
+              <blockquote className="font-serif text-[1.625rem] leading-snug text-navy-950">
                 <p>“Tratar um sorriso é cuidar de uma pessoa por inteiro: da saúde à autoestima.”</p>
               </blockquote>
               <figcaption className="mt-3 text-sm text-muted">
-                <span className="font-semibold text-ink">Dra. Helena Vasconcellos</span> · Fundadora e diretora clínica
+                <span className="font-semibold text-navy-900">Dra. Helena Vasconcellos</span> · Fundadora e diretora clínica
               </figcaption>
             </figure>
           </Reveal>
@@ -75,7 +75,7 @@ export function About() {
             <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-8 sm:grid-cols-4">
               {milestones.map((milestone) => (
                 <li key={milestone.year}>
-                  <p className="font-serif text-[1.75rem] leading-none text-ink">{milestone.year}</p>
+                  <p className="font-serif text-[1.75rem] leading-none text-navy-950">{milestone.year}</p>
                   <p className="mt-2 text-sm leading-snug text-muted">{milestone.text}</p>
                 </li>
               ))}

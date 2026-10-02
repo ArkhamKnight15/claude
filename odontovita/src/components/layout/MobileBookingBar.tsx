@@ -41,13 +41,13 @@ export function MobileBookingBar() {
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-[120%] opacity-0',
       )}
     >
-      <div className="flex items-center gap-1.5 rounded-full bg-surface-raised/90 p-1.5 shadow-elevated ring-1 ring-white/10 backdrop-blur-xl">
+      <div className="flex items-center gap-1.5 rounded-full bg-white/90 p-1.5 shadow-elevated ring-1 ring-navy-950/5 backdrop-blur-xl">
         <ButtonLink
           href={clinic.phone.href}
           variant="ghost"
           className="w-12 shrink-0 px-0"
           aria-label={`Ligar para ${clinic.phone.display}`}
-          leadingIcon={<Phone aria-hidden="true" className="size-[1.125rem] text-accent-300" />}
+          leadingIcon={<Phone aria-hidden="true" className="size-[1.125rem] text-accent-600" />}
         />
         <Button arrow className="flex-1" onClick={() => openBooking()}>
           Agendar consulta

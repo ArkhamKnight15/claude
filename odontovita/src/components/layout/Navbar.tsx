@@ -28,9 +28,9 @@ export function Navbar() {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-500',
           elevated
-            ? 'bg-canvas/75 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150'
+            ? 'bg-ivory/85 shadow-[0_1px_0_rgb(10_22_40/0.07)] backdrop-blur-xl backdrop-saturate-150'
             : 'bg-transparent',
-          menuOpen && 'bg-canvas shadow-none',
+          menuOpen && 'bg-ivory shadow-none',
         )}
       >
         <Container
@@ -54,15 +54,15 @@ export function Navbar() {
                       aria-current={isActive ? 'location' : undefined}
                       className={cn(
                         'group relative block rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-300',
-                        isActive ? 'text-ink' : 'text-body hover:text-ink',
+                        isActive ? 'text-navy-950' : 'text-navy-700 hover:text-navy-950',
                       )}
                     >
                       {item.label}
                       <span
                         aria-hidden="true"
                         className={cn(
-                          'absolute inset-x-3.5 bottom-1 h-px origin-left bg-accent-300 transition-transform duration-500 ease-out-expo',
-                          isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100 group-hover:bg-white/30',
+                          'absolute inset-x-3.5 bottom-1 h-px origin-left bg-navy-950 transition-transform duration-500 ease-out-expo',
+                          isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100 group-hover:bg-navy-300',
                         )}
                       />
                     </a>
@@ -75,9 +75,9 @@ export function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2">
             <a
               href={clinic.phone.href}
-              className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-body transition-colors hover:text-ink xl:inline-flex"
+              className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-navy-800 transition-colors hover:text-navy-950 xl:inline-flex"
             >
-              <Phone aria-hidden="true" className="size-4 text-accent-300" />
+              <Phone aria-hidden="true" className="size-4 text-accent-600" />
               {clinic.phone.display}
             </a>
             <Button size="sm" arrow className="hidden sm:inline-flex" onClick={() => openBooking()}>
@@ -89,7 +89,7 @@ export function Navbar() {
               aria-expanded={menuOpen}
               aria-controls="menu-mobile"
               aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-              className="-mr-2 flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-white/[0.06] lg:hidden"
+              className="-mr-2 flex size-11 items-center justify-center rounded-full text-navy-950 transition-colors hover:bg-navy-950/5 lg:hidden"
             >
               <span aria-hidden="true" className="relative block h-3 w-5">
                 <span

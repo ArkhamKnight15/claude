@@ -72,12 +72,12 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="flex max-h-[92dvh] flex-col overflow-hidden rounded-t-[1.75rem] bg-surface shadow-elevated ring-1 ring-white/10 focus:outline-none md:h-[min(48rem,calc(100dvh-3rem))] md:max-h-none md:flex-row md:rounded-[1.75rem]"
+        className="flex max-h-[92dvh] flex-col overflow-hidden rounded-t-[1.75rem] bg-white shadow-elevated focus:outline-none md:h-[min(48rem,calc(100dvh-3rem))] md:max-h-none md:flex-row md:rounded-[1.75rem]"
       >
-        <aside className="grain relative hidden w-[18.5rem] shrink-0 flex-col overflow-y-auto border-r border-line bg-canvas-alt p-8 md:flex">
-          <div aria-hidden="true" className="absolute -top-24 -right-24 size-64 rounded-full bg-accent-500/20 blur-3xl" />
-          <Logo />
-          <p className="mt-10 font-serif text-[1.75rem] leading-[1.1] text-ink">
+        <aside className="grain relative hidden w-[18.5rem] shrink-0 flex-col overflow-y-auto bg-navy-950 p-8 text-white md:flex">
+          <div aria-hidden="true" className="absolute -top-24 -right-24 size-64 rounded-full bg-accent-500/25 blur-3xl" />
+          <Logo tone="light" />
+          <p className="mt-10 font-serif text-[1.75rem] leading-[1.1] text-white">
             Seu novo sorriso começa com uma conversa.
           </p>
           <ol className="mt-8 space-y-5">
@@ -87,17 +87,17 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
                   <Icon aria-hidden="true" className="size-4" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-ink">
+                  <p className="text-sm font-semibold text-white">
                     <span className="sr-only">Passo {index + 1}: </span>
                     {title}
                   </p>
-                  <p className="mt-0.5 text-[0.8125rem] leading-relaxed text-muted">{text}</p>
+                  <p className="mt-0.5 text-[0.8125rem] leading-relaxed text-navy-200">{text}</p>
                 </div>
               </li>
             ))}
           </ol>
-          <div className="mt-auto space-y-2 border-t border-line pt-6 text-[0.8125rem] text-body">
-            <a href={clinic.phone.href} className="flex items-center gap-2 transition-colors hover:text-ink">
+          <div className="mt-auto space-y-2 border-t border-white/10 pt-6 text-[0.8125rem] text-navy-200">
+            <a href={clinic.phone.href} className="flex items-center gap-2 transition-colors hover:text-white">
               <Phone aria-hidden="true" className="size-3.5 text-accent-300" />
               {clinic.phone.display}
             </a>
@@ -109,7 +109,7 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
         </aside>
 
         <div className="flex min-h-0 min-w-0 flex-col md:flex-1">
-          <div aria-hidden="true" className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-white/20 md:hidden" />
+          <div aria-hidden="true" className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-navy-950/15 md:hidden" />
           <header className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-6 pt-4 pb-5 sm:px-8 md:pt-7">
             <div>
               <h2 id={titleId} className="font-serif text-[2rem] leading-tight">
@@ -123,7 +123,7 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
               type="button"
               onClick={requestClose}
               aria-label="Fechar agendamento"
-              className="-mr-2 flex size-10 shrink-0 items-center justify-center rounded-full text-body transition-colors hover:bg-white/[0.06] hover:text-ink active:scale-95"
+              className="-mr-2 flex size-10 shrink-0 items-center justify-center rounded-full text-navy-700 transition-colors hover:bg-navy-950/5 hover:text-navy-950 active:scale-95"
             >
               <X aria-hidden="true" className="size-5" />
             </button>
