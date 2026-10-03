@@ -74,7 +74,10 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
         tabIndex={-1}
         className="flex max-h-[92dvh] flex-col overflow-hidden rounded-t-[1.75rem] bg-white shadow-elevated focus:outline-none md:h-[min(48rem,calc(100dvh-3rem))] md:max-h-none md:flex-row md:rounded-[1.75rem]"
       >
-        <aside className="grain relative hidden w-[18.5rem] shrink-0 flex-col overflow-y-auto bg-navy-950 p-8 text-white md:flex">
+        <aside
+          data-lenis-prevent
+          className="grain relative hidden w-[18.5rem] shrink-0 flex-col overflow-y-auto bg-navy-950 p-8 text-white md:flex"
+        >
           <div aria-hidden="true" className="absolute -top-24 -right-24 size-64 rounded-full bg-accent-500/25 blur-3xl" />
           <Logo tone="light" />
           <p className="mt-10 font-serif text-[1.75rem] leading-[1.1] text-white">
@@ -128,7 +131,9 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
               <X aria-hidden="true" className="size-5" />
             </button>
           </header>
-          <div className="flex min-h-0 flex-col overflow-y-auto overscroll-contain px-6 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-8 md:flex-1">
+          <div
+            data-lenis-prevent
+            className="flex min-h-0 flex-col overflow-y-auto overscroll-contain px-6 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-8 md:flex-1">
             {(open || closing) && children({ close: requestClose })}
           </div>
         </div>

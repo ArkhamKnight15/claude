@@ -1,4 +1,6 @@
 import { BookingProvider } from './components/booking/BookingProvider'
+import { useSpotlight } from './hooks/usePointerEffects'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { Footer } from './components/layout/Footer'
 import { MobileBookingBar } from './components/layout/MobileBookingBar'
 import { Navbar } from './components/layout/Navbar'
@@ -11,9 +13,13 @@ import { Results } from './sections/Results'
 import { Stats } from './sections/Stats'
 import { Team } from './sections/Team'
 import { Testimonials } from './sections/Testimonials'
+import { TreatmentMarquee } from './sections/TreatmentMarquee'
 import { Treatments } from './sections/Treatments'
 
 export default function App() {
+  useSmoothScroll()
+  useSpotlight()
+
   return (
     <BookingProvider>
       <a
@@ -26,6 +32,7 @@ export default function App() {
       <main id="conteudo">
         <Hero />
         <Stats />
+        <TreatmentMarquee />
         <Treatments />
         <About />
         <Differentials />

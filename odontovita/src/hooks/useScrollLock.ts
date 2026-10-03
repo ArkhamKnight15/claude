@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { getSmoothScroll } from '../lib/smoothScroll'
 
 let activeLocks = 0
 
@@ -9,10 +10,14 @@ export function useScrollLock(locked: boolean): void {
 
     activeLocks += 1
     document.documentElement.style.overflow = 'hidden'
+    getSmoothScroll()?.stop()
 
     return () => {
       activeLocks -= 1
-      if (activeLocks === 0) document.documentElement.style.overflow = ''
+      if (activeLocks === 0) {
+        document.documentElement.style.overflow = ''
+        getSmoothScroll()?.start()
+      }
     }
   }, [locked])
 }

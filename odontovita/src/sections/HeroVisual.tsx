@@ -1,4 +1,6 @@
 import { CalendarCheck2 } from 'lucide-react'
+import { useRef } from 'react'
+import { useTilt } from '../hooks/usePointerEffects'
 import { clinic } from '../data/clinic'
 import { SmileIllustration } from '../components/illustrations/SmileIllustration'
 import { Monogram } from '../components/ui/Monogram'
@@ -12,8 +14,11 @@ const metrics = [
 
 /** Composição do hero: planejamento digital do sorriso + cartões flutuantes. */
 export function HeroVisual() {
+  const tiltRef = useRef<HTMLDivElement>(null)
+  useTilt(tiltRef, 6)
+
   return (
-    <div className="relative mx-auto w-full max-w-[36rem] lg:max-w-none">
+    <div ref={tiltRef} className="tilt relative mx-auto w-full max-w-[36rem] lg:max-w-none">
       <div
         aria-hidden="true"
         className="absolute -inset-x-4 -top-8 -bottom-6 rounded-[2.75rem] bg-gradient-to-br from-accent-100 via-mist to-transparent sm:-inset-x-8"
@@ -65,7 +70,7 @@ export function HeroVisual() {
         </figcaption>
       </figure>
 
-      <div className="animate-float absolute -top-7 -left-3 flex items-center gap-3 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-left-10">
+      <div className="animate-float tilt-depth absolute -top-7 -left-3 flex items-center gap-3 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-left-10">
         <span className="flex size-10 items-center justify-center rounded-xl bg-accent-50 text-accent-700">
           <CalendarCheck2 aria-hidden="true" className="size-5" />
         </span>
@@ -75,7 +80,7 @@ export function HeroVisual() {
         </div>
       </div>
 
-      <div className="animate-float-delayed absolute -right-2 -bottom-16 flex sm:-bottom-10 items-center gap-3.5 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-right-8">
+      <div className="animate-float-delayed tilt-depth absolute -right-2 -bottom-16 flex sm:-bottom-10 items-center gap-3.5 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-right-8">
         <div className="flex -space-x-2.5">
           {['Camila Andrade', 'Ricardo Menezes', 'Juliana Prado'].map((name, index) => (
             <Monogram key={name} name={name} index={index} className="size-9 text-sm ring-2 ring-white" />

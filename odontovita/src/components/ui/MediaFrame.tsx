@@ -13,7 +13,7 @@ interface MediaFrameProps {
 
 export function MediaFrame({ asset, fallback, className, imageClassName, priority = false }: MediaFrameProps) {
   return (
-    <div className={cn('relative overflow-hidden', className)}>
+    <div className={cn('relative overflow-clip', className)}>
       {asset.src ? (
         <img
           src={asset.src}

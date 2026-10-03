@@ -1,5 +1,5 @@
 import { ChevronsLeftRight, Info } from 'lucide-react'
-import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { useBooking } from '../components/booking/context'
 import { SmileIllustration } from '../components/illustrations/SmileIllustration'
 import { Button } from '../components/ui/Button'
@@ -7,14 +7,43 @@ import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { SectionHeader } from '../components/ui/SectionHeader'
 import { resultCases } from '../data/results'
+import { useInView } from '../hooks/useInView'
 import { cn } from '../lib/cn'
 import type { ResultCase } from '../types'
 
+/** A demonstração automática do slider roda uma única vez por visita. */
+let hintPlayed = false
+const HINT_STOPS = [50, 28, 70, 50]
+const HINT_DURATION_MS = 2600
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+
 function CompareSlider({ item }: { item: ResultCase }) {
   const [position, setPosition] = useState(50)
+  const [ref, inView] = useInView<HTMLDivElement>({ rootMargin: '0px 0px -30% 0px' })
+  const interacted = useRef(false)
+
+  // Ao aparecer pela primeira vez, a alça desliza sozinha para sinalizar que é interativa.
+  useEffect(() => {
+    if (!inView || hintPlayed || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    hintPlayed = true
+
+    const segments = HINT_STOPS.length - 1
+    const startedAt = performance.now()
+    let frame = 0
+    const tick = (now: number) => {
+      if (interacted.current) return
+      const progress = Math.min(Math.max((now - startedAt) / HINT_DURATION_MS, 0), 1)
+      const segment = Math.min(Math.floor(progress * segments), segments - 1)
+      const local = easeInOutCubic(progress * segments - segment)
+      setPosition(HINT_STOPS[segment] + (HINT_STOPS[segment + 1] - HINT_STOPS[segment]) * local)
+      if (progress < 1) frame = requestAnimationFrame(tick)
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [inView])
 
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-navy-950 shadow-elevated select-none sm:aspect-[16/11]">
+    <div ref={ref} className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-navy-950 shadow-elevated select-none sm:aspect-[16/11]">
       <SmileIllustration
         preset={item.after}
         preserveAspectRatio="xMidYMid slice"
@@ -41,10 +70,16 @@ function CompareSlider({ item }: { item: ResultCase }) {
         type="range"
         min={0}
         max={100}
-        value={position}
-        onChange={(event) => setPosition(Number(event.target.value))}
+        value={Math.round(position)}
+        onChange={(event) => {
+          interacted.current = true
+          setPosition(Number(event.target.value))
+        }}
+        onPointerDown={() => {
+          interacted.current = true
+        }}
         aria-label="Comparar antes e depois"
-        aria-valuetext={`${position}% da imagem mostrando o antes`}
+        aria-valuetext={`${Math.round(position)}% da imagem mostrando o antes`}
         className="compare-range peer absolute inset-0 z-20 size-full cursor-ew-resize opacity-0"
       />
 

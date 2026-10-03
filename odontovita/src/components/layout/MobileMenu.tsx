@@ -52,7 +52,7 @@ export function MobileMenu({ open, onClose, activeId }: MobileMenuProps) {
         open ? 'visible opacity-100' : 'invisible opacity-0',
       )}
     >
-      <Container className="flex h-full flex-col overflow-y-auto pt-24 pb-[max(2rem,env(safe-area-inset-bottom))]">
+      <Container data-lenis-prevent className="flex h-full flex-col overflow-y-auto pt-24 pb-[max(2rem,env(safe-area-inset-bottom))]">
         <nav aria-label="Menu">
           <ul className="border-t border-line">
             {navItems.map((item, index) => (

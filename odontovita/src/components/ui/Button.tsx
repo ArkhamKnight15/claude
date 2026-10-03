@@ -18,7 +18,7 @@ const baseClasses =
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-navy-950 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_10px_24px_-12px_rgb(10_22_40/0.55)] hover:bg-navy-800 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_16px_32px_-14px_rgb(10_22_40/0.6)]',
+    'overflow-hidden bg-navy-950 text-white before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-1/3 before:-translate-x-full before:skew-x-[-20deg] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out-expo hover:before:translate-x-[400%] shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_10px_24px_-12px_rgb(10_22_40/0.55)] hover:bg-navy-800 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_16px_32px_-14px_rgb(10_22_40/0.6)]',
   secondary:
     'bg-white text-navy-950 shadow-soft ring-1 ring-inset ring-navy-950/10 hover:ring-navy-950/25',
   accent:

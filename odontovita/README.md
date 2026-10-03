@@ -35,6 +35,13 @@ npm run dev       # http://localhost:5173
 - **Agendamento**: modal nativo (`<dialog>`), que vira bottom sheet no mobile. Tem validação, máscara de telefone, estados de carregamento, erro e sucesso, e preserva o rascunho se for fechado sem enviar.
 - **Barra fixa de agendamento** no mobile, visível entre o hero e o formulário final.
 
+## Animações
+
+- **Fundo animado (WebGL):** um gradiente fluido gerado por shader em `src/components/effects/AnimatedGradient.tsx`, usado no hero (tons claros) e no CTA final (marinho). Ele é renderizado em meia resolução a 30 fps, pausa fora da tela e não aparece sem suporte a WebGL; nesse caso, fica o fundo estático em CSS. As cores são passadas pela prop `palette`.
+- **Rolagem suave com inércia** ([Lenis](https://github.com/darkroomengineering/lenis)), configurada em `src/lib/smoothScroll.ts`, incluindo a navegação por âncoras com foco acessível.
+- **Títulos revelados palavra por palavra** (`RevealText`), **parallax e barra de progresso de leitura** ligados à rolagem (CSS scroll-driven animations; navegadores sem suporte mostram o conteúdo estático), **inclinação 3D** no visual do hero, **brilho que segue o cursor** nos cards, **faixa contínua** de tratamentos e **demonstração automática** do slider de antes e depois.
+- Com `prefers-reduced-motion` ativado, a rolagem passa a ser direta, os títulos aparecem prontos e o fundo fica estático.
+
 ## Estrutura
 
 ```

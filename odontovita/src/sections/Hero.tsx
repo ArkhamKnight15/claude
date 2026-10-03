@@ -1,23 +1,35 @@
 import { ScanLine } from 'lucide-react'
 import { useBooking } from '../components/booking/context'
+import { AnimatedGradient, type GradientPalette } from '../components/effects/AnimatedGradient'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Container } from '../components/ui/Container'
+import { RevealText } from '../components/ui/RevealText'
 import { clinic } from '../data/clinic'
 import { enterDelay } from '../lib/motion'
 import { HeroVisual } from './HeroVisual'
+
+/** Marfim + azuis claros: claros o bastante para manter o contraste do texto por cima. */
+const HERO_PALETTE: GradientPalette = ['#f8f6f2', '#e6eff8', '#cde2f4', '#b1d2ef']
 
 export function Hero() {
   const { openBooking } = useBooking()
 
   return (
-    <section id="inicio" aria-labelledby="inicio-titulo" className="relative isolate overflow-x-clip pt-28 sm:pt-36 lg:pt-40">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+    <section id="inicio" aria-labelledby="inicio-titulo" className="relative isolate overflow-x-clip pt-28 pb-8 sm:pt-36 lg:pt-40 lg:pb-0">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,var(--color-accent-100),transparent_60%)]"
+      >
+        <AnimatedGradient
+          palette={HERO_PALETTE}
+          className="absolute inset-0 [mask-image:linear-gradient(to_bottom,black_55%,transparent)]"
+        />
+        <div className="absolute inset-0 bg-ivory/50 lg:bg-transparent lg:bg-gradient-to-r lg:from-ivory/85 lg:via-ivory/30 lg:to-transparent" />
         <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_70%_0%,black_10%,transparent_65%)]" />
-        <div className="absolute -top-48 right-[-15%] h-[42rem] w-[42rem] rounded-full bg-accent-200/40 blur-3xl" />
       </div>
 
       <Container className="grid items-center gap-20 lg:grid-cols-12 lg:gap-12">
-        <div className="lg:col-span-6">
+        <div className="scroll-exit lg:col-span-6">
           <p className="enter inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-navy-800 shadow-soft ring-1 ring-navy-950/5">
             <span className="rounded-full bg-navy-950 px-2.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.1em] whitespace-nowrap text-white uppercase">
               Jardins · SP
@@ -27,13 +39,15 @@ export function Hero() {
             </span>
           </p>
 
-          <h1
+          <RevealText
+            as="h1"
             id="inicio-titulo"
-            style={enterDelay(80)}
-            className="enter mt-7 font-serif text-[3.1rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.5rem] lg:text-[4.25rem] xl:text-[5.5rem]"
+            trigger="load"
+            delay={120}
+            className="mt-7 font-serif text-[3.1rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.5rem] lg:text-[4.25rem] xl:text-[5.5rem]"
           >
             Seu sorriso merece um cuidado <em className="text-accent-600">extraordinário.</em>
-          </h1>
+          </RevealText>
 
           <p style={enterDelay(160)} className="enter mt-7 max-w-xl text-lg leading-relaxed text-body sm:text-xl sm:leading-relaxed">
             Na {clinic.name}, especialistas e tecnologia digital se unem para criar tratamentos precisos, confortáveis e
@@ -62,7 +76,9 @@ export function Hero() {
         </div>
 
         <div style={enterDelay(200)} className="enter lg:col-span-6 lg:pl-6">
-          <HeroVisual />
+          <div className="parallax [--parallax:28px]">
+            <HeroVisual />
+          </div>
         </div>
       </Container>
     </section>

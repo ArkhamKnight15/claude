@@ -4,6 +4,7 @@ import { Container } from '../components/ui/Container'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { MediaFrame } from '../components/ui/MediaFrame'
 import { Reveal } from '../components/ui/Reveal'
+import { RevealText } from '../components/ui/RevealText'
 import { headingClasses } from '../components/ui/SectionHeader'
 import { milestones } from '../data/about'
 import { clinic } from '../data/clinic'
@@ -18,7 +19,7 @@ export function About() {
           <MediaFrame
             asset={media.aboutMain}
             className="aspect-[4/5] rounded-[2rem] shadow-elevated ring-1 ring-navy-950/5"
-            fallback={<ClinicInterior className="absolute inset-0 size-full" />}
+            fallback={<ClinicInterior className="parallax absolute inset-0 size-full scale-[1.12] [--parallax:4%]" />}
           />
 
           <div className="absolute top-6 -left-3 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:top-10 sm:-left-8">
@@ -31,7 +32,7 @@ export function About() {
             </div>
           </div>
 
-          <div className="grain absolute -right-3 -bottom-10 w-48 rounded-[1.5rem] bg-navy-950 p-5 text-white shadow-elevated sm:-right-8 sm:w-64 sm:p-7">
+          <div className="grain parallax absolute -right-3 -bottom-10 w-48 [--parallax:-28px] rounded-[1.5rem] bg-navy-950 p-5 text-white shadow-elevated sm:-right-8 sm:w-64 sm:p-7">
             <p className="font-serif text-5xl leading-none tracking-[-0.02em] sm:text-6xl">{clinic.foundedYear}</p>
             <p className="mt-3 text-[0.8125rem] leading-relaxed text-navy-200 sm:text-sm">
               Mais de uma década transformando sorrisos nos Jardins, em São Paulo.
@@ -42,10 +43,10 @@ export function About() {
         <div className="lg:col-span-6 lg:pl-10">
           <Reveal>
             <Eyebrow>Sobre nós</Eyebrow>
-            <h2 id="sobre-titulo" className={cn(headingClasses, 'mt-5')}>
-              Uma clínica criada para quem valoriza cada <em className="text-accent-600">detalhe</em>.
-            </h2>
           </Reveal>
+          <RevealText id="sobre-titulo" delay={80} className={cn(headingClasses, 'mt-5')}>
+            Uma clínica criada para quem valoriza cada <em className="text-accent-600">detalhe</em>.
+          </RevealText>
 
           <Reveal delay={100} className="mt-7 space-y-5 text-[1.0625rem] leading-relaxed text-body">
             <p>

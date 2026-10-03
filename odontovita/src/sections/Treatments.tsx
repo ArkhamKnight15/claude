@@ -12,7 +12,9 @@ function TreatmentCard({ treatment, index }: { treatment: Treatment; index: numb
   const { icon: Icon } = treatment
 
   return (
-    <article className="group relative flex h-full flex-col rounded-[1.5rem] bg-ivory/70 p-7 ring-1 ring-line transition-[transform,box-shadow,background-color] duration-500 ease-out-expo ring-inset hover:-translate-y-1 hover:bg-white hover:shadow-card hover:ring-accent-200 sm:p-8">
+    <article
+      data-spotlight
+      className="group spotlight flex h-full flex-col rounded-[1.5rem] bg-ivory/70 p-7 ring-1 ring-line transition-[transform,box-shadow,background-color] duration-500 ease-out-expo ring-inset hover:-translate-y-1 hover:bg-white hover:shadow-card hover:ring-accent-200 sm:p-8">
       <div className="flex items-start justify-between">
         <span className="flex size-14 items-center justify-center rounded-2xl bg-white text-navy-800 ring-1 ring-line transition-colors duration-500 ring-inset group-hover:bg-navy-950 group-hover:text-accent-200 group-hover:ring-navy-950">
           <Icon aria-hidden="true" className="size-6" strokeWidth={1.6} />

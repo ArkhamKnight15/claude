@@ -28,7 +28,7 @@ function StatItem({ stat }: { stat: Stat }) {
 
 export function Stats() {
   return (
-    <section aria-label="A OdontoVita em números" className="pt-24 pb-24 sm:pt-32 sm:pb-28">
+    <section aria-label="A OdontoVita em números" className="pt-24 pb-16 sm:pt-32 sm:pb-20">
       <Container>
         <Reveal className="grid grid-cols-2 gap-px overflow-hidden rounded-[1.75rem] bg-line shadow-soft ring-1 ring-line lg:grid-cols-4">
           {stats.map((stat) => (

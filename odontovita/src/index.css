@@ -100,6 +100,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  html.lenis {
+    scroll-behavior: auto;
+  }
+
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+
   body {
     background-color: var(--color-ivory);
     color: var(--color-body);
@@ -343,5 +351,160 @@
     border: 0;
     background: transparent;
     cursor: ew-resize;
+  }
+
+  /* Títulos revelados palavra por palavra (<RevealText />) */
+  .split-word {
+    display: inline-block;
+    overflow: clip;
+    vertical-align: top;
+    /* Folga para descendentes e itálicos não serem cortados pela máscara */
+    padding: 0 0.08em 0.14em;
+    margin: 0 -0.08em -0.14em;
+  }
+
+  .split-word-inner {
+    display: inline-block;
+    translate: 0 108%;
+    rotate: 4deg;
+    transform-origin: 0 100%;
+    transition:
+      translate 1.1s var(--ease-out-expo),
+      rotate 1.1s var(--ease-out-expo);
+    transition-delay: calc(var(--split-delay, 0ms) + var(--word, 0) * 42ms);
+  }
+
+  .split-text[data-visible='true'] .split-word-inner {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  .split-text[data-trigger='load'] .split-word-inner {
+    animation: word-in 1.2s var(--ease-out-expo) both;
+    animation-delay: calc(var(--split-delay, 0ms) + var(--word, 0) * 55ms);
+  }
+
+  @keyframes word-in {
+    from {
+      translate: 0 108%;
+      rotate: 4deg;
+    }
+    to {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .split-text[data-trigger] .split-word-inner {
+      animation: none;
+      translate: none;
+      rotate: none;
+    }
+  }
+
+  /* Faixa contínua de tratamentos */
+  .marquee {
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  /* Brilho que acompanha o cursor (data-spotlight) */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      var(--spot-color, rgb(79 147 212 / 0.11)),
+      transparent 45%
+    );
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Inclinação 3D controlada por useTilt */
+  .tilt {
+    transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.9s var(--ease-out-expo);
+  }
+
+  .tilt-depth {
+    translate: 0 0 48px;
+  }
+
+  /* Animações ligadas à rolagem (melhoria progressiva; sem suporte, o conteúdo fica estático) */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .parallax {
+        animation: parallax linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+
+      .scroll-exit {
+        animation: scroll-exit linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+
+      .scroll-progress {
+        animation: scroll-progress linear both;
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+
+  @keyframes parallax {
+    from {
+      translate: 0 var(--parallax, 48px);
+    }
+    to {
+      translate: 0 calc(var(--parallax, 48px) * -1);
+    }
+  }
+
+  @keyframes scroll-exit {
+    to {
+      opacity: 0.1;
+      translate: 0 -64px;
+    }
+  }
+
+  @keyframes scroll-progress {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
   }
 }

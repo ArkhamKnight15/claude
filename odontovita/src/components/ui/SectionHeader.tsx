@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 import { Eyebrow } from './Eyebrow'
 import { Reveal } from './Reveal'
+import { RevealText } from './RevealText'
 
 interface SectionHeaderProps {
   id?: string
@@ -38,14 +39,16 @@ export function SectionHeader({
         className,
       )}
     >
-      <Reveal className={cn(layout === 'split' && 'lg:col-span-7')}>
-        <Eyebrow tone={tone} className={cn(layout === 'center' && 'justify-center')}>
-          {eyebrow}
-        </Eyebrow>
-        <h2 id={id} className={cn(headingClasses, 'mt-5', isLight && 'text-white')}>
+      <div className={cn(layout === 'split' && 'lg:col-span-7')}>
+        <Reveal>
+          <Eyebrow tone={tone} className={cn(layout === 'center' && 'justify-center')}>
+            {eyebrow}
+          </Eyebrow>
+        </Reveal>
+        <RevealText id={id} delay={80} className={cn(headingClasses, 'mt-5', isLight && 'text-white')}>
           {title}
-        </h2>
-      </Reveal>
+        </RevealText>
+      </div>
       {(description || children) && (
         <Reveal delay={120} className={cn(layout === 'split' ? 'lg:col-span-5 lg:pb-2' : 'mt-6')}>
           {description && (

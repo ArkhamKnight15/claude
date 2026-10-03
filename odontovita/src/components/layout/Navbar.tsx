@@ -108,6 +108,10 @@ export function Navbar() {
             </button>
           </div>
         </Container>
+        <div
+          aria-hidden="true"
+          className="scroll-progress absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-accent-300 via-accent-500 to-accent-600"
+        />
       </header>
       <MobileMenu open={menuOpen} onClose={closeMenu} activeId={activeId} />
     </>

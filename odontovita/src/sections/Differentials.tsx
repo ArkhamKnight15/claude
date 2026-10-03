@@ -5,7 +5,7 @@ import { differentials, equipment } from '../data/differentials'
 import type { Differential } from '../types'
 
 const cardClasses =
-  'h-full rounded-[1.75rem] bg-white/[0.035] ring-1 ring-white/10 ring-inset transition-[background-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-white/[0.06] hover:ring-white/20'
+  'spotlight h-full rounded-[1.75rem] [--spot-color:rgb(155_201_238/0.09)] bg-white/[0.035] ring-1 ring-white/10 ring-inset transition-[background-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-white/[0.06] hover:ring-white/20'
 
 function IconTile({ icon: Icon }: { icon: Differential['icon'] }) {
   return (
@@ -17,7 +17,7 @@ function IconTile({ icon: Icon }: { icon: Differential['icon'] }) {
 
 function TechnologyCard({ item }: { item: Differential }) {
   return (
-    <article className={`${cardClasses} grid gap-10 p-7 sm:p-9 md:grid-cols-2 md:gap-8`}>
+    <article data-spotlight className={`${cardClasses} grid gap-10 p-7 sm:p-9 md:grid-cols-2 md:gap-8`}>
       <div className="flex flex-col">
         <IconTile icon={item.icon} />
         <h3 className="mt-7 text-2xl font-semibold tracking-[-0.01em] text-white">{item.title}</h3>
@@ -46,7 +46,7 @@ function TechnologyCard({ item }: { item: Differential }) {
 
 function DifferentialCard({ item }: { item: Differential }) {
   return (
-    <article className={`${cardClasses} flex flex-col p-7 sm:p-8`}>
+    <article data-spotlight className={`${cardClasses} flex flex-col p-7 sm:p-8`}>
       <IconTile icon={item.icon} />
       <h3 className="mt-6 text-xl font-semibold tracking-[-0.01em] text-white sm:mt-7">{item.title}</h3>
       <p className="mt-3 leading-relaxed text-navy-200">{item.description}</p>

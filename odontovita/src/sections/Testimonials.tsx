@@ -18,11 +18,12 @@ interface TestimonialCardProps {
 function TestimonialCard({ testimonial, index, featured = false }: TestimonialCardProps) {
   return (
     <figure
+      data-spotlight={featured ? undefined : true}
       className={cn(
         'flex h-full flex-col rounded-[1.75rem] p-7 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 sm:p-9',
         featured
           ? 'grain relative overflow-hidden bg-navy-950 text-white shadow-elevated'
-          : 'bg-white shadow-soft ring-1 ring-line ring-inset hover:shadow-card',
+          : 'spotlight bg-white shadow-soft ring-1 ring-line ring-inset hover:shadow-card',
       )}
     >
       {featured && (

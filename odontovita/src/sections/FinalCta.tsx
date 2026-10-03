@@ -1,8 +1,10 @@
 import { Check, Clock, MapPin, Phone } from 'lucide-react'
 import { BookingForm } from '../components/booking/BookingForm'
+import { AnimatedGradient, type GradientPalette } from '../components/effects/AnimatedGradient'
 import { Container } from '../components/ui/Container'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { Reveal } from '../components/ui/Reveal'
+import { RevealText } from '../components/ui/RevealText'
 import { headingClasses } from '../components/ui/SectionHeader'
 import { clinic } from '../data/clinic'
 import { cn } from '../lib/cn'
@@ -13,6 +15,9 @@ const benefits = [
   'Valor da avaliação abatido se você iniciar o tratamento',
 ]
 
+/** Marinho com reflexos azuis: escuro o bastante para o texto branco manter contraste AA. */
+const CTA_PALETTE: GradientPalette = ['#0a1628', '#0f2645', '#163d6b', '#2a68a3']
+
 export function FinalCta() {
   const { address } = clinic
 
@@ -20,18 +25,17 @@ export function FinalCta() {
     <section id="agendar" aria-labelledby="agendar-titulo" className="bg-white py-20 sm:py-28">
       <Container>
         <div className="grain relative overflow-hidden rounded-[2rem] bg-navy-950 px-5 py-12 sm:rounded-[2.5rem] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            <div className="absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-accent-500/20 blur-3xl" />
-            <div className="absolute right-0 -bottom-48 h-[30rem] w-[30rem] rounded-full bg-accent-300/10 blur-3xl" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+            <AnimatedGradient palette={CTA_PALETTE} speed={0.8} className="absolute inset-0" />
             <div className="bg-grid-light absolute inset-0 [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_60%)]" />
           </div>
 
           <div className="relative grid gap-12 lg:grid-cols-12 lg:gap-14">
             <Reveal className="lg:col-span-5 lg:py-2">
               <Eyebrow tone="light">Agende sua avaliação</Eyebrow>
-              <h2 id="agendar-titulo" className={cn(headingClasses, 'mt-5 text-white')}>
+              <RevealText id="agendar-titulo" delay={80} className={cn(headingClasses, 'mt-5 text-white')}>
                 Seu novo sorriso começa com uma <em className="text-accent-300">conversa</em>.
-              </h2>
+              </RevealText>
               <p className="mt-6 text-lg leading-relaxed text-navy-200">
                 Conte o que você deseja e nossa equipe entra em contato para encontrar o melhor horário. Sem compromisso.
               </p>
