@@ -144,7 +144,8 @@ def build(raw=False):
         kit.point_light((7.2, 3.8, 1.42), 60, (1.0, 0.8, 0.6), radius=0.03)
 
     kit.sky(38, 165, strength=0.3, sun_energy=4.5, sun_color=(1.0, 0.9, 0.78))
-    kit.area_light((W / 2, D / 2, H - 0.05), 6, 260, size_y=5, color=(1.0, 0.9, 0.8))
+    fill = kit.area_light((W / 2, D / 2, H - 0.05), 6, 260, size_y=5, color=(1.0, 0.9, 0.8))
+    fill.visible_glossy = False  # sem o retângulo refletido nos caixilhos
     sc = bpy.context.scene
     sc.cycles.diffuse_bounces = 6
 

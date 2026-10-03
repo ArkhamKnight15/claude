@@ -81,14 +81,15 @@ def build():
     kit.bed(5.1, 3.15, width=1.6, length=2.0, rotation=90)
 
     kit.sky(4, 260, strength=0.3, sun_energy=2.8, sun_color=(1.0, 0.62, 0.38), dust=1.6)
-    kit.area_light((W / 2, D / 2, H - 0.05), 3, 60, size_y=2.5, color=(1.0, 0.86, 0.72))
+    fill = kit.area_light((W / 2, D / 2, H - 0.05), 3, 60, size_y=2.5, color=(1.0, 0.86, 0.72))
+    fill.visible_glossy = False  # sem o retângulo refletido nos vidros
     bpy.context.scene.cycles.diffuse_bounces = 6
 
 
 CAMERAS = {
     'living': (dict(location=(0.9, 0.35, 1.3), target=(5.8, 4.3, 1.2), lens=20, shift_y=0.03), 0.5),
     'kitchen': (dict(location=(3.7, 2.3, 1.35), target=(0.0, 1.55, 1.1), lens=24), 0.5),
-    'bed': (dict(location=(1.0, 2.2, 1.35), target=(5.0, 4.6, 1.0), lens=24, shift_y=0.02), 0.5),
+    'bed': (dict(location=(6.3, 1.0, 1.35), target=(3.9, 4.0, 0.8), lens=24, shift_y=0.04), 0.5),
     'view': (dict(location=(1.6, 1.0, 1.35), target=(6.6, 4.8, 1.4), lens=26), 0.6),
 }
 
