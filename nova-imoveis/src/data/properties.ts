@@ -631,11 +631,12 @@ export const properties: Property[] = [
     area: 210,
     parking: 3,
     description: [
-      'Lançamento com entrega prevista para dezembro de 2026, em uma das últimas quadras residenciais de Lourdes. São 24 apartamentos de 210 m², dois por andar, todos com varanda gourmet voltada para a Serra do Curral.',
+      'Lançamento com entrega prevista para dezembro de 2028, em uma das últimas quadras residenciais de Lourdes. São 24 apartamentos de 210 m², dois por andar, todos com varanda gourmet voltada para a Serra do Curral.',
+      'O apartamento decorado, montado no estande de vendas ao lado do terreno, mostra a planta de três suítes com os acabamentos de entrega.',
       'A NOVA acompanha o empreendimento desde o lançamento e tem as condições de tabela, as plantas personalizáveis e o cronograma de obra atualizado para compartilhar com você.',
     ],
     features: [
-      'Entrega em dezembro de 2026',
+      'Entrega em dezembro de 2028',
       'Planta personalizável até a fase de acabamentos',
       'Varanda gourmet com vista para a serra',
       'Três suítes',
@@ -644,7 +645,7 @@ export const properties: Property[] = [
     amenities: ['piscina', 'academia', 'coworking', 'brinquedoteca', 'rooftop', 'portaria', 'pet', 'bicicletario'],
     condo: {
       name: 'Residencial Serra',
-      yearBuilt: 2026,
+      yearBuilt: 2028,
       totalFloors: 12,
       unitsPerFloor: 2,
       furnished: false,
@@ -659,7 +660,7 @@ export const properties: Property[] = [
     ],
     images: gallery('residencial-serra-lourdes', [
       'Fachada do Residencial Serra com varandas de vidro ao entardecer',
-      'Living decorado com sofá claro e painel ripado',
+      'Living do apartamento decorado com sofá claro, poltronas de couro e jardim ao fundo',
       'Cozinha integrada com ilha em mármore',
       'Suíte decorada com roupa de cama clara',
     ]),

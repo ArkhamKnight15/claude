@@ -35,14 +35,31 @@ def build():
     kit.turn_around(lambda: environments.city(origin_z=46, y0=90, seed=22, lit=0.0, glow=0.0, count=300,
                                               haze=((0.8, 0.7, 0.64), 0, 1400)), degrees=-90)
 
-    # Cozinha linear na parede esquerda (x = 0)
-    box(0, 0.3, 0, 0.62, 3.0, 0.88, oak, bevel=0.004)
-    box(0, 0.25, 0.88, 0.65, 3.05, 0.92, stone, bevel=0.003)
-    box(0, 0.3, 1.5, 0.36, 3.0, 2.3, oak, bevel=0.004)
-    box(0.0, 0.25, 0.92, 0.02, 3.05, 1.5, stone, bevel=0)
-    box(0.02, 1.2, 0.93, 0.5, 1.8, 0.935, kit.mat_simple((0.02, 0.02, 0.02), rough=0.1, name='cooktop'), bevel=0)
-    kit.area_light((0.3, 1.65, 1.48), 2.6, 25, size_y=0.08, color=(1.0, 0.84, 0.64))
-    kit.vase(0.3, 2.6, 0.92, height=0.24, radius=0.06)
+    # Cozinha linear na parede esquerda (x = 0), com coluna de geladeira e despensa no canto
+    gap = kit.mat_simple((0.03, 0.025, 0.02), name='sgap')
+    box(0, 0, 0, 0.64, 0.7, H, oak, bevel=0.004)
+    box(0.64, 0.348, 0.04, 0.645, 0.352, H - 0.04, gap, bevel=0)
+    box(0, 0.7, 0, 0.62, 3.0, 0.88, oak, bevel=0.004)
+    for yy in (1.45, 2.2):
+        box(0.62, yy - 0.003, 0.04, 0.625, yy + 0.003, 0.84, gap, bevel=0)
+    box(0, 0.7, 0.88, 0.65, 3.05, 0.92, stone, bevel=0.003)
+    box(0, 0.7, 1.5, 0.36, 3.0, H, oak, bevel=0.004)
+    for yy in (1.45, 2.2):
+        box(0.36, yy - 0.003, 1.52, 0.365, yy + 0.003, H - 0.02, gap, bevel=0)
+    box(0.0, 0.7, 0.92, 0.02, 3.05, 1.5, stone, bevel=0)
+    box(0.06, 1.1, 0.92, 0.54, 1.7, 0.925, kit.mat_simple((0.02, 0.02, 0.02), rough=0.1, name='cooktop'), bevel=0)
+    steel = kit.mat_simple((0.55, 0.53, 0.5), rough=0.25, metal=1.0, name='ssteel')
+    box(0.12, 2.25, 0.92, 0.5, 2.75, 0.923, kit.mat_simple((0.16, 0.16, 0.16), rough=0.3, metal=0.8, name='ssink'),
+        bevel=0)
+    kit.cylinder(0.07, 2.5, 0.92, 1.22, 0.012, steel)
+    kit.beam((0.07, 2.5, 1.21), (0.27, 2.5, 1.21), 0.022, 0.022, steel)
+    kit.area_light((0.3, 1.85, 1.48), 2.2, 25, size_y=0.08, color=(1.0, 0.84, 0.64))
+    board = kit.mat_wood(name='sboard', light=(0.62, 0.46, 0.3), dark=(0.48, 0.32, 0.2))
+    box(0.04, 0.85, 0.92, 0.07, 1.25, 1.32, board, bevel=0.01)
+    kit.cylinder(0.32, 1.95, 0.92, 1.1, 0.075, kit.mat_simple((0.12, 0.12, 0.11), rough=0.4, name='kettle'), bevel=0.02)
+    kit.vase(0.25, 2.9, 0.92, height=0.24, radius=0.06)
+    kit.sphere(0.3, 0.95, 0.97, 0.05, kit.mat_simple((0.8, 0.5, 0.2), rough=0.5, name='orange'))
+    kit.sphere(0.38, 1.02, 0.97, 0.05, kit.mat_simple((0.8, 0.5, 0.2), rough=0.5, name='orange'))
     # Mesa redonda junto à janela
     kit.round_table(2.3, 3.6, radius=0.5)
     chair = kit.mat_fabric((0.55, 0.5, 0.44), name='schair')
@@ -70,7 +87,7 @@ def build():
 
 CAMERAS = {
     'living': (dict(location=(0.9, 0.35, 1.3), target=(5.8, 4.3, 1.2), lens=20, shift_y=0.03), 0.5),
-    'kitchen': (dict(location=(5.4, 2.0, 1.4), target=(0.0, 1.4, 1.1), lens=24, shift_y=0.02), 0.5),
+    'kitchen': (dict(location=(3.7, 2.3, 1.35), target=(0.0, 1.55, 1.1), lens=24), 0.5),
     'bed': (dict(location=(1.0, 2.2, 1.35), target=(5.0, 4.6, 1.0), lens=24, shift_y=0.02), 0.5),
     'view': (dict(location=(1.6, 1.0, 1.35), target=(6.6, 4.8, 1.4), lens=26), 0.6),
 }
