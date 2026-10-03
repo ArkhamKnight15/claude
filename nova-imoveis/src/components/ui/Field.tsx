@@ -2,7 +2,7 @@ import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type Texta
 import { cn } from '../../lib/cn'
 
 const controlBase =
-  'w-full rounded-[2px] border bg-white text-[0.9375rem] text-ink placeholder:text-graphite-400 transition-[border-color,box-shadow] duration-300 outline-none focus:border-ink focus:ring-1 focus:ring-ink disabled:opacity-60'
+  'w-full rounded-[2px] border bg-white text-[0.9375rem] text-ink placeholder:text-graphite-500 transition-[border-color,box-shadow] duration-300 outline-none focus:border-ink focus:ring-1 focus:ring-ink disabled:opacity-60'
 
 interface FieldShellProps {
   id: string
@@ -22,7 +22,7 @@ function FieldShell({ id, label, error, hint, optional, children, className }: F
         className="mb-2 flex items-baseline justify-between text-[0.8125rem] font-medium text-graphite-700"
       >
         {label}
-        {optional && <span className="text-xs font-normal text-graphite-400">Opcional</span>}
+        {optional && <span className="text-xs font-normal text-graphite-500">Opcional</span>}
       </label>
       {children}
       {error ? (

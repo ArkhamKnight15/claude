@@ -14,9 +14,19 @@ export function NotFoundPage({
   usePageMeta({ title: 'Página não encontrada', description })
   return (
     <Container className="flex min-h-[80svh] flex-col justify-center pb-24 pt-36">
-      <p aria-hidden="true" className="font-display text-[clamp(7rem,22vw,16rem)] font-[300] leading-none text-sand">
-        404
-      </p>
+      <svg aria-hidden="true" viewBox="0 0 300 110" className="h-[clamp(6rem,18vw,12rem)] w-auto self-start text-sand">
+        <text
+          x="0"
+          y="96"
+          fill="currentColor"
+          className="font-display"
+          fontSize="128"
+          fontWeight="300"
+          letterSpacing="-4"
+        >
+          404
+        </text>
+      </svg>
       <h1 className="font-display -mt-4 max-w-2xl text-display-lg sm:-mt-8">{title}</h1>
       <p className="mt-6 max-w-lg text-lg leading-relaxed text-graphite-500">{description}</p>
       <div className="mt-10 flex flex-col gap-3 sm:flex-row">

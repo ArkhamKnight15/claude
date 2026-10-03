@@ -22,7 +22,7 @@ export function Hero() {
         />
 
         <Container className="flex flex-1 flex-col justify-end pb-24 pt-36 lg:pb-[11.5rem]">
-          <p className="eyebrow flex animate-page-in items-center gap-3 text-gold-200 [animation-delay:200ms]">
+          <p className="eyebrow flex animate-page-in items-center gap-3 text-gold-200 [animation-delay:80ms]">
             <span aria-hidden="true" className="h-px w-8 bg-gold-300" />
             Imóveis de alto padrão desde 2018
           </p>
@@ -32,14 +32,14 @@ export function Hero() {
           >
             {lines.map((line, index) => (
               <span key={line} className="block overflow-hidden pb-[0.08em]">
-                <span className="block animate-rise" style={{ animationDelay: `${280 + index * 110}ms` }}>
+                <span className="block animate-rise" style={{ animationDelay: `${120 + index * 90}ms` }}>
                   {index === lines.length - 1 ? <em className="font-[300] text-gold-200">{line}</em> : line}
                 </span>
               </span>
             ))}
           </h1>
           <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-            <div className="animate-page-in [animation-delay:700ms]">
+            <div className="animate-page-in [animation-delay:380ms]">
               <p className="max-w-md text-base leading-relaxed text-white/80 sm:text-lg">
                 Imóveis selecionados para quem valoriza arquitetura, localização e qualidade de vida.
               </p>
@@ -54,7 +54,7 @@ export function Hero() {
             </div>
             <Link
               to={heroMedia.featured.to}
-              className="group hidden animate-page-in items-center gap-3 text-[0.8125rem] text-white/70 transition-colors [animation-delay:900ms] hover:text-white md:flex"
+              className="group hidden animate-page-in items-center gap-3 text-[0.8125rem] text-white/70 transition-colors [animation-delay:500ms] hover:text-white md:flex"
             >
               <span className="eyebrow text-[0.5625rem] text-white/50">Na imagem</span>
               <span className="h-px w-6 bg-white/30" aria-hidden="true" />
@@ -68,7 +68,7 @@ export function Hero() {
           </div>
         </Container>
 
-        <Container className="absolute inset-x-0 bottom-10 z-10 hidden animate-page-in [animation-delay:1000ms] lg:block">
+        <Container className="absolute inset-x-0 bottom-10 z-10 hidden animate-page-in [animation-delay:560ms] lg:block">
           <HeroSearch />
         </Container>
       </div>

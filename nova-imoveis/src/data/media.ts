@@ -44,7 +44,6 @@ export const aboutDetailImage = image(
 )
 
 export const ctaImage = image('sections/cta', 'Terraço de cobertura com piscina de borda infinita e vista para o mar', {
-  width: 1800,
-  height: 1200,
-  widths: [900, 1800],
+  width: 1600,
+  height: 1067,
 })

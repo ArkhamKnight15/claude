@@ -228,7 +228,7 @@ export function Select({
         {groups.map((group, groupIndex) => (
           <li key={group.name ?? groupIndex} role="presentation">
             {group.name && (
-              <span className="eyebrow block px-4 pb-2 pt-3 text-[0.625rem] text-graphite-400">{group.name}</span>
+              <span className="eyebrow block px-4 pb-2 pt-3 text-[0.625rem] text-graphite-500">{group.name}</span>
             )}
             <ul role="group" aria-label={group.name}>
               {group.items.map(({ option, index }) => {
@@ -255,7 +255,7 @@ export function Select({
                       />
                       {option.label}
                     </span>
-                    {option.hint && <span className="text-xs tabular-nums text-graphite-400">{option.hint}</span>}
+                    {option.hint && <span className="text-xs tabular-nums text-graphite-500">{option.hint}</span>}
                   </li>
                 )
               })}

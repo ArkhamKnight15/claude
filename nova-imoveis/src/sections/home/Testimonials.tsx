@@ -33,32 +33,28 @@ export function Testimonials() {
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-7 lg:col-start-6">
-          <figure
-            key={active.id}
-            id="testimonials-panel"
-            role="tabpanel"
-            aria-labelledby={`testimonials-tab-${active.id}`}
-            className="min-h-[26rem] animate-page-in sm:min-h-[22rem]"
-          >
-            <Quote aria-hidden="true" className="size-9 text-gold-500" strokeWidth={1} />
-            <blockquote className="mt-6">
-              <p className="font-display text-display-md text-ink">“{active.highlight}”</p>
-              <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-graphite-500">{active.quote}</p>
-            </blockquote>
-            <figcaption className="mt-8 flex items-center gap-4">
-              <span
-                aria-hidden="true"
-                className="font-display flex size-12 items-center justify-center rounded-full bg-paper text-lg text-graphite-600 ring-1 ring-ink/5"
-              >
-                {getInitials(active.name)}
-              </span>
-              <span>
-                <span className="block font-medium text-ink">{active.name}</span>
-                <span className="block text-[0.8125rem] text-graphite-500">{active.context}</span>
-              </span>
-              <StarRating value={active.rating} className="ml-auto hidden sm:flex" />
-            </figcaption>
-          </figure>
+          <div id="testimonials-panel" role="tabpanel" aria-labelledby={`testimonials-tab-${active.id}`}>
+            <figure key={active.id} className="min-h-[26rem] animate-page-in sm:min-h-[22rem]">
+              <Quote aria-hidden="true" className="size-9 text-gold-500" strokeWidth={1} />
+              <blockquote className="mt-6">
+                <p className="font-display text-display-md text-ink">“{active.highlight}”</p>
+                <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-graphite-500">{active.quote}</p>
+              </blockquote>
+              <figcaption className="mt-8 flex items-center gap-4">
+                <span
+                  aria-hidden="true"
+                  className="font-display flex size-12 items-center justify-center rounded-full bg-paper text-lg text-graphite-600 ring-1 ring-ink/5"
+                >
+                  {getInitials(active.name)}
+                </span>
+                <span>
+                  <span className="block font-medium text-ink">{active.name}</span>
+                  <span className="block text-[0.8125rem] text-graphite-500">{active.context}</span>
+                </span>
+                <StarRating value={active.rating} className="ml-auto hidden sm:flex" />
+              </figcaption>
+            </figure>
+          </div>
 
           <div className="mt-12 flex flex-col-reverse gap-6 border-t border-graphite-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <Tabs

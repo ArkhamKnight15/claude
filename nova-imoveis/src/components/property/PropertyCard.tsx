@@ -67,18 +67,18 @@ export function PropertyCard({
 
       <div className="flex flex-1 flex-col pt-5">
         {/* Troca sutil de informação no hover: categoria → código do imóvel */}
-        <div className="relative h-4 overflow-hidden">
-          <p className="eyebrow text-[0.625rem] text-gold-700 transition-transform duration-500 ease-out-expo group-hover:-translate-y-full">
+        <div className="relative h-5 overflow-hidden">
+          <p className="eyebrow text-[0.625rem] leading-5 text-gold-700 transition-transform duration-500 ease-out-expo group-hover:-translate-y-full">
             {property.category}
           </p>
           <p
             aria-hidden="true"
-            className="eyebrow absolute inset-x-0 top-full text-[0.625rem] text-graphite-500 transition-transform duration-500 ease-out-expo group-hover:-translate-y-full"
+            className="eyebrow absolute inset-x-0 top-full text-[0.625rem] leading-5 text-graphite-500 transition-transform duration-500 ease-out-expo group-hover:-translate-y-full"
           >
             Cód. {property.id} · {property.location.neighborhood}
           </p>
         </div>
-        <h3 className="font-display mt-3 text-[1.625rem] leading-tight">
+        <h3 className="font-display mt-2 text-[1.625rem] leading-tight">
           <Link
             to={href}
             className="outline-none after:absolute after:inset-0 after:content-[''] focus-visible:underline"

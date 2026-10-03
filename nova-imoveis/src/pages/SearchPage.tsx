@@ -147,7 +147,7 @@ export function SearchPage({ purpose }: { purpose?: Purpose }) {
               onChange={(event) => setText(event.target.value)}
               placeholder="Busque por bairro, cidade, nome ou código (ex.: NV-1042)"
               autoComplete="off"
-              className="h-16 w-full rounded-[2px] border border-line bg-paper pl-14 pr-14 text-base text-ink shadow-panel outline-none transition-[border-color,box-shadow] placeholder:text-graphite-400 focus:border-ink focus:ring-1 focus:ring-ink [&::-webkit-search-cancel-button]:hidden"
+              className="h-16 w-full rounded-[2px] border border-line bg-paper pl-14 pr-14 text-base text-ink shadow-panel outline-none transition-[border-color,box-shadow] placeholder:text-graphite-500 focus:border-ink focus:ring-1 focus:ring-ink [&::-webkit-search-cancel-button]:hidden"
             />
             {text && (
               <button
@@ -183,7 +183,7 @@ export function SearchPage({ purpose }: { purpose?: Purpose }) {
         </aside>
 
         <div className="min-w-0">
-          <div className="sticky top-0 z-20 -mx-5 flex items-center justify-between gap-4 border-b border-line bg-paper/90 px-5 py-3 backdrop-blur-lg sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
+          <div className="sticky top-[var(--nav-offset,4.25rem)] z-20 -mx-5 flex items-center justify-between gap-4 border-b border-line bg-paper/90 px-5 py-3 backdrop-blur-lg transition-[top] duration-500 ease-out-expo sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
             <Button
               variant="outline"
               size="sm"
@@ -221,6 +221,7 @@ export function SearchPage({ purpose }: { purpose?: Purpose }) {
               : `${pluralize(total, 'imóvel', 'imóveis')} ${total === 1 ? 'encontrado' : 'encontrados'}`}
           </p>
 
+          <h2 className="sr-only">Resultados</h2>
           <div className="mt-6">
             <ActiveFilters query={query} onRemove={update} onClear={clearFilters} />
           </div>

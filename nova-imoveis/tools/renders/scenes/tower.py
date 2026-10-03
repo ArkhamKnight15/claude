@@ -55,9 +55,11 @@ def build(dusk=False):
         kit.tree(x, -8.5 + rnd.uniform(-0.5, 0.5), height=rnd.uniform(7, 9), crown=2.8, seed=110 + i)
     kit.shrub(9.5, -6.2, radius=1.2, height=1.0, seed=120)
     # Prédios vizinhos
-    environments.city(origin_z=0, y0=70, depth=900, width=1400, seed=5, lit=0.3 if dusk else 0.0,
-                      glow=3.0 if dusk else 0.0, count=200,
-                      haze=((0.32, 0.38, 0.5), 60, 700) if dusk else ((0.72, 0.78, 0.86), 60, 700))
+    environments.city(origin_z=0, y0=220, depth=1200, width=1800, seed=5, lit=0.3 if dusk else 0.0,
+                      glow=3.0 if dusk else 0.0, count=180,
+                      haze=((0.32, 0.38, 0.5), 0, 650) if dusk else ((0.72, 0.78, 0.86), 0, 650))
+    for i, x in enumerate((-60, -38, 46, 70, 95)):
+        kit.tree(x, 20 + (i % 2) * 18, height=11 + (i % 3), crown=4.2, seed=140 + i)
     if dusk:
         kit.sky(-1.5, 60, strength=1.4, sun_energy=0, air=1.0, dust=1.2, ozone=3.0)
     else:

@@ -78,7 +78,7 @@ export function ChoiceGrid({ label, choices, value, onChange, error, columns = '
               )}
             >
               {choice.sublabel && (
-                <span className={cn('eyebrow text-[0.5625rem]', checked ? 'text-white/60' : 'text-graphite-400')}>
+                <span className={cn('eyebrow text-[0.5625rem]', checked ? 'text-white/70' : 'text-graphite-500')}>
                   {choice.sublabel}
                 </span>
               )}

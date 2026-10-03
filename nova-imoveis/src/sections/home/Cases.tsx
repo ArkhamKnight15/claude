@@ -57,7 +57,7 @@ export function Cases() {
                 <div key={metric.label} className="grid grid-cols-[1fr_auto] items-baseline gap-4 py-4">
                   <dt className="text-[0.8125rem] text-white/55">{metric.label}</dt>
                   <dd className="flex items-baseline gap-3 text-sm tabular-nums">
-                    <span className="text-white/45 line-through decoration-white/30">{metric.before}</span>
+                    <span className="text-white/60 line-through decoration-white/40">{metric.before}</span>
                     <span aria-hidden="true" className="text-white/30">
                       →
                     </span>

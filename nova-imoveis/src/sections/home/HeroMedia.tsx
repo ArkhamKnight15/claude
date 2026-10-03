@@ -135,7 +135,7 @@ export function HeroMedia() {
           }}
           aria-pressed={paused}
           aria-label={paused ? 'Retomar movimento do fundo' : 'Pausar movimento do fundo'}
-          className="absolute bottom-5 right-5 z-20 hidden size-9 items-center justify-center rounded-full border border-white/25 text-white/80 backdrop-blur-sm transition-colors duration-300 hover:border-white/60 hover:text-white md:flex lg:bottom-auto lg:top-28 lg:right-8"
+          className="absolute right-5 top-24 z-20 hidden size-9 items-center justify-center rounded-full border border-white/25 text-white/80 backdrop-blur-sm transition-colors duration-300 hover:border-white/60 hover:text-white md:flex lg:right-8 lg:top-28"
         >
           {paused ? (
             <Play aria-hidden="true" className="size-3.5" strokeWidth={1.5} />

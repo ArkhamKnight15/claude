@@ -99,12 +99,7 @@ export function Footer() {
         </div>
 
         {/* Assinatura tipográfica */}
-        <p
-          aria-hidden="true"
-          className="font-display pointer-events-none mt-20 select-none whitespace-nowrap text-center text-[clamp(5rem,22vw,20rem)] leading-[0.8] tracking-[-0.04em] text-white/[0.04]"
-        >
-          NOVA
-        </p>
+        <Logo decorative className="mt-20 flex justify-center text-[clamp(4rem,18vw,16rem)] text-white/[0.05]" />
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 text-[0.8125rem] text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>

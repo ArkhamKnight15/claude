@@ -31,10 +31,10 @@ def build(night=False):
         location, size, rotation, size_y = portal_args
         portal = kit.area_light(location, size, 1.0, rotation=rotation, size_y=size_y)
         portal.data.cycles.is_portal = True
-    environments.city(origin_z=46, y0=40, seed=21, lit=0.45 if night else 0.2, glow=4.0 if night else 2.0,
+    environments.city(origin_z=46, y0=70, seed=21, lit=0.45 if night else 0.03, glow=4.0 if night else 1.5,
                       haze=((0.36, 0.38, 0.48), 120, 1500) if night else ((0.78, 0.66, 0.6), 120, 1500), count=520)
-    kit.turn_around(lambda: environments.city(origin_z=46, y0=60, seed=22, lit=0.45 if night else 0.2,
-                                              glow=4.0 if night else 2.0, count=300,
+    kit.turn_around(lambda: environments.city(origin_z=46, y0=90, seed=22, lit=0.45 if night else 0.03,
+                                              glow=4.0 if night else 1.5, count=300,
                                               haze=((0.36, 0.38, 0.48), 120, 1500) if night else ((0.78, 0.66, 0.6), 120, 1500)),
                     degrees=-90)
 
@@ -47,8 +47,7 @@ def build(night=False):
     kit.area_light((0.3, 1.65, 1.48), 2.6, 25, size_y=0.08, color=(1.0, 0.84, 0.64))
     kit.vase(0.3, 2.6, 0.92, height=0.24, radius=0.06)
     # Mesa redonda junto à janela
-    kit.coffee_table(2.3, 3.6, radius=0.5, height=0.74, mat=kit.mat_wood(name='stable', light=(0.5, 0.36, 0.22),
-                                                                          dark=(0.34, 0.22, 0.12)))
+    kit.round_table(2.3, 3.6, radius=0.5)
     chair = kit.mat_fabric((0.55, 0.5, 0.44), name='schair')
     for cx, cy in ((1.55, 3.4), (2.75, 4.15)):
         kit.soft_box(cx - 0.22, cy - 0.22, 0.44, cx + 0.22, cy + 0.22, 0.5, chair, 0.03)

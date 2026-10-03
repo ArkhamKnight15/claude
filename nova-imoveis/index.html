@@ -13,15 +13,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script>
-      // Pré-carrega a imagem do hero apenas na home, sem desperdiçar banda nas demais páginas.
+      // Pré-carrega a imagem do hero só na home (versão vertical no celular), sem desperdiçar banda nas demais páginas.
       if (location.pathname === '/') {
+        const mobile = matchMedia('(max-width: 767px)').matches
         const link = document.createElement('link')
         link.rel = 'preload'
         link.as = 'image'
         link.type = 'image/webp'
         link.fetchPriority = 'high'
-        link.imageSrcset =
-          '/images/hero/hero-960.webp 960w, /images/hero/hero-1920.webp 1920w, /images/hero/hero-2560.webp 2560w'
+        link.imageSrcset = mobile
+          ? '/images/hero/hero-mobile-720.webp 720w, /images/hero/hero-mobile-960.webp 960w'
+          : '/images/hero/hero-960.webp 960w, /images/hero/hero-1920.webp 1920w, /images/hero/hero-2560.webp 2560w'
         link.imageSizes = '100vw'
         document.head.appendChild(link)
       }

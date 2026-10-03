@@ -68,7 +68,7 @@ export function FeaturedProperties() {
             className="scrollbar-none -mx-5 mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:px-8 md:mx-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-16 md:overflow-visible md:px-0 lg:mt-20 xl:grid-cols-3"
           >
             {!data
-              ? Array.from({ length: 3 }, (_, index) => (
+              ? Array.from({ length: 6 }, (_, index) => (
                   <li key={index} className="w-[85%] shrink-0 snap-start md:w-auto">
                     <PropertyCardSkeleton />
                   </li>

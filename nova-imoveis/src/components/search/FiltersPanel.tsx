@@ -1,12 +1,12 @@
 import { useMemo, type ReactNode } from 'react'
 import { propertyTypeOptions } from '../../data/catalog'
 import { pluralize } from '../../lib/format'
-import { locationOptions } from '../../services/properties'
 import type { PropertyQuery, Purpose } from '../../types/property'
 import { ChipGroup } from '../ui/ChipGroup'
 import { SegmentedControl } from '../ui/SegmentedControl'
 import { Select } from '../ui/Select'
 import { NumberInput } from './NumberInput'
+import { useLocationOptions } from '../../hooks/useLocationOptions'
 
 interface FiltersPanelProps {
   query: PropertyQuery
@@ -33,6 +33,7 @@ function Group({ title, children }: { title: string; children: ReactNode }) {
 
 /** Todos os filtros da busca. Cada alteração atualiza a URL (compartilhável) e a lista. */
 export function FiltersPanel({ query, onChange, onPurposeChange }: FiltersPanelProps) {
+  const locationOptions = useLocationOptions()
   const locations = useMemo(
     () => [
       { value: '', label: 'Todas as regiões' },
@@ -43,7 +44,7 @@ export function FiltersPanel({ query, onChange, onPurposeChange }: FiltersPanelP
         group: option.city ? 'Bairros' : 'Cidades',
       })),
     ],
-    [],
+    [locationOptions],
   )
   const isRent = query.purpose === 'aluguel'
 

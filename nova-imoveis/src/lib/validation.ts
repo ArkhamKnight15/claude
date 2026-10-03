@@ -1,8 +1,6 @@
 import { isValidPhone } from './phone'
 
-export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-
-export type Validator<T> = (value: T) => string | undefined
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 export const validators = {
   name: (value: string) => {
@@ -22,18 +20,3 @@ export const validators = {
   required: (message: string) => (value: string) => (value.trim() ? undefined : message),
   maxLength: (max: number) => (value: string) => (value.length > max ? `Use no máximo ${max} caracteres.` : undefined),
 } as const
-
-export type FieldErrors<T> = Partial<Record<keyof T, string>>
-
-/** Valida um objeto com um mapa de validadores e devolve apenas os erros encontrados. */
-export function validate<T extends object>(
-  values: T,
-  rules: Partial<{ [K in keyof T]: Validator<T[K]> }>,
-): FieldErrors<T> {
-  const errors: FieldErrors<T> = {}
-  for (const key of Object.keys(rules) as (keyof T)[]) {
-    const error = rules[key]?.(values[key])
-    if (error) errors[key] = error
-  }
-  return errors
-}

@@ -6,7 +6,6 @@ import { useForm, type SubmitState } from '../../hooks/useForm'
 import { cn } from '../../lib/cn'
 import { buildSearchUrl } from '../../lib/filters'
 import { submitLead } from '../../services/inquiries'
-import { locationOptions } from '../../services/properties'
 import type { ContactPreference, InquiryResponse } from '../../types/inquiry'
 import type { PropertyType, Purpose } from '../../types/property'
 import { Button } from '../ui/Button'
@@ -17,6 +16,7 @@ import { Select } from '../ui/Select'
 import { ContactFields } from './ContactFields'
 import { CONSENT_LABEL, FormError, FormSuccess } from './FormFeedback'
 import { contactRules } from './rules'
+import { useLocationOptions } from '../../hooks/useLocationOptions'
 
 interface LeadValues {
   purpose: Purpose
@@ -62,6 +62,7 @@ const steps = ['O que você procura', 'Como falamos com você'] as const
 /** Briefing em duas etapas do CTA "Encontrar meu imóvel". */
 export function LeadForm({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate()
+  const locationOptions = useLocationOptions()
   const [step, setStep] = useState(0)
   const [state, setState] = useState<SubmitState<InquiryResponse>>({ status: 'idle' })
   const form = useForm(initialValues, rules)
@@ -76,7 +77,7 @@ export function LeadForm({ onClose }: { onClose: () => void }) {
         group: option.city ? 'Bairros' : 'Cidades',
       })),
     ],
-    [],
+    [locationOptions],
   )
 
   const budgets = [{ value: '', label: 'Prefiro conversar' }, ...priceRanges[values.purpose]]

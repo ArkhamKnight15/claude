@@ -1,14 +1,27 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useCallback, useMemo, useState, type ReactNode } from 'react'
 import { BrokerAvatar } from '../components/property/BrokerAvatar'
-import { LeadForm } from '../components/forms/LeadForm'
-import { MessageForm } from '../components/forms/MessageForm'
-import { VisitForm } from '../components/forms/VisitForm'
 import { Dialog } from '../components/ui/Dialog'
 import { ResponsiveImage } from '../components/ui/ResponsiveImage'
+import { Spinner } from '../components/ui/Spinner'
 import { formatPrice } from '../lib/format'
 import type { Broker } from '../types/content'
 import type { Property } from '../types/property'
 import { InquiryContext, type InquiryRequest } from './inquiry'
+
+// Os formulários só são baixados quando o usuário abre um diálogo.
+const LeadForm = lazy(() => import('../components/forms/LeadForm').then((module) => ({ default: module.LeadForm })))
+const VisitForm = lazy(() => import('../components/forms/VisitForm').then((module) => ({ default: module.VisitForm })))
+const MessageForm = lazy(() =>
+  import('../components/forms/MessageForm').then((module) => ({ default: module.MessageForm })),
+)
+
+function FormFallback() {
+  return (
+    <div role="status" className="flex items-center gap-3 py-16 text-sm text-graphite-500">
+      <Spinner /> Carregando formulário…
+    </div>
+  )
+}
 
 function PropertySummary({ property }: { property: Property }) {
   const cover = property.images[0]
@@ -103,7 +116,7 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
         description={description}
         size={request?.kind === 'visit' ? 'lg' : 'md'}
       >
-        {body}
+        <Suspense fallback={<FormFallback />}>{body}</Suspense>
       </Dialog>
     </InquiryContext.Provider>
   )

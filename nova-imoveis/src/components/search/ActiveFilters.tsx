@@ -1,8 +1,8 @@
 import { X } from 'lucide-react'
 import { propertyTypeLabels } from '../../data/catalog'
 import { formatCompactCurrency } from '../../lib/format'
-import { locationOptions } from '../../services/properties'
 import type { PropertyQuery } from '../../types/property'
+import { useLocationOptions } from '../../hooks/useLocationOptions'
 
 interface ActiveFiltersProps {
   query: PropertyQuery
@@ -12,6 +12,7 @@ interface ActiveFiltersProps {
 
 /** Chips removíveis com os filtros aplicados. */
 export function ActiveFilters({ query, onRemove, onClear }: ActiveFiltersProps) {
+  const locationOptions = useLocationOptions()
   const chips: { key: string; label: string; patch: Partial<PropertyQuery> }[] = []
   if (query.query) chips.push({ key: 'q', label: `“${query.query}”`, patch: { query: undefined } })
   if (query.location) {

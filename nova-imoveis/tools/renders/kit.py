@@ -49,7 +49,9 @@ def reset(seed=7):
     return sc
 
 
-SCALE = float(os.environ.get('NOVA_RENDER_SCALE', '0.75'))  # 2400 px x 0,75 = 1800 px (o site usa até 1600)
+SCALE = float(os.environ.get('NOVA_RENDER_SCALE', '0.6667'))  # 2400 px -> 1600 px, a maior largura usada no site
+SAMPLES_CAP = int(os.environ.get('NOVA_RENDER_SAMPLES', '48'))  # o denoiser (OIDN) cuida do ruído restante
+MAX_DIFFUSE_BOUNCES = int(os.environ.get('NOVA_RENDER_BOUNCES', '4'))
 
 
 def render(name, width, height, samples=128, exposure=0.0, look='AgX - Base Contrast', full_res=False):
@@ -60,7 +62,10 @@ def render(name, width, height, samples=128, exposure=0.0, look='AgX - Base Cont
         sc.render.resolution_percentage = max(10, int(100 * min(1.0, QUALITY * 2)))
     else:
         sc.render.resolution_percentage = 100 if full_res else int(100 * SCALE)
-    sc.cycles.samples = max(8, int(samples * QUALITY))
+    sc.cycles.samples = max(8, int(min(samples, SAMPLES_CAP) * QUALITY))
+    sc.cycles.diffuse_bounces = min(sc.cycles.diffuse_bounces, MAX_DIFFUSE_BOUNCES)
+    sc.cycles.glossy_bounces = min(sc.cycles.glossy_bounces, 3)
+    sc.cycles.adaptive_threshold = max(sc.cycles.adaptive_threshold, 0.03)
     sc.view_settings.exposure = exposure
     sc.view_settings.look = look
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -377,32 +382,6 @@ def mat_fabric(color, rough=0.95, name=None, scale=180):
     bsdf.inputs['Sheen Weight'].default_value = 0.6
     bsdf.inputs['Sheen Roughness'].default_value = 0.5
     _bump(nt, bsdf, noise.outputs['Fac'], strength=0.25, distance=0.003)
-    _cache[key] = mat
-    return mat
-
-
-def mat_glass(tint=(0.92, 0.95, 0.95), rough=0.0, name=None):
-    """Vidro arquitetônico: reflete e refrata, mas deixa a luz direta passar (sem cáusticas)."""
-    key = name or f'glass{tint}{rough}'
-    if key in _cache:
-        return _cache[key]
-    mat = bpy.data.materials.new(key)
-    mat.use_nodes = True
-    nt = mat.node_tree
-    nt.nodes.clear()
-    out = nt.nodes.new('ShaderNodeOutputMaterial')
-    glass = nt.nodes.new('ShaderNodeBsdfGlass')
-    glass.inputs['Color'].default_value = (*tint, 1)
-    glass.inputs['Roughness'].default_value = rough
-    glass.inputs['IOR'].default_value = 1.5
-    transparent = nt.nodes.new('ShaderNodeBsdfTransparent')
-    transparent.inputs['Color'].default_value = (*tint, 1)
-    path = nt.nodes.new('ShaderNodeLightPath')
-    mix = nt.nodes.new('ShaderNodeMixShader')
-    nt.links.new(path.outputs['Is Shadow Ray'], mix.inputs['Fac'])
-    nt.links.new(glass.outputs['BSDF'], mix.inputs[1])
-    nt.links.new(transparent.outputs['BSDF'], mix.inputs[2])
-    nt.links.new(mix.outputs['Shader'], out.inputs['Surface'])
     _cache[key] = mat
     return mat
 
@@ -788,17 +767,6 @@ def turn_around(build_fn, degrees=180):
         rotate(obj, degrees, pivot=(0, 0, obj.location.z))
 
 
-def join(objects, name='Group'):
-    bpy.ops.object.select_all(action='DESELECT')
-    for obj in objects:
-        obj.select_set(True)
-    bpy.context.view_layer.objects.active = objects[0]
-    bpy.ops.object.join()
-    obj = bpy.context.active_object
-    obj.name = name
-    return obj
-
-
 def slats(x0, y0, x1, y1, z0, z1, count, mat, depth=0.06, axis='X', name='Slats'):
     """Brise de ripas verticais distribuídas entre dois pontos."""
     objs = []
@@ -1146,6 +1114,15 @@ def coffee_table(x, y, floor=0.0, radius=0.55, height=0.34, mat=None, round_=Tru
         box(x - length / 2, y - depth / 2, floor + height - 0.06, x + length / 2, y + depth / 2, floor + height, mat, bevel=0.008)
         box(x - length / 2 + 0.1, y - depth / 2 + 0.1, floor, x + length / 2 - 0.1, y + depth / 2 - 0.1, floor + height - 0.06,
             mat, bevel=0.008)
+
+
+def round_table(x, y, floor=0.0, radius=0.5, height=0.74, top=None, base=None):
+    """Mesa redonda de pedestal (jantar compacto)."""
+    top = top or mat_wood(name='roundtop', light=(0.5, 0.36, 0.22), dark=(0.34, 0.22, 0.12))
+    base = base or mat_simple((0.06, 0.06, 0.06), rough=0.4, metal=0.5, name='tablebase')
+    cylinder(x, y, floor + height - 0.035, floor + height, radius, top, bevel=0.006, name='TableTop')
+    cylinder(x, y, floor + 0.02, floor + height - 0.035, 0.045, base, vertices=24, name='TableLeg')
+    cylinder(x, y, floor, floor + 0.025, 0.24, base, bevel=0.004, name='TableBase')
 
 
 def rug(x0, y0, x1, y1, floor=0.0, color=(0.72, 0.67, 0.6)):

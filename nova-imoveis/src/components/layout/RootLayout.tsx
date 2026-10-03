@@ -1,5 +1,6 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
+import { scrollToSection } from '../../lib/scroll'
 import { FavoritesProvider } from '../../state/FavoritesProvider'
 import { InquiryProvider } from '../../state/InquiryProvider'
 import { ToastProvider } from '../../state/ToastProvider'
@@ -13,7 +14,30 @@ function pageKey(pathname: string) {
 }
 
 export function RootLayout() {
-  const { pathname } = useLocation()
+  const { pathname, hash, key } = useLocation()
+  const mainRef = useRef<HTMLElement>(null)
+  const firstRender = useRef(true)
+
+  // Em navegações internas, leva o foco ao conteúdo (leitores de tela anunciam a nova página).
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+    if (!hash) mainRef.current?.focus({ preventScroll: true })
+  }, [pathname, hash])
+
+  // Ao chegar por âncora (ex.: /#sobre vindo de outra página), corrige a rolagem depois que
+  // conteúdos assíncronos acima da seção terminarem de carregar e mudarem a altura da página.
+  useEffect(() => {
+    if (!hash) return
+    const timer = window.setTimeout(() => {
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)))
+      if (target && Math.abs(target.getBoundingClientRect().top) > 120) scrollToSection(target.id)
+    }, 700)
+    return () => window.clearTimeout(timer)
+  }, [pathname, hash])
+
   return (
     <FavoritesProvider>
       <ToastProvider>
@@ -25,9 +49,9 @@ export function RootLayout() {
             Pular para o conteúdo
           </a>
           <Navbar />
-          <main id="conteudo" tabIndex={-1} className="outline-none">
-            {/* A chave reinicia a animação de entrada a cada troca de página. */}
-            <div key={pageKey(pathname)} className="animate-page-in">
+          <main ref={mainRef} id="conteudo" tabIndex={-1} className="outline-none">
+            {/* A chave reinicia a animação de entrada a cada troca de página (não no primeiro carregamento). */}
+            <div key={pageKey(pathname)} className={key === 'default' ? undefined : 'animate-page-in'}>
               <Suspense fallback={<PageFallback />}>
                 <Outlet />
               </Suspense>

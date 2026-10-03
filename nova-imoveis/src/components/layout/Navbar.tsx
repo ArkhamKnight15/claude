@@ -1,5 +1,5 @@
 import { Heart, Menu } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { mainNavigation } from '../../data/navigation'
 import { useHideOnScroll } from '../../hooks/useHideOnScroll'
@@ -26,13 +26,19 @@ export function Navbar() {
   const { openLead } = useInquiry()
   const [menuOpen, setMenuOpen] = useState(false)
   const transparent = pathname === '/' && !scrolled
+  const offscreen = hidden && !menuOpen
+
+  // Expõe a altura visível da navbar para elementos fixos/sticky da página (ex.: barra de filtros).
+  useEffect(() => {
+    document.documentElement.style.setProperty('--nav-offset', offscreen ? '0px' : transparent ? '6rem' : '4.25rem')
+  }, [offscreen, transparent])
 
   return (
     <>
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-40 transition-transform duration-500 ease-out-expo focus-within:translate-y-0',
-          hidden && !menuOpen && '-translate-y-full',
+          offscreen && '-translate-y-full',
         )}
       >
         {/* Gradiente para legibilidade sobre o vídeo */}

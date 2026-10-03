@@ -5,11 +5,11 @@ import { priceRanges, propertyTypeOptions } from '../../data/catalog'
 import { cn } from '../../lib/cn'
 import { buildSearchUrl } from '../../lib/filters'
 import { pluralize } from '../../lib/format'
-import { locationOptions } from '../../services/properties'
 import type { PropertyType, Purpose } from '../../types/property'
 import { Button } from '../ui/Button'
 import { SegmentedControl } from '../ui/SegmentedControl'
 import { Select } from '../ui/Select'
+import { useLocationOptions } from '../../hooks/useLocationOptions'
 
 const bedroomOptions = [
   { value: '', label: 'Qualquer' },
@@ -25,6 +25,7 @@ const bedroomOptions = [
  */
 export function HeroSearch({ className }: { className?: string }) {
   const navigate = useNavigate()
+  const locationOptions = useLocationOptions()
   const [purpose, setPurpose] = useState<Purpose>('venda')
   const [location, setLocation] = useState('')
   const [type, setType] = useState('')
@@ -41,7 +42,7 @@ export function HeroSearch({ className }: { className?: string }) {
         group: option.city ? 'Bairros' : 'Cidades',
       })),
     ],
-    [],
+    [locationOptions],
   )
   const types = [{ value: '', label: 'Todos os tipos' }, ...propertyTypeOptions]
   const prices = [{ value: '', label: 'Qualquer valor' }, ...priceRanges[purpose]]

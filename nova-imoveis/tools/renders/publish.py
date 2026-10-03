@@ -35,7 +35,7 @@ PROPERTIES = {
 SECTIONS = {
     'sections/about': ('tower-dusk', LANDSCAPE, None),
     'sections/about-detail': ('house-detail', (600, 1200), None),
-    'sections/cta': ('penthouse-sea-deck', (900, 1800), None),
+    'sections/cta': ('penthouse-sea-deck', LANDSCAPE, None),
     'sections/why-curadoria': ('house-pool', LANDSCAPE, None),
     'sections/why-atendimento': ('dining-oak', LANDSCAPE, None),
     'sections/why-especialistas': ('tower-day', LANDSCAPE, None),
@@ -48,9 +48,15 @@ SECTIONS = {
     'cases/staging-before': ('house-before', LANDSCAPE, None),
     'cases/staging-after': ('house-golden', LANDSCAPE, None),
     'hero/hero': ('house-dusk', (960, 1920, 2560), None),
-    # Recorte vertical (2:3) para celulares, centrado na casa
-    'hero/hero-mobile': ('house-dusk', (720, 960), '960x1440+1180+0'),
+    # Recorte vertical (2:3) para celulares, centrado no interior iluminado
+    'hero/hero-mobile': ('house-dusk', (720, 960), '960x1440+700+0'),
 }
+
+
+# Céus e degradês escuros do hero pedem mais qualidade e um grão fino de filme para não
+# formar faixas (banding) na compressão.
+QUALITY = {'hero/hero': 90, 'hero/hero-mobile': 90}
+GRAIN = {'hero/hero': 0.3, 'hero/hero-mobile': 0.3}
 
 
 def convert(render, dest, widths, crop=None):
@@ -65,7 +71,12 @@ def convert(render, dest, widths, crop=None):
         if crop:
             # O recorte é definido sobre a imagem normalizada para 2560 px de largura.
             command += ['-resize', '2560x', '-crop', crop, '+repage']
-        command += ['-resize', f'{width}x', '-strip', '-quality', '78', '-define', 'webp:method=6', target]
+        quality = str(QUALITY.get(dest, 80))
+        command += ['-resize', f'{width}x']
+        if dest in GRAIN:
+            command += ['-attenuate', str(GRAIN[dest]), '+noise', 'Gaussian']
+        command += ['-strip', '-quality', quality, '-define', 'webp:method=6',
+                    '-define', 'webp:use-sharp-yuv=true', target]
         subprocess.run(command, check=True)
     print(f'  {render} -> {dest}')
 

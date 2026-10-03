@@ -79,13 +79,3 @@ export const priceRanges: Record<Purpose, PriceRange[]> = {
     { value: 'acima-20mil', label: 'Acima de R$ 20 mil', min: 20_000 },
   ],
 }
-
-/** Valores sugeridos para os campos de preço mínimo e máximo da busca completa. */
-export const priceSteps: Record<Purpose, number[]> = {
-  venda: [1_000_000, 2_000_000, 3_000_000, 5_000_000, 7_500_000, 10_000_000, 15_000_000],
-  aluguel: [5_000, 8_000, 12_000, 15_000, 20_000, 30_000, 40_000],
-}
-
-export const countOptions = [1, 2, 3, 4] as const
-
-export const areaSteps = [60, 100, 150, 200, 300, 400, 600] as const

@@ -58,9 +58,9 @@ function KeyFacts({ property }: { property: Property }) {
     ...(property.lotArea ? [{ label: 'Terreno', value: formatArea(property.lotArea) }] : []),
   ]
   return (
-    <dl className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 xl:grid-cols-6">
+    <dl className="grid grid-cols-2 border-l border-t border-line sm:grid-cols-3 xl:grid-cols-6">
       {facts.map((fact) => (
-        <div key={fact.label} className="bg-paper px-5 py-5">
+        <div key={fact.label} className="border-b border-r border-line px-5 py-5">
           <dt className="eyebrow text-[0.5625rem] text-graphite-500">{fact.label}</dt>
           <dd className="font-display mt-2.5 text-xl text-ink">{fact.value}</dd>
         </div>
@@ -264,7 +264,7 @@ function PropertyDetails({ property }: { property: Property }) {
                 <MapPin aria-hidden="true" className="size-4" strokeWidth={1.5} />
                 {property.location.neighborhood}, {property.location.city} – {property.location.state}
               </span>
-              <span aria-hidden="true" className="h-3 w-px bg-graphite-200" />
+              <span aria-hidden="true" className="hidden h-3 w-px bg-graphite-200 sm:block" />
               <span>Cód. {property.id}</span>
             </p>
           </div>
@@ -432,29 +432,32 @@ function PropertyDetails({ property }: { property: Property }) {
 
       {/* Barra fixa de ação no celular e tablet */}
       {createPortal(
-        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg lg:hidden">
+        <aside
+          aria-label="Ações rápidas do imóvel"
+          className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg lg:hidden"
+        >
           <div className="mx-auto flex max-w-xl items-center gap-3">
             <div className="min-w-0 flex-1">
-              <p className="truncate font-display text-xl leading-tight text-ink">
+              <p className="eyebrow text-[0.5625rem] text-graphite-500">{purpose.noun}</p>
+              <p className="font-display mt-1 whitespace-nowrap text-lg leading-tight text-ink">
                 {formatPrice(property.price, property.purpose)}
               </p>
-              <p className="truncate text-[0.75rem] text-graphite-500">{property.title}</p>
             </div>
             {broker && (
               <button
                 type="button"
                 onClick={() => openMessage(broker, property)}
                 aria-label="Falar com o corretor"
-                className="flex size-12 shrink-0 items-center justify-center rounded-full border border-line text-ink"
+                className="flex size-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink"
               >
                 <MessageCircle aria-hidden="true" className="size-5" strokeWidth={1.5} />
               </button>
             )}
-            <Button variant="solid" onClick={() => openVisit(property)}>
+            <Button variant="solid" size="sm" className="h-11 px-5" onClick={() => openVisit(property)}>
               Agendar visita
             </Button>
           </div>
-        </div>,
+        </aside>,
         document.body,
       )}
     </>

@@ -4,19 +4,22 @@ interface LogoProps {
   className?: string
   /** Mostra "Imóveis" ao lado do monograma. */
   withTagline?: boolean
+  /** Uso puramente gráfico (ex.: assinatura no rodapé): oculto para leitores de tela. */
+  decorative?: boolean
 }
 
 /**
  * Logotipo NOVA: letras de traço fino, com o "A" sem travessão (Λ) espelhando o "V"
  * como um telhado — vale e cumeeira, a casa e o horizonte.
  */
-export function Logo({ className, withTagline }: LogoProps) {
+export function Logo({ className, withTagline, decorative }: LogoProps) {
   return (
     <span className={cn('inline-flex items-center gap-3', className)}>
       <svg
         viewBox="0 0 100 24"
-        role="img"
-        aria-label="NOVA Imóveis"
+        role={decorative ? undefined : 'img'}
+        aria-label={decorative ? undefined : 'NOVA Imóveis'}
+        aria-hidden={decorative || undefined}
         className="h-[1.05em] w-auto overflow-visible"
         fill="none"
         stroke="currentColor"
@@ -27,7 +30,7 @@ export function Logo({ className, withTagline }: LogoProps) {
         <path d="M2 22V2l15.5 20V2" />
         <circle cx="36" cy="12" r="10" />
         <path d="M54 2l9 20 9-20" />
-        <path d="M80 22l9-20 9 20" className="text-gold-400" stroke="currentColor" />
+        <path d="M80 22l9-20 9 20" className={decorative ? undefined : 'text-gold-400'} stroke="currentColor" />
       </svg>
       {withTagline && (
         <span

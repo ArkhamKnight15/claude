@@ -36,7 +36,7 @@ export function FormSuccess({ title, protocol, children, actions }: FormSuccessP
       </span>
       <h3 className="font-display mt-6 text-3xl">{title}</h3>
       <div className="mx-auto mt-4 max-w-sm text-[0.9375rem] leading-relaxed text-graphite-500">{children}</div>
-      <p className="eyebrow mt-6 text-[0.625rem] text-graphite-400">
+      <p className="eyebrow mt-6 text-[0.625rem] text-graphite-500">
         Protocolo <span className="ml-1 tabular-nums text-graphite-700">{protocol}</span>
       </p>
       <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">{actions}</div>

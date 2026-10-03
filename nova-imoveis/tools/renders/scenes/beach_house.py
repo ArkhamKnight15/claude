@@ -20,7 +20,11 @@ def build():
 
     # Terreno de areia/restinga e deck
     box(-400, -32, -0.6, 400, 400, 0, sand, bevel=0)
-    box(-3, -9, -0.05, 25, 0.2, 0.04, deck, bevel=0.003)
+    # Deck com recorte para a piscina (x 1.8..18.2, y -7.7..-3.3)
+    box(-3, -3.3, -0.05, 25, 0.2, 0.04, deck, bevel=0.003)
+    box(-3, -9, -0.05, 25, -7.7, 0.04, deck, bevel=0.003)
+    box(-3, -7.7, -0.05, 1.8, -3.3, 0.04, deck, bevel=0.003)
+    box(18.2, -7.7, -0.05, 25, -3.3, 0.04, deck, bevel=0.003)
     # Piscina no pátio
     box(2, -7.5, -1.0, 18, -3.5, -0.98, tile, bevel=0)
     for x0, y0, x1, y1 in ((2, -7.5, 18, -7.48), (2, -3.52, 18, -3.5), (2, -7.5, 2.02, -3.5), (17.98, -7.5, 18, -3.5)):
@@ -70,9 +74,9 @@ def main(shots=None):
     build()
     if 'front' in shots:
         kit.sky(18, 230, strength=0.24, sun_energy=4.2, sun_color=(1.0, 0.8, 0.6))
-        kit.camera((26.0, -17.0, 1.6), target=(8, 2, 1.6), lens=24, shift_y=0.1)
+        kit.camera((25.0, -8.8, 1.5), target=(9, 3, 1.5), lens=22, shift_y=0.1)
         kit.render('beach-front', 2400, 1600, samples=128, exposure=0.0)
     if 'pool' in shots:
         kit.sky(10, 200, strength=0.26, sun_energy=3.6, sun_color=(1.0, 0.7, 0.45), dust=1.4)
-        kit.camera((19.5, -1.4, 1.1), target=(4.0, -12.0, 0.8), lens=22, shift_y=-0.02)
+        kit.camera((21.6, -2.9, 1.15), target=(2.0, -9.5, 0.8), lens=22, shift_y=-0.02)
         kit.render('beach-pool', 2400, 1600, samples=128, exposure=0.0)
