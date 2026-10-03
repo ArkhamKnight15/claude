@@ -81,10 +81,34 @@ def build(raw=False):
             kit.vase(0.16, 1.4, z + 0.04, height=0.22, radius=0.07)
             kit.vase(0.16, 3.2, z + 0.04, height=0.16, radius=0.08, shape='round')
             kit.books(0.05, 4.0, z + 0.04, length=0.5, depth=0.22, rotation=90, seed=int(z * 10))
+        # Frente de aço escurecido, cooktop, cuba e torneira
+        box(0, 0.6, 0.94, 0.015, 5.4, 1.42, steel, bevel=0)
+        box(0.1, 1.4, 0.94, 0.55, 2.1, 0.944, kit.mat_simple((0.02, 0.02, 0.02), rough=0.1, name='cooktop'), bevel=0)
+        box(0.12, 3.6, 0.94, 0.52, 4.3, 0.943, kit.mat_simple((0.12, 0.12, 0.12), rough=0.3, metal=0.8, name='sink'),
+            bevel=0)
+        kit.cylinder(0.07, 3.95, 0.94, 1.26, 0.014, steel)
+        kit.beam((0.07, 3.95, 1.25), (0.3, 3.95, 1.25), 0.024, 0.024, steel)
+        # Coluna de marcenaria com forno embutido
+        cabinet = kit.mat_wood(name='loftcabinet', light=(0.46, 0.31, 0.18), dark=(0.3, 0.19, 0.1))
+        box(0, 5.4, 0, 0.65, 7.0, 2.6, cabinet, bevel=0.004)
+        box(0.65, 6.198, 0.05, 0.66, 6.202, 2.55, kit.mat_simple((0.02, 0.02, 0.02), name='gap'), bevel=0)
+        box(0.65, 5.55, 0.95, 0.67, 6.1, 1.5, black, bevel=0.002)
+        # Ilha com tampo em cascata e banquetas
         box(1.9, 1.8, 0, 2.8, 4.2, 0.9, black, bevel=0.004)
         box(1.85, 1.75, 0.9, 2.85, 4.25, 0.95, counter, bevel=0.004)
+        box(1.85, 1.75, 0, 2.85, 1.8, 0.9, counter, bevel=0.002)
+        box(1.85, 4.2, 0, 2.85, 4.25, 0.9, counter, bevel=0.002)
+        seat = kit.mat_simple((0.3, 0.16, 0.08), rough=0.45, name='stoolleather', coat=0.2)
+        for sy in (2.3, 3.0, 3.7):
+            kit.cylinder(3.2, sy, 0, 0.64, 0.018, steel, vertices=8)
+            kit.cylinder(3.2, sy, 0.0, 0.02, 0.19, steel)
+            kit.cylinder(3.2, sy, 0.64, 0.72, 0.19, seat, bevel=0.02)
+        kit.vase(2.3, 2.1, 0.95, height=0.34, radius=0.07)
+        box(2.1, 3.3, 0.95, 2.55, 3.65, 0.99, kit.mat_wood(name='board', light=(0.6, 0.45, 0.3), dark=(0.45, 0.3, 0.18)))
         for py in (2.3, 3.0, 3.7):
             kit.pendant(2.35, py, M, drop=0.9, radius=0.14, shape='dome')
+        # Embutidos sob o mezanino
+        kit.area_light((1.6, 3.4, M - 0.02), 2.4, 70, size_y=4.4, color=(1.0, 0.86, 0.68))
 
         # Estar
         kit.rug(5.0, 2.4, 9.4, 6.6, color=(0.62, 0.55, 0.48))
@@ -94,6 +118,12 @@ def build(raw=False):
                          mat=kit.mat_wood(name='ctable', light=(0.4, 0.26, 0.14), dark=(0.24, 0.14, 0.07)))
         kit.lounge_chair(5.6, 3.4, rotation=90, leather=kit.mat_fabric((0.7, 0.66, 0.6), name='armfab'))
         kit.floor_lamp(9.3, 7.2, glow=4)
+        # Tela grande acima do sofá (parede x = W)
+        art = kit.mat_art([(0.2, 0.18, 0.16), (0.86, 0.83, 0.77), (0.66, 0.42, 0.26), (0.9, 0.88, 0.83)],
+                          'loftart2', seed=7.0)
+        box(W - 0.035, 3.3, 1.55, W, 5.3, 3.05, art, bevel=0.003, name='Art')
+        box(W - 0.03, 3.275, 1.525, W, 5.325, 3.075, kit.mat_simple((0.08, 0.07, 0.06), rough=0.5, name='frame'),
+            bevel=0.002, name='Frame')
         kit.potted_plant(5.2, 7.3, height=2.4, seed=8)
         kit.artwork(5.6, 8.6, 0.0, 1.6, 3.6, [(0.86, 0.84, 0.8), (0.18, 0.17, 0.16), (0.62, 0.36, 0.2), (0.8, 0.77, 0.7)],
                     'loftart', toward=1, seed=4.0)
@@ -131,7 +161,7 @@ def main(shots=None):
             kit.camera((7.6, 1.6, 1.4), rotation=(102, 0, 52), lens=20)
             kit.render('loft-mezzanine', 2400, 1600, samples=128, exposure=1.1)
         if 'kitchen' in finished:
-            kit.camera((6.6, 6.6, 1.45), target=(0.4, 2.0, 1.45), lens=22, shift_y=0.06)
+            kit.camera((5.0, 6.6, 1.35), target=(0.8, 3.1, 1.15), lens=24, shift_y=0.04)
             kit.render('loft-kitchen', 2400, 1600, samples=128, exposure=1.2)
         if 'living' in finished:
             kit.camera((4.9, 1.0, 1.25), target=(9.2, 6.6, 1.1), lens=24, shift_y=0.1)
