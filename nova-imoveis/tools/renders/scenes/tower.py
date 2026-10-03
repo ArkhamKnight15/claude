@@ -55,9 +55,10 @@ def build(dusk=False):
         kit.tree(x, -8.5 + rnd.uniform(-0.5, 0.5), height=rnd.uniform(7, 9), crown=2.8, seed=110 + i)
     kit.shrub(9.5, -6.2, radius=1.2, height=1.0, seed=120)
     # Prédios vizinhos
-    environments.city(origin_z=0, y0=220, depth=1200, width=1800, seed=5, lit=0.3 if dusk else 0.0,
-                      glow=3.0 if dusk else 0.0, count=180,
-                      haze=((0.32, 0.38, 0.5), 0, 650) if dusk else ((0.72, 0.78, 0.86), 0, 650))
+    environments.city(origin_z=0, y0=220, depth=1200, width=1800, seed=5, lit=0.16 if dusk else 0.0,
+                      glow=1.0 if dusk else 0.0, count=180, tone=0.4 if dusk else 1.0,
+                      glass_roughness=0.4 if dusk else 0.06,
+                      haze=((0.018, 0.024, 0.042), 0, 1100) if dusk else ((0.72, 0.78, 0.86), 0, 650))
     for i, x in enumerate((-60, -38, 46, 70, 95)):
         kit.tree(x, 20 + (i % 2) * 18, height=11 + (i % 3), crown=4.2, seed=140 + i)
     if dusk:
@@ -75,5 +76,5 @@ def main(shots=None):
         kit.render('tower-day', 2400, 1600, samples=128, exposure=0.0)
     if 'dusk' in shots:
         build(dusk=True)
-        kit.camera((40.0, -62.0, 1.7), target=(12, 4, 1.7), lens=30, shift_y=0.42)
+        kit.camera((62.0, -100.0, 1.7), target=(11, 9, 1.7), lens=24, shift_y=0.27)
         kit.render('tower-dusk', 2400, 1600, samples=128, exposure=0.6)

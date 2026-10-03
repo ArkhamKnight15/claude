@@ -23,22 +23,26 @@ def garden(y0, width=40, x_center=6):
 
 
 def city(origin_z=0.0, y0=60, depth=1400, width=2400, seed=1, density=0.22, haze=((0.62, 0.66, 0.72), 120, 1500),
-         lit=0.25, glow=3.0, count=420):
+         lit=0.25, glow=3.0, count=420, tone=1.0, glass_roughness=0.06):
     """Skyline procedural. `origin_z` é a altura do observador (andar do apartamento)."""
     rnd = random.Random(seed)
     ground = kit.mat_hazy((0.32, 0.31, 0.29), haze, name=f'cityground{seed}')
     box(-width, y0 - 40, -origin_z - 1, width, y0 + depth + 400, -origin_z, ground, bevel=0)
     walls = ((0.46, 0.44, 0.41), (0.3, 0.29, 0.27), (0.56, 0.53, 0.48), (0.2, 0.2, 0.21), (0.42, 0.36, 0.3))
     glass = ((0.05, 0.07, 0.09), (0.04, 0.05, 0.05), (0.08, 0.09, 0.1))
+    walls = tuple(tuple(c * tone for c in w) for w in walls)
     bases = [kit.mat_windows_grid(wall=w, glass=glass[i % len(glass)], density=lit, strength=glow, haze=haze,
                                   bay=2.6 + (i % 3) * 0.9, win_w=0.82 + (i % 2) * 0.1, win_h=0.72 + (i % 3) * 0.08,
-                                  name=f'facade{seed}{i}') for i, w in enumerate(walls)]
+                                  glass_roughness=glass_roughness, name=f'facade{seed}{i}') for i, w in enumerate(walls)]
     for _ in range(count):
         y = y0 + rnd.random() ** 0.8 * depth
         x = rnd.uniform(-width / 2, width / 2) * (0.3 + 0.7 * (y - y0) / depth)
         w = rnd.uniform(14, 34)
         d = rnd.uniform(14, 30)
         h = rnd.choice((rnd.uniform(12, 40), rnd.uniform(30, 90), rnd.uniform(60, 140)))
+        if origin_z:
+            # Perto do observador os prédios ficam abaixo da linha de visão (vista de andar alto).
+            h = min(h, origin_z + 10 + 0.07 * abs(y - y0))
         z0 = -origin_z
         box(x - w / 2, y, z0, x + w / 2, y + d, z0 + h, rnd.choice(bases), bevel=0, name='Building')
 

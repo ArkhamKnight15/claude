@@ -18,8 +18,11 @@ def build():
     glass = kit.mat_window_glass(name='beachglass', reflect=0.1)
     tile = kit.mat_simple((0.5, 0.72, 0.72), rough=0.2, name='beachtile')
 
-    # Terreno de areia/restinga e deck
-    box(-400, -32, -0.6, 400, 400, 0, sand, bevel=0)
+    # Terreno de areia com recorte para a piscina (x 1.8..18.2, y -7.7..-3.3)
+    box(-400, -3.3, -0.6, 400, 400, 0, sand, bevel=0)
+    box(-400, -32, -0.6, 400, -7.7, 0, sand, bevel=0)
+    box(-400, -7.7, -0.6, 1.8, -3.3, 0, sand, bevel=0)
+    box(18.2, -7.7, -0.6, 400, -3.3, 0, sand, bevel=0)
     # Deck com recorte para a piscina (x 1.8..18.2, y -7.7..-3.3)
     box(-3, -3.3, -0.05, 25, 0.2, 0.04, deck, bevel=0.003)
     box(-3, -9, -0.05, 25, -7.7, 0.04, deck, bevel=0.003)

@@ -50,7 +50,7 @@ def reset(seed=7):
 
 
 SCALE = float(os.environ.get('NOVA_RENDER_SCALE', '0.6667'))  # 2400 px -> 1600 px, a maior largura usada no site
-SAMPLES_CAP = int(os.environ.get('NOVA_RENDER_SAMPLES', '48'))  # o denoiser (OIDN) cuida do ruído restante
+SAMPLES_CAP = int(os.environ.get('NOVA_RENDER_SAMPLES', '32'))  # o denoiser (OIDN) cuida do ruído restante
 MAX_DIFFUSE_BOUNCES = int(os.environ.get('NOVA_RENDER_BOUNCES', '4'))
 
 
@@ -572,7 +572,8 @@ def mat_art(colors, name, scale=1.4, seed=0.0):
 
 
 def mat_windows_grid(wall=(0.56, 0.54, 0.5), glass=(0.035, 0.04, 0.05), lit=(1.0, 0.74, 0.48), density=0.0,
-                     strength=3.0, bay=2.8, floor=3.2, win_w=0.72, win_h=0.62, haze=None, name=None):
+                     strength=3.0, bay=2.8, floor=3.2, win_w=0.72, win_h=0.62, haze=None, name=None,
+                     glass_roughness=0.06):
     """Fachada de edifício: janelas em grade (por andar e por vão) com fração acesa ao entardecer."""
     key = name or f'wgrid{wall}{density}{strength}{haze}{bay}'
     if key in _cache:
@@ -616,7 +617,7 @@ def mat_windows_grid(wall=(0.56, 0.54, 0.5), glass=(0.035, 0.04, 0.05), lit=(1.0
     nt.links.new(mix_color.outputs['Result'], bsdf.inputs['Base Color'])
     rough = nt.nodes.new('ShaderNodeMapRange')
     rough.inputs['To Min'].default_value = 0.75
-    rough.inputs['To Max'].default_value = 0.06
+    rough.inputs['To Max'].default_value = glass_roughness
     nt.links.new(window, rough.inputs['Value'])
     nt.links.new(rough.outputs['Result'], bsdf.inputs['Roughness'])
     bsdf.inputs['Emission Color'].default_value = (*lit, 1)

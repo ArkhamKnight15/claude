@@ -420,7 +420,7 @@ export const properties: Property[] = [
       'Studio integrado com sofá, mesa de jantar e janela de canto para a cidade',
       'Cozinha compacta com marcenaria clara e bancada em pedra',
       'Quarto com cama de casal e vista para os prédios do Itaim',
-      'Vista noturna do skyline a partir da janela do studio',
+      'Vista do skyline no fim de tarde a partir da janela do studio',
     ]),
     brokerId: 'lucas-almeida',
     publishedAt: '2026-09-27',
@@ -599,7 +599,7 @@ export const properties: Property[] = [
       { label: 'Aeroporto Afonso Pena', distance: '30 min de carro' },
     ],
     images: gallery('cobertura-batel-curitiba', [
-      'Terraço da Cobertura Batel com piscina e vista para a cidade ao entardecer',
+      'Terraço da Cobertura Batel com piscina e vista para o skyline no fim de tarde',
       'Living com sofá, poltronas e janelas amplas',
       'Deck do terraço com espreguiçadeiras',
       'Suíte com cama baixa e cabeceira em madeira',

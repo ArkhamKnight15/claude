@@ -1,4 +1,4 @@
-"""Terraço de cobertura com piscina de borda infinita. Vista para o mar (pôr do sol) ou para a cidade (entardecer)."""
+"""Terraço de cobertura com piscina de borda infinita, com vista para o mar ou para o skyline da cidade."""
 
 import bpy
 
@@ -63,9 +63,9 @@ def build(view='sea'):
         kit.turn_around(lambda: environments.seafront(origin_z=42, shore_y=90))
         kit.sky(14, 235, strength=0.2, sun_energy=4.0, sun_color=(1.0, 0.78, 0.58), dust=0.5, air=1.0, ozone=2.6)
     else:
-        environments.city(origin_z=72, y0=-60, depth=-1600, width=2600, seed=11, lit=0.35, glow=4.0,
-                          haze=((0.34, 0.38, 0.5), 150, 1700), count=520)
-        kit.sky(-1.0, 200, strength=1.2, sun_energy=0, air=1.0, dust=1.4, ozone=3.0)
+        environments.city(origin_z=72, y0=-260, depth=-2200, width=3200, seed=11, lit=0.0, glow=0.0,
+                          haze=((0.76, 0.74, 0.74), 0, 1600), count=600)
+        kit.sky(9, 250, strength=0.24, sun_energy=3.8, sun_color=(1.0, 0.74, 0.5), dust=1.0, ozone=2.4)
     bpy.context.scene.cycles.diffuse_bounces = 4
 
 
@@ -83,7 +83,7 @@ def main(shots=None):
         build('city')
         if 'city-terrace' in shots:
             kit.camera((4.2, -1.6, 1.05), target=(-8.0, -6.8, 1.05), lens=22, shift_y=-0.06)
-            kit.render('penthouse-city-terrace', 2400, 1600, samples=128, exposure=0.6)
+            kit.render('penthouse-city-terrace', 2400, 1600, samples=128, exposure=0.0)
         if 'city-deck' in shots:
             kit.camera((-2.5, 2.5, 1.2), target=(6.0, -7.0, 0.8), lens=26, dof_target=(4.6, -4.4, 0.3), fstop=8)
-            kit.render('penthouse-city-deck', 2400, 1600, samples=128, exposure=0.6)
+            kit.render('penthouse-city-deck', 2400, 1600, samples=128, exposure=0.0)
