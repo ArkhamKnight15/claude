@@ -69,8 +69,17 @@ def bedroom(palette='oak', view='garden'):
     kit.soft_box(1.85, 1.75, 0.0, 3.35, 2.2, 0.45, bench, 0.03)
     kit.lounge_chair(4.7, 1.0, rotation=135, leather=kit.mat_fabric((0.82, 0.8, 0.76), name='bchair'))
     kit.potted_plant(5.5, 4.9, height=1.7, seed=12)
+    # Cômoda baixa e tela na parede oposta à janela (x = 0)
+    box(0, 1.5, 0, 0.45, 3.1, 0.72, side, bevel=0.006)
+    kit.vase(0.22, 1.75, 0.72, height=0.32, radius=0.07)
+    kit.books(0.06, 2.55, 0.72, length=0.3, depth=0.22, rotation=90, seed=14)
+    art = kit.mat_art([(0.3, 0.27, 0.24), (0.86, 0.83, 0.78), p['throw'], (0.9, 0.88, 0.84)], 'bart', seed=3.0)
+    box(0, 1.6, 1.15, 0.035, 3.0, 2.25, art, bevel=0.003, name='Art')
+    box(0, 1.575, 1.125, 0.03, 3.025, 2.275, kit.mat_simple((0.08, 0.07, 0.06), rough=0.5, name='frame'), bevel=0.002,
+        name='Frame')
     kit.sky(24, 270, strength=0.3, sun_energy=4.5, sun_color=(1.0, 0.86, 0.7))
-    kit.area_light((W / 2, D / 2, H - 0.05), 3, 60, size_y=3, color=(1.0, 0.88, 0.76))
+    fill = kit.area_light((W / 2, D / 2, H - 0.05), 3, 60, size_y=3, color=(1.0, 0.88, 0.76))
+    fill.visible_glossy = False  # sem o retângulo refletido no vidro
     bpy.context.scene.cycles.diffuse_bounces = 6
 
 
@@ -130,7 +139,7 @@ def bathroom(palette='travertine'):
 
 CAMERAS = {
     'bedroom': dict(location=(0.45, 0.4, 1.3), target=(4.4, 4.3, 1.0), lens=22, shift_y=0.02),
-    'bedroom-alt': dict(location=(5.5, 0.5, 1.3), target=(1.6, 4.5, 1.0), lens=22, shift_y=0.02),
+    'bedroom-alt': dict(location=(5.6, 1.9, 1.35), target=(1.4, 4.4, 0.95), lens=22, shift_y=0.02),
     'bath': dict(location=(4.3, 0.3, 1.35), target=(1.8, 3.4, 1.0), lens=22, shift_y=0.02),
     'bath-alt': dict(location=(0.7, 0.35, 1.35), target=(3.2, 3.6, 1.0), lens=22, shift_y=0.02),
 }
