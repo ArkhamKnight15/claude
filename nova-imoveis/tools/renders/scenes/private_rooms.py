@@ -140,7 +140,6 @@ def bathroom(palette='travertine'):
 CAMERAS = {
     'bedroom': dict(location=(0.45, 0.4, 1.3), target=(4.4, 4.3, 1.0), lens=22, shift_y=0.02),
     'bedroom-alt': dict(location=(5.6, 1.9, 1.35), target=(1.4, 4.4, 0.95), lens=22, shift_y=0.02),
-    'bedroom-view': dict(location=(1.25, 4.4, 1.3), target=(6.0, 2.2, 1.05), lens=22, shift_y=0.02),
     'bath': dict(location=(4.3, 0.3, 1.35), target=(1.8, 3.4, 1.0), lens=22, shift_y=0.02),
     'bath-alt': dict(location=(0.7, 0.35, 1.35), target=(3.2, 3.6, 1.0), lens=22, shift_y=0.02),
 }
@@ -151,7 +150,7 @@ SHOTS = {
     'bedroom-walnut': ('bedroom', dict(palette='walnut', view='city'), 'bedroom'),
     'bedroom-walnut-alt': ('bedroom', dict(palette='walnut', view='city'), 'bedroom-alt'),
     'bedroom-ash': ('bedroom', dict(palette='ash', view='sea'), 'bedroom'),
-    'bedroom-mare': ('bedroom', dict(palette='oak', view='sea'), 'bedroom-view'),
+    'bedroom-mare': ('bedroom', dict(palette='oak', view='sea'), 'bedroom-alt'),
     'bedroom-serra': ('bedroom', dict(palette='ash', view='garden'), 'bedroom-alt'),
     'bath-travertine': ('bathroom', dict(palette='travertine'), 'bath'),
     'bath-marble': ('bathroom', dict(palette='marble'), 'bath'),
