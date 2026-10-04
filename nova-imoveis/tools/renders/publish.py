@@ -21,15 +21,14 @@ PROPERTIES = {
                                                'bedroom-oak'],
     'apartamento-lumiere-vila-nova-conceicao': ['tower-day', 'living-walnut', 'kitchen-walnut', 'dining-walnut',
                                                 'bedroom-walnut'],
-    'cobertura-atlantica-leblon': ['penthouse-sea-terrace', 'living-sea', 'penthouse-sea-deck', 'bedroom-ash',
-                                   'bath-marble'],
+    'cobertura-atlantica-leblon': ['penthouse-sea-terrace', 'living-sea', 'penthouse-sea-deck', 'bedroom-ash'],
     'loft-galeria-vila-madalena': ['loft-wide', 'loft-mezzanine', 'loft-kitchen', 'loft-living'],
-    'casa-ipe-tambore': ['ipe-front', 'ipe-pool', 'living-ash', 'kitchen-ash', 'bath-travertine'],
+    'casa-ipe-tambore': ['ipe-front', 'ipe-pool', 'living-ash', 'kitchen-ash'],
     'studio-itaim-bibi': ['studio-living', 'studio-kitchen', 'studio-bed', 'studio-view'],
     'casa-mare-jurere-internacional': ['beach-front', 'beach-pool', 'dining-sea', 'bedroom-mare'],
-    'apartamento-europa-jardim-europa': ['living-city', 'dining-ash-city', 'kitchen-walnut-alt', 'bath-marble-alt'],
+    'apartamento-europa-jardim-europa': ['living-city', 'dining-ash-city', 'kitchen-walnut-alt'],
     'cobertura-batel-curitiba': ['penthouse-city-terrace', 'living-oak-city', 'penthouse-city-deck', 'bedroom-walnut-alt'],
-    'residencial-serra-lourdes': ['tower-dusk', 'living-oak-alt', 'kitchen-oak-alt', 'bedroom-serra'],
+    'residencial-serra-lourdes': ['tower-dusk', 'living-oak-alt', 'kitchen-oak-alt'],
 }
 
 SECTIONS = {
