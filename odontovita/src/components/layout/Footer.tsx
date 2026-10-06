@@ -10,7 +10,7 @@ const CURRENT_YEAR = new Date().getFullYear()
 const linkClasses = 'text-[0.9375rem] text-navy-200 transition-colors duration-200 hover:text-white'
 
 function FooterHeading({ children }: { children: string }) {
-  return <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-300">{children}</h2>
+  return <h2 className="font-mono text-xs font-medium tracking-[0.12em] text-accent-300 uppercase">{children}</h2>
 }
 
 export function Footer() {

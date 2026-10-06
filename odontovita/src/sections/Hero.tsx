@@ -31,7 +31,7 @@ export function Hero() {
       <Container className="grid items-center gap-20 lg:grid-cols-12 lg:gap-12">
         <div className="scroll-exit lg:col-span-6">
           <p className="enter inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-navy-800 shadow-soft ring-1 ring-navy-950/5">
-            <span className="rounded-full bg-navy-950 px-2.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.1em] whitespace-nowrap text-white uppercase">
+            <span className="rounded-full bg-navy-950 px-2.5 py-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.06em] whitespace-nowrap text-white uppercase">
               Jardins · SP
             </span>
             <span className="whitespace-nowrap">

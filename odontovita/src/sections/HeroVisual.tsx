@@ -43,7 +43,7 @@ export function HeroVisual() {
             aria-hidden="true"
             className="animate-scan pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-transparent via-accent-300/20 to-transparent"
           />
-          <span className="absolute top-3 right-3 rounded-full bg-navy-950/60 px-2.5 py-1 text-[0.6875rem] font-semibold tracking-[0.14em] text-accent-200 uppercase ring-1 ring-white/10 ring-inset backdrop-blur sm:top-4 sm:right-4">
+          <span className="absolute top-3 right-3 rounded-full bg-navy-950/60 px-2.5 py-1 font-mono text-[0.6875rem] font-medium tracking-[0.06em] text-accent-200 uppercase ring-1 ring-white/10 ring-inset backdrop-blur sm:top-4 sm:right-4">
             DSD · 3D
           </span>
         </div>
@@ -59,7 +59,7 @@ export function HeroVisual() {
           <dl className="mt-4 grid grid-cols-3 gap-2">
             {metrics.map((metric) => (
               <div key={metric.label}>
-                <dt className="text-[0.6875rem] font-medium tracking-[0.12em] text-navy-300 uppercase">{metric.label}</dt>
+                <dt className="font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase text-navy-300">{metric.label}</dt>
                 <dd className="mt-1 font-serif text-2xl leading-none text-white sm:text-[1.75rem]">{metric.value}</dd>
               </div>
             ))}
@@ -75,7 +75,7 @@ export function HeroVisual() {
           <CalendarCheck2 aria-hidden="true" className="size-5" />
         </span>
         <div>
-          <p className="text-[0.6875rem] font-semibold tracking-[0.12em] text-muted uppercase">Próximo horário</p>
+          <p className="font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase text-muted">Próximo horário</p>
           <p className="text-sm font-semibold text-navy-950">Amanhã, às 9h30</p>
         </div>
       </div>

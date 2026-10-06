@@ -52,7 +52,7 @@ function DifferentialCard({ item }: { item: Differential }) {
       <p className="mt-3 leading-relaxed text-navy-200">{item.description}</p>
       {item.detail && (
         <p className="mt-auto pt-7">
-          <span className="inline-flex rounded-full bg-white/[0.06] px-3 py-1 text-xs font-semibold text-accent-200 ring-1 ring-white/10 ring-inset">
+          <span className="inline-flex rounded-full bg-white/[0.06] px-3 py-1 font-mono text-[0.6875rem] text-accent-200 ring-1 ring-white/10 ring-inset">
             {item.detail}
           </span>
         </p>

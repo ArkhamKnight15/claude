@@ -63,7 +63,7 @@ export function About() {
 
           <Reveal delay={160}>
             <figure className="mt-9 border-l-2 border-accent-300 pl-6">
-              <blockquote className="font-serif text-[1.625rem] leading-snug text-navy-950">
+              <blockquote className="font-editorial text-[1.75rem] leading-snug font-medium text-navy-950 italic">
                 <p>“Tratar um sorriso é cuidar de uma pessoa por inteiro: da saúde à autoestima.”</p>
               </blockquote>
               <figcaption className="mt-3 text-sm text-muted">

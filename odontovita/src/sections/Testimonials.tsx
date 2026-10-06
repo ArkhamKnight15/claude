@@ -37,7 +37,9 @@ function TestimonialCard({ testimonial, index, featured = false }: TestimonialCa
         className={cn(
           'relative mt-6',
           featured && 'mb-8',
-          featured ? 'font-serif text-[1.625rem] leading-snug text-white sm:text-[1.875rem]' : 'text-[1.0625rem] leading-relaxed text-navy-900',
+          featured
+            ? 'font-editorial text-[1.75rem] leading-snug font-medium text-white italic sm:text-[2rem]'
+            : 'font-editorial text-[1.375rem] leading-snug font-medium text-navy-900',
         )}
       >
         <p>“{testimonial.quote}”</p>

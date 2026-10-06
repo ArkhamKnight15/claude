@@ -151,7 +151,7 @@ export function BookingForm({
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-3">
               <dt className="text-muted">{label}</dt>
-              <dd className="text-right font-semibold text-navy-950">{value}</dd>
+              <dd className={cn('text-right font-semibold text-navy-950', label === 'Protocolo' && 'font-mono font-medium')}>{value}</dd>
             </div>
           ))}
         </dl>

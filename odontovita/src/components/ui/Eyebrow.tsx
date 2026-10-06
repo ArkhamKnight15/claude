@@ -11,7 +11,7 @@ export function Eyebrow({ children, tone = 'dark', className }: EyebrowProps) {
   return (
     <p
       className={cn(
-        'inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]',
+        'inline-flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.12em]',
         tone === 'dark' ? 'text-accent-700' : 'text-accent-300',
         className,
       )}

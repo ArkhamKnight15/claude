@@ -59,10 +59,10 @@ function CompareSlider({ item }: { item: ResultCase }) {
         />
       </div>
 
-      <span className="pointer-events-none absolute top-4 left-4 rounded-full bg-navy-950/70 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-white uppercase ring-1 ring-white/15 backdrop-blur sm:top-5 sm:left-5">
+      <span className="pointer-events-none absolute top-4 left-4 rounded-full bg-navy-950/70 px-3 py-1 font-mono text-xs font-medium tracking-[0.08em] text-white uppercase ring-1 ring-white/15 backdrop-blur sm:top-5 sm:left-5">
         Antes
       </span>
-      <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-navy-950 uppercase backdrop-blur sm:top-5 sm:right-5">
+      <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 font-mono text-xs font-medium tracking-[0.08em] text-navy-950 uppercase backdrop-blur sm:top-5 sm:right-5">
         Depois
       </span>
 
@@ -189,7 +189,7 @@ export function Results() {
               <dl className="mt-8 grid grid-cols-3 divide-x divide-line rounded-2xl bg-ivory ring-1 ring-line ring-inset">
                 {active.facts.map((fact) => (
                   <div key={fact.label} className="px-4 py-4 sm:px-5">
-                    <dt className="text-xs font-medium tracking-[0.08em] text-muted uppercase">{fact.label}</dt>
+                    <dt className="font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase text-muted">{fact.label}</dt>
                     <dd className="mt-1.5 text-[0.9375rem] font-semibold text-navy-950">{fact.value}</dd>
                   </div>
                 ))}

@@ -323,8 +323,9 @@ export function SmileIllustration({
                     textAnchor="middle"
                     fill="#c2def5"
                     stroke="none"
-                    fontSize={9}
-                    fontWeight={600}
+                    fontSize={8.5}
+                    fontWeight={500}
+                    fontFamily="DM Mono, ui-monospace, monospace"
                     opacity={0.8}
                   >
                     {label}

@@ -18,7 +18,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
         fallback={<PortraitPlaceholder name={member.name} index={index} className={zoomOnHover} />}
       />
       <div className="mt-6">
-        <p className="text-xs font-semibold tracking-[0.16em] text-accent-700 uppercase">{member.role}</p>
+        <p className="font-mono text-xs font-medium tracking-[0.08em] text-accent-700 uppercase">{member.role}</p>
         <h3 className="mt-2 text-xl font-semibold tracking-[-0.01em]">{member.name}</h3>
         <p className="mt-1 text-[0.9375rem] font-medium text-navy-700">{member.specialty}</p>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-body">{member.bio}</p>
@@ -26,7 +26,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
           {member.credentials.map((credential) => (
             <li
               key={credential}
-              className="rounded-full bg-ivory px-3 py-1 text-xs font-medium text-navy-700 ring-1 ring-line ring-inset"
+              className="rounded-full bg-ivory px-3 py-1 font-mono text-[0.6875rem] text-navy-700 ring-1 ring-line ring-inset"
             >
               {credential}
             </li>

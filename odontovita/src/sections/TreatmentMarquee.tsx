@@ -13,8 +13,8 @@ export function TreatmentMarquee() {
               <span key={treatment.id} className="flex items-center">
                 <span
                   className={cn(
-                    'px-5 font-serif text-[2.25rem] leading-none tracking-[-0.015em] whitespace-nowrap sm:px-8 sm:text-5xl lg:text-6xl',
-                    index % 2 === 0 ? 'text-navy-950' : 'text-accent-600 italic',
+                    'px-5 text-[2.25rem] leading-none tracking-[-0.015em] whitespace-nowrap sm:px-8 sm:text-5xl lg:text-6xl',
+                    index % 2 === 0 ? 'font-serif text-navy-950' : 'font-editorial font-medium text-accent-600 italic',
                   )}
                 >
                   {treatment.title}

@@ -53,7 +53,7 @@ export function FinalCta() {
 
               <div className="mt-10 grid gap-x-6 gap-y-7 border-t border-white/10 pt-8 sm:grid-cols-2">
                 <a href={clinic.phone.href} className="group">
-                  <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-accent-300 uppercase">
+                  <p className="flex items-center gap-2 font-mono text-xs font-medium tracking-[0.08em] text-accent-300 uppercase">
                     <Phone aria-hidden="true" className="size-3.5" />
                     Telefone
                   </p>
@@ -62,7 +62,7 @@ export function FinalCta() {
                   </p>
                 </a>
                 <a href={address.mapsHref} target="_blank" rel="noopener noreferrer" className="group">
-                  <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-accent-300 uppercase">
+                  <p className="flex items-center gap-2 font-mono text-xs font-medium tracking-[0.08em] text-accent-300 uppercase">
                     <MapPin aria-hidden="true" className="size-3.5" />
                     Endereço
                   </p>
@@ -73,7 +73,7 @@ export function FinalCta() {
                   </p>
                 </a>
                 <div className="sm:col-span-2">
-                  <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-accent-300 uppercase">
+                  <p className="flex items-center gap-2 font-mono text-xs font-medium tracking-[0.08em] text-accent-300 uppercase">
                     <Clock aria-hidden="true" className="size-3.5" />
                     Horário de atendimento
                   </p>

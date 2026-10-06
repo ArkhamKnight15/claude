@@ -19,7 +19,7 @@ function TreatmentCard({ treatment, index }: { treatment: Treatment; index: numb
         <span className="flex size-14 items-center justify-center rounded-2xl bg-white text-navy-800 ring-1 ring-line transition-colors duration-500 ring-inset group-hover:bg-navy-950 group-hover:text-accent-200 group-hover:ring-navy-950">
           <Icon aria-hidden="true" className="size-6" strokeWidth={1.6} />
         </span>
-        <span aria-hidden="true" className="font-serif text-lg text-navy-500 transition-colors duration-500 group-hover:text-accent-700">
+        <span aria-hidden="true" className="font-mono text-sm text-navy-500 transition-colors duration-500 group-hover:text-accent-700">
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
@@ -31,7 +31,7 @@ function TreatmentCard({ treatment, index }: { treatment: Treatment; index: numb
         {treatment.highlights.map((highlight) => (
           <li
             key={highlight}
-            className="rounded-full bg-white px-3 py-1 text-xs font-medium text-navy-700 ring-1 ring-line ring-inset"
+            className="rounded-full bg-white px-3 py-1 font-mono text-[0.6875rem] text-navy-700 ring-1 ring-line ring-inset"
           >
             {highlight}
           </li>

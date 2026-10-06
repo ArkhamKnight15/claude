@@ -2,10 +2,18 @@
 @import '@fontsource/instrument-serif/400.css';
 @import '@fontsource/instrument-serif/400-italic.css';
 @import '@fontsource-variable/manrope/wght.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/500-italic.css';
+@import '@fontsource/dm-mono/400.css';
+@import '@fontsource/dm-mono/500.css';
 
 @theme {
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  /* Serifa editorial: citações, depoimentos e destaques em itálico */
+  --font-editorial: 'Cormorant Garamond', ui-serif, Georgia, serif;
+  /* Monoespaçada: etiquetas, dados técnicos e números de referência */
+  --font-mono: 'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   /* Azul-marinho: base institucional, texto e superfícies escuras */
   --color-navy-50: #f2f5f9;
