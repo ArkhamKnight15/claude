@@ -325,7 +325,7 @@ export function SmileIllustration({
                     stroke="none"
                     fontSize={8.5}
                     fontWeight={500}
-                    fontFamily="DM Mono, ui-monospace, monospace"
+                    fontFamily="IBM Plex Mono, ui-monospace, monospace"
                     opacity={0.8}
                   >
                     {label}

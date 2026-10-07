@@ -28,12 +28,12 @@ export function Logo({ tone = 'dark', className }: LogoProps) {
       <LogoMark tone={tone} />
       <span
         className={cn(
-          'flex items-baseline text-[1.3125rem] leading-none tracking-[-0.03em]',
+          'flex items-baseline font-display text-[1.375rem] leading-none tracking-[-0.04em]',
           tone === 'dark' ? 'text-navy-950' : 'text-white',
         )}
       >
         <span className="font-semibold">Odonto</span>
-        <span className="ml-px font-serif text-[1.5rem] italic tracking-[-0.01em]">Vita</span>
+        <span className={cn('font-normal', tone === 'dark' ? 'text-accent-600' : 'text-accent-300')}>Vita</span>
       </span>
     </span>
   )

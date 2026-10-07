@@ -22,7 +22,7 @@ export function PortraitPlaceholder({ name, index = 0, className }: PortraitPlac
     >
       <div className="absolute inset-x-[18%] top-[16%] bottom-0 rounded-t-full border border-navy-950/[0.07] bg-white/45" />
       <div className="absolute inset-x-[26%] top-[24%] bottom-0 rounded-t-full border border-navy-950/[0.05]" />
-      <span className="absolute inset-0 flex items-center justify-center pt-[12%] font-serif text-[clamp(3.5rem,9vw,5.5rem)] leading-none text-navy-800/80">
+      <span className="absolute inset-0 flex items-center justify-center pt-[12%] font-display text-[clamp(3rem,7vw,4.5rem)] leading-none font-medium tracking-[-0.05em] text-navy-800/80">
         {getInitials(name)}
       </span>
     </div>

@@ -33,7 +33,7 @@ export function About() {
           </div>
 
           <div className="grain parallax absolute -right-3 -bottom-10 w-48 [--parallax:-28px] rounded-[1.5rem] bg-navy-950 p-5 text-white shadow-elevated sm:-right-8 sm:w-64 sm:p-7">
-            <p className="font-serif text-5xl leading-none tracking-[-0.02em] sm:text-6xl">{clinic.foundedYear}</p>
+            <p className="font-display text-[2.75rem] leading-none font-medium tracking-[-0.05em] sm:text-[3.5rem]">{clinic.foundedYear}</p>
             <p className="mt-3 text-[0.8125rem] leading-relaxed text-navy-200 sm:text-sm">
               Mais de uma década transformando sorrisos nos Jardins, em São Paulo.
             </p>
@@ -63,7 +63,7 @@ export function About() {
 
           <Reveal delay={160}>
             <figure className="mt-9 border-l-2 border-accent-300 pl-6">
-              <blockquote className="font-editorial text-[1.75rem] leading-snug font-medium text-navy-950 italic">
+              <blockquote className="font-serif text-[1.375rem] leading-[1.5] text-navy-950">
                 <p>“Tratar um sorriso é cuidar de uma pessoa por inteiro: da saúde à autoestima.”</p>
               </blockquote>
               <figcaption className="mt-3 text-sm text-muted">
@@ -76,7 +76,7 @@ export function About() {
             <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-8 sm:grid-cols-4">
               {milestones.map((milestone) => (
                 <li key={milestone.year}>
-                  <p className="font-serif text-[1.75rem] leading-none text-navy-950">{milestone.year}</p>
+                  <p className="font-display text-[1.5rem] leading-none font-medium tracking-[-0.04em] text-navy-950">{milestone.year}</p>
                   <p className="mt-2 text-sm leading-snug text-muted">{milestone.text}</p>
                 </li>
               ))}

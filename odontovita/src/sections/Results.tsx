@@ -184,7 +184,7 @@ export function Results() {
           <Reveal delay={120} className="lg:col-span-5">
             <div key={active.id} className="enter">
               <p className="text-sm font-semibold text-accent-700">{active.patient}</p>
-              <h3 className="mt-2 font-serif text-[2rem] leading-tight sm:text-[2.25rem]">{active.title}</h3>
+              <h3 className="mt-2 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.035em] sm:text-[2rem]">{active.title}</h3>
               <p className="mt-4 text-[1.0625rem] leading-relaxed text-body">{active.summary}</p>
               <dl className="mt-8 grid grid-cols-3 divide-x divide-line rounded-2xl bg-ivory ring-1 ring-line ring-inset">
                 {active.facts.map((fact) => (

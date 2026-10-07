@@ -44,7 +44,7 @@ export function Hero() {
             id="inicio-titulo"
             trigger="load"
             delay={120}
-            className="mt-7 font-serif text-[3.1rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.5rem] lg:text-[4.25rem] xl:text-[5.5rem]"
+            className="mt-7 font-display text-[2.6rem] leading-[1.04] font-medium tracking-[-0.045em] sm:text-[3.75rem] lg:text-[3.5rem] xl:text-[4.25rem]"
           >
             Seu sorriso merece um cuidado <em className="text-accent-600">extraordinário.</em>
           </RevealText>

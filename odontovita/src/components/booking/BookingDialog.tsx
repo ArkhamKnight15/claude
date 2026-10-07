@@ -80,7 +80,7 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
         >
           <div aria-hidden="true" className="absolute -top-24 -right-24 size-64 rounded-full bg-accent-500/25 blur-3xl" />
           <Logo tone="light" />
-          <p className="mt-10 font-serif text-[1.75rem] leading-[1.1] text-white">
+          <p className="mt-10 font-display text-[1.5rem] leading-[1.2] font-medium tracking-[-0.03em] text-white">
             Seu novo sorriso começa com uma conversa.
           </p>
           <ol className="mt-8 space-y-5">
@@ -115,7 +115,7 @@ export function BookingDialog({ open, onClose, children }: BookingDialogProps) {
           <div aria-hidden="true" className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-navy-950/15 md:hidden" />
           <header className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-6 pt-4 pb-5 sm:px-8 md:pt-7">
             <div>
-              <h2 id={titleId} className="font-serif text-[2rem] leading-tight">
+              <h2 id={titleId} className="font-display text-[1.625rem] leading-tight font-semibold tracking-[-0.03em]">
                 Agendar consulta
               </h2>
               <p id={descriptionId} className="mt-1 text-sm text-muted">

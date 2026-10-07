@@ -16,7 +16,8 @@ interface SectionHeaderProps {
   children?: ReactNode
 }
 
-export const headingClasses = 'font-serif text-[2.5rem] leading-[1.04] tracking-[-0.015em] sm:text-5xl lg:text-[3.5rem]'
+export const headingClasses =
+  'font-display text-[2.125rem] leading-[1.1] font-medium tracking-[-0.035em] sm:text-[2.75rem] lg:text-[3.25rem]'
 
 export function SectionHeader({
   id,

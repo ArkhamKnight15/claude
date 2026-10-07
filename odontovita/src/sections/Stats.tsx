@@ -16,7 +16,7 @@ function StatItem({ stat }: { stat: Stat }) {
 
   return (
     <div ref={ref} className="bg-white px-5 py-7 sm:px-8 sm:py-9">
-      <p className="font-serif text-[2.75rem] leading-none tracking-[-0.02em] text-navy-950 tabular-nums sm:text-[3.5rem]">
+      <p className="font-display text-[2.5rem] leading-none font-medium tracking-[-0.045em] text-navy-950 tabular-nums sm:text-[3.25rem]">
         <span aria-hidden="true">{format(current)}</span>
         <span className="sr-only">{format(stat.value)}</span>
       </p>

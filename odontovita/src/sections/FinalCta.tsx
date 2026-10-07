@@ -91,7 +91,7 @@ export function FinalCta() {
 
             <Reveal delay={120} className="lg:col-span-7">
               <div className="rounded-[1.5rem] bg-white p-6 shadow-elevated sm:p-8 lg:p-10">
-                <h3 className="font-serif text-[1.875rem] leading-tight">Solicite seu horário</h3>
+                <h3 className="font-display text-[1.5rem] leading-tight font-semibold tracking-[-0.03em]">Solicite seu horário</h3>
                 <p className="mt-1 text-sm text-muted">Leva menos de um minuto. Retornamos em até {clinic.responseTime}.</p>
                 <BookingForm className="mt-7" />
               </div>

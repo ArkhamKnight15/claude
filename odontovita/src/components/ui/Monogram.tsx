@@ -20,7 +20,7 @@ export function Monogram({ name, index = 0, className }: MonogramProps) {
     <span
       aria-hidden="true"
       className={cn(
-        'inline-flex shrink-0 items-center justify-center rounded-full font-serif text-lg leading-none',
+        'inline-flex shrink-0 items-center justify-center rounded-full font-display text-[0.9375rem] leading-none font-semibold tracking-[-0.02em]',
         tones[index % tones.length],
         className,
       )}

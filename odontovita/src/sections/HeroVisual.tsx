@@ -60,7 +60,7 @@ export function HeroVisual() {
             {metrics.map((metric) => (
               <div key={metric.label}>
                 <dt className="font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase text-navy-300">{metric.label}</dt>
-                <dd className="mt-1 font-serif text-2xl leading-none text-white sm:text-[1.75rem]">{metric.value}</dd>
+                <dd className="mt-1.5 font-display text-xl leading-none font-medium tracking-[-0.03em] text-white sm:text-2xl">{metric.value}</dd>
               </div>
             ))}
           </dl>
@@ -83,7 +83,7 @@ export function HeroVisual() {
       <div className="animate-float-delayed tilt-depth absolute -right-2 -bottom-16 flex sm:-bottom-10 items-center gap-3.5 rounded-2xl bg-white/95 py-3 pr-5 pl-3 shadow-card ring-1 ring-navy-950/5 backdrop-blur sm:-right-8">
         <div className="flex -space-x-2.5">
           {['Camila Andrade', 'Ricardo Menezes', 'Juliana Prado'].map((name, index) => (
-            <Monogram key={name} name={name} index={index} className="size-9 text-sm ring-2 ring-white" />
+            <Monogram key={name} name={name} index={index} className="size-9 text-[0.6875rem] ring-2 ring-white" />
           ))}
         </div>
         <div>

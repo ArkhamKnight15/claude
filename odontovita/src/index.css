@@ -1,19 +1,19 @@
 @import 'tailwindcss';
-@import '@fontsource/instrument-serif/400.css';
-@import '@fontsource/instrument-serif/400-italic.css';
-@import '@fontsource-variable/manrope/wght.css';
-@import '@fontsource/cormorant-garamond/500.css';
-@import '@fontsource/cormorant-garamond/500-italic.css';
-@import '@fontsource/dm-mono/400.css';
-@import '@fontsource/dm-mono/500.css';
+@import '@fontsource-variable/instrument-sans/wght.css';
+@import '@fontsource-variable/inter/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
 
 @theme {
-  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
-  /* Serifa editorial: citações, depoimentos e destaques em itálico */
-  --font-editorial: 'Cormorant Garamond', ui-serif, Georgia, serif;
-  /* Monoespaçada: etiquetas, dados técnicos e números de referência */
-  --font-mono: 'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  /* Texto e interface */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Títulos e números de destaque */
+  --font-display: 'Instrument Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  /* Citações e depoimentos (sempre em estilo reto) */
+  --font-serif: 'Source Serif 4 Variable', ui-serif, Georgia, 'Times New Roman', serif;
+  /* Etiquetas, dados técnicos e números de referência */
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   /* Azul-marinho: base institucional, texto e superfícies escuras */
   --color-navy-50: #f2f5f9;
@@ -135,6 +135,11 @@
 
   p {
     text-wrap: pretty;
+  }
+
+  /* Destaques nos títulos usam só a cor, sem itálico */
+  :is(h1, h2, h3) em {
+    font-style: normal;
   }
 
   ::selection {

@@ -61,7 +61,7 @@ export function MobileMenu({ open, onClose, activeId }: MobileMenuProps) {
                   href={`#${item.id}`}
                   onClick={onClose}
                   aria-current={activeId === item.id ? 'location' : undefined}
-                  className="group flex items-center justify-between border-b border-line py-4 font-serif text-[2rem] leading-none text-navy-950"
+                  className="group flex items-center justify-between border-b border-line py-4 font-display text-[1.75rem] leading-none font-medium tracking-[-0.035em] text-navy-950"
                 >
                   <span className="flex items-center gap-3">
                     {item.label}

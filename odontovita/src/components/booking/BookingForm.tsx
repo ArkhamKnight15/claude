@@ -135,7 +135,7 @@ export function BookingForm({
           <circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" strokeWidth="2" />
           <path d="m16 27 7 7 13-15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        <h3 ref={successHeadingRef} tabIndex={-1} className="mt-6 font-serif text-[2rem] leading-tight focus:outline-none">
+        <h3 ref={successHeadingRef} tabIndex={-1} className="mt-6 font-display text-[1.75rem] leading-tight font-semibold tracking-[-0.03em] focus:outline-none">
           Solicitação enviada!
         </h3>
         <p className="mt-3 max-w-sm text-[0.9375rem] leading-relaxed text-body">

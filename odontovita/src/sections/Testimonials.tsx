@@ -38,8 +38,8 @@ function TestimonialCard({ testimonial, index, featured = false }: TestimonialCa
           'relative mt-6',
           featured && 'mb-8',
           featured
-            ? 'font-editorial text-[1.75rem] leading-snug font-medium text-white italic sm:text-[2rem]'
-            : 'font-editorial text-[1.375rem] leading-snug font-medium text-navy-900',
+            ? 'font-serif text-[1.375rem] leading-[1.5] text-white sm:text-[1.5rem]'
+            : 'font-serif text-[1.125rem] leading-[1.6] text-navy-900',
         )}
       >
         <p>“{testimonial.quote}”</p>
@@ -77,7 +77,7 @@ export function Testimonials() {
           />
           <Reveal delay={120} className="shrink-0">
             <div className="inline-flex items-center gap-5 rounded-[1.25rem] bg-white py-4 pr-6 pl-5 shadow-soft ring-1 ring-line ring-inset">
-              <p className="font-serif text-5xl leading-none text-navy-950">{clinic.rating.score.toLocaleString('pt-BR')}</p>
+              <p className="font-display text-[2.75rem] leading-none font-medium tracking-[-0.04em] text-navy-950">{clinic.rating.score.toLocaleString('pt-BR')}</p>
               <div>
                 <StarRating rating={clinic.rating.score} className="text-accent-500" />
                 <p className="mt-1.5 text-sm text-muted">
