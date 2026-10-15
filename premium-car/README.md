@@ -30,12 +30,18 @@ Todos os dados da empresa ficam em **`src/config/site.ts`**:
 - As mensagens iniciais de cada botão estão em `src/config/messages.ts`.
 - No `index.html`, informe a URL final em `og:url` e use URL absoluta em `og:image`.
 
-## Imagens
+## Fotografias
 
-As fotos atuais são **ilustrativas** (Unsplash) e estão centralizadas em `src/data/media.ts`.
-Para usar fotos reais da Premium Car, salve-as em `public/images/` (WebP, ~1920px) e troque cada item por
-`{ src: '/images/arquivo.webp', alt, width, height }`. Se uma imagem falhar, o componente `<Picture />`
-mostra um fundo grafite no lugar.
+O site usa **fotografias reais** do Unsplash (licença gratuita, uso comercial permitido), listadas em
+`src/data/photos.ts` com o autor de cada uma. São imagens **ilustrativas**, não trabalhos da Premium Car.
+
+**Recomendado antes de publicar:** rode `npm run photos`. O script baixa cada foto em alta resolução e gera
+versões WebP otimizadas (640 a 2400 px) em `src/assets/photos/`. O site passa a usá-las automaticamente,
+sem depender do Unsplash e com carregamento mais rápido. Sem esse passo, as fotos são carregadas
+diretamente do Unsplash.
+
+Para trocar uma foto, edite o `id` (o trecho final de `https://unsplash.com/photos/...`) e o `alt` em
+`src/data/photos.ts` e rode `npm run photos -- --force`.
 
 Na galeria (`src/data/gallery.ts`), informe `before` em um item para habilitar o comparativo
 **antes/depois** na visualização ampliada.
@@ -45,9 +51,10 @@ Na galeria (`src/data/gallery.ts`), informe `before` em um item para habilitar o
 ```
 src/
   config/      dados da empresa e mensagens do WhatsApp
-  data/        conteúdo: serviços, diferenciais, galeria, navegação, fotos
+  data/        conteúdo: serviços, diferenciais, galeria, navegação e catálogo de fotos
   sections/    blocos da página (Hero, Services, Differentials, Gallery, About, FinalCta)
   components/  ui/ (primitivos), layout/ (header, menu, rodapé, WhatsApp flutuante), brand/, gallery/, icons/
   hooks/       viewport, rolagem, seção ativa, diálogos nativos
-  lib/         utilitários (WhatsApp, Unsplash, classes, scroll)
+  lib/         utilitários (WhatsApp, fotos, classes, scroll)
+scripts/       download e otimização das fotografias (npm run photos)
 ```
