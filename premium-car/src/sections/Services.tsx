@@ -23,7 +23,7 @@ export function Services() {
             }
             subtitle="Cuidados especializados para valorizar, preservar e transformar a aparência do seu veículo."
           />
-          <Reveal delay={120} className="max-w-xs border-l border-gold-400/40 pl-5 text-sm leading-relaxed text-silver-400">
+          <Reveal delay={120} className="max-w-xs border-l border-brand-400/40 pl-5 text-sm leading-relaxed text-silver-400">
             Cada serviço é indicado após a avaliação do veículo, conforme o estado da pintura, dos revestimentos e
             das peças.
           </Reveal>
@@ -45,7 +45,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const Icon = service.icon
 
   return (
-    <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-ink-850 shadow-card transition-[border-color,transform] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-gold-400/30">
+    <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-ink-850 shadow-card transition-[border-color,transform] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-brand-400/30">
       <div className="relative">
         <Picture
           photo={service.image}
@@ -57,7 +57,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <span className="absolute top-4 left-5 font-display text-xs font-semibold tracking-[0.2em] text-snow/80 tabular-nums">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <span className="absolute bottom-0 left-5 grid size-12 translate-y-1/2 place-items-center rounded-full border border-gold-400/35 bg-ink-900 text-gold-300 transition-colors duration-300 group-hover:bg-gold-400 group-hover:text-ink-950">
+        <span className="absolute bottom-0 left-5 grid size-12 translate-y-1/2 place-items-center rounded-full border border-brand-400/35 bg-ink-900 text-brand-300 transition-colors duration-300 group-hover:bg-brand-400 group-hover:text-ink-950">
           <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
         </span>
       </div>
@@ -71,7 +71,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           href={whatsappUrl(whatsappMessages.service(service.title))}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 self-start text-[0.8125rem] font-semibold tracking-wide text-gold-300 transition-colors hover:text-gold-100"
+          className="mt-6 inline-flex items-center gap-2 self-start text-[0.8125rem] font-semibold tracking-wide text-brand-300 transition-colors hover:text-brand-100"
         >
           Solicitar avaliação
           <span className="sr-only"> de {service.title.toLowerCase()} pelo WhatsApp</span>

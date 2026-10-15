@@ -32,7 +32,7 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
       {open && (
         <div className="grain relative flex h-full flex-col bg-ink-950 px-5 pt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-8">
           <div className="flex items-center justify-between">
-            <Logo />
+            <Logo className="h-14" />
             <button
               type="button"
               onClick={onClose}
@@ -57,7 +57,7 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
                     aria-current={active === item.id ? 'location' : undefined}
                     className={cn(
                       'group flex items-baseline gap-5 py-5 transition-colors',
-                      active === item.id ? 'text-gold-200' : 'text-snow hover:text-gold-200',
+                      active === item.id ? 'text-brand-200' : 'text-snow hover:text-brand-200',
                     )}
                   >
                     <span className="font-display text-xs tracking-[0.2em] text-silver-500 tabular-nums">

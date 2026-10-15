@@ -24,19 +24,19 @@
   --color-silver-400: #a4a4aa;
   --color-silver-500: #8b8b92;
 
-  /* Dourado metálico: destaques pontuais */
-  --color-gold-100: #f4ead2;
-  --color-gold-200: #e8d6aa;
-  --color-gold-300: #d9bf84;
-  --color-gold-400: #c7a662;
-  --color-gold-500: #ad8b47;
-  --color-gold-600: #8a6c33;
+  /* Laranja da marca (logotipo Premium Car): destaques pontuais */
+  --color-brand-100: #fde8dc;
+  --color-brand-200: #f9c9ad;
+  --color-brand-300: #f3a077;
+  --color-brand-400: #e4682f;
+  --color-brand-500: #c9551f;
+  --color-brand-600: #a24317;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 
   --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -24px rgb(0 0 0 / 0.7);
-  --shadow-gold: 0 10px 30px -12px rgb(199 166 98 / 0.55);
+  --shadow-accent: 0 10px 30px -12px rgb(199 166 98 / 0.55);
 
   --animate-scroll-cue: scroll-cue 2.4s var(--ease-in-out-quart) infinite;
   --animate-ping-soft: ping-soft 2.6s ease-out infinite;
@@ -98,12 +98,12 @@
   }
 
   ::selection {
-    background-color: var(--color-gold-400);
+    background-color: var(--color-brand-400);
     color: var(--color-ink-950);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold-300);
+    outline: 2px solid var(--color-brand-300);
     outline-offset: 3px;
   }
 
@@ -138,14 +138,14 @@
     text-transform: uppercase;
   }
 
-  /* Dourado metálico: gradiente curto e contido, só em palavras de destaque */
+  /* Laranja da marca com leve reflexo metálico, só em palavras de destaque */
   .text-metal {
     background: linear-gradient(
       100deg,
-      var(--color-gold-500) 0%,
-      var(--color-gold-200) 38%,
-      var(--color-gold-400) 62%,
-      var(--color-gold-300) 100%
+      var(--color-brand-400) 0%,
+      color-mix(in oklab, var(--color-brand-400), var(--color-brand-300) 55%) 42%,
+      var(--color-brand-400) 70%,
+      var(--color-brand-500) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -163,7 +163,7 @@
     font-weight: 600;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--color-gold-300);
+    color: var(--color-brand-300);
   }
 
   .eyebrow::before {

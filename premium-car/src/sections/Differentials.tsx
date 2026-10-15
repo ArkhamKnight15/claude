@@ -18,7 +18,7 @@ export function Differentials() {
       {/* Brilho difuso, como um refletor de estúdio */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-[-10%] size-[42rem] rounded-full bg-gold-400/[0.06] blur-3xl"
+        className="pointer-events-none absolute -top-40 right-[-10%] size-[42rem] rounded-full bg-brand-400/[0.06] blur-3xl"
       />
 
       <Container className="relative grid gap-14 lg:grid-cols-12 lg:gap-16">
@@ -55,7 +55,7 @@ export function Differentials() {
                   className="group relative flex flex-col bg-ink-950 p-7 transition-colors duration-500 hover:bg-ink-850 sm:p-9"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="grid size-12 place-items-center rounded-xl border border-white/10 text-gold-300 transition-[border-color,transform] duration-500 group-hover:-translate-y-0.5 group-hover:border-gold-400/40">
+                    <span className="grid size-12 place-items-center rounded-xl border border-white/10 text-brand-300 transition-[border-color,transform] duration-500 group-hover:-translate-y-0.5 group-hover:border-brand-400/40">
                       <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
                     </span>
                     <span className="font-display text-xs font-semibold tracking-[0.2em] text-silver-500 tabular-nums">
@@ -68,7 +68,7 @@ export function Differentials() {
                   <p className="mt-3 text-[0.9375rem] leading-relaxed text-silver-400">{item.description}</p>
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gold-400/60 transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-x-100"
+                    className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-brand-400/60 transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-x-100"
                   />
                 </Reveal>
               )

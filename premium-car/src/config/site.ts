@@ -9,7 +9,6 @@ export type SocialNetwork = 'instagram' | 'facebook' | 'youtube'
 
 interface SiteConfig {
   name: string
-  tagline: string
   whatsapp: { number: string; display: string }
   phone: string
   address: string[]
@@ -20,7 +19,6 @@ interface SiteConfig {
 
 export const site: SiteConfig = {
   name: 'Premium Car',
-  tagline: 'Estética automotiva',
 
   whatsapp: {
     /** Formato internacional, apenas dígitos: código do país + DDD + número. */

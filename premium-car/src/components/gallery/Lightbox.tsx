@@ -63,7 +63,7 @@ export function Lightbox({ items, index, onChange, onClose }: LightboxProps) {
           </div>
 
           <div className="mx-auto w-full max-w-3xl text-center">
-            <p className="text-[0.6875rem] font-semibold tracking-[0.24em] text-gold-300 uppercase">{item.category}</p>
+            <p className="text-[0.6875rem] font-semibold tracking-[0.24em] text-brand-300 uppercase">{item.category}</p>
             <p className="mt-2 font-display text-lg font-semibold text-snow uppercase [font-stretch:112%]">{item.title}</p>
           </div>
         </div>
@@ -111,7 +111,7 @@ function LightboxPhoto({ item }: { item: GalleryItem }) {
                 onClick={() => setShowBefore(label === 'Antes')}
                 className={cn(
                   'rounded-full px-5 py-2 text-xs font-semibold tracking-[0.16em] uppercase transition-colors',
-                  selected ? 'bg-gold-400 text-ink-950' : 'text-silver-300 hover:text-snow',
+                  selected ? 'bg-brand-400 text-ink-950' : 'text-silver-300 hover:text-snow',
                 )}
               >
                 {label}
@@ -132,7 +132,7 @@ function NavButton({ direction, onClick }: { direction: 'prev' | 'next'; onClick
       onClick={onClick}
       aria-label={direction === 'prev' ? 'Foto anterior' : 'Próxima foto'}
       className={cn(
-        'absolute top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-ink-950/70 text-snow backdrop-blur transition-colors hover:border-gold-400/50 hover:text-gold-200',
+        'absolute top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-ink-950/70 text-snow backdrop-blur transition-colors hover:border-brand-400/50 hover:text-brand-200',
         direction === 'prev' ? 'left-0 sm:left-2' : 'right-0 sm:right-2',
       )}
     >

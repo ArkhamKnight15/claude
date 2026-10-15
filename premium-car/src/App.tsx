@@ -14,7 +14,7 @@ export default function App() {
     <>
       <a
         href="#conteudo"
-        className="fixed top-3 left-3 z-50 -translate-y-20 rounded-full bg-gold-400 px-5 py-3 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
+        className="fixed top-3 left-3 z-50 -translate-y-20 rounded-full bg-brand-400 px-5 py-3 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
       >
         Pular para o conteúdo
       </a>

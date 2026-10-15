@@ -112,7 +112,7 @@ function MobileCarousel({ onOpen }: { onOpen: (index: number) => void }) {
             <span
               className={cn(
                 'block h-0.5 rounded-full transition-[width,background-color] duration-500',
-                current === index ? 'w-8 bg-gold-300' : 'w-4 bg-white/20',
+                current === index ? 'w-8 bg-brand-300' : 'w-4 bg-white/20',
               )}
             />
           </button>
@@ -143,13 +143,13 @@ function GalleryCard({ item, sizes, onOpen }: { item: GalleryItem; sizes: string
       </span>
 
       {item.before && (
-        <span className="absolute top-4 left-4 rounded-full bg-gold-400 px-3 py-1 text-[0.625rem] font-semibold tracking-[0.16em] text-ink-950 uppercase">
+        <span className="absolute top-4 left-4 rounded-full bg-brand-400 px-3 py-1 text-[0.625rem] font-semibold tracking-[0.16em] text-ink-950 uppercase">
           Antes e depois
         </span>
       )}
 
       <span className="relative mt-auto flex flex-col gap-1.5 p-5 sm:p-6">
-        <span className="text-[0.6875rem] font-semibold tracking-[0.24em] text-gold-300 uppercase">{item.category}</span>
+        <span className="text-[0.6875rem] font-semibold tracking-[0.24em] text-brand-300 uppercase">{item.category}</span>
         <span className="font-display text-base font-semibold text-snow uppercase [font-stretch:112%] sm:text-lg">
           {item.title}
         </span>

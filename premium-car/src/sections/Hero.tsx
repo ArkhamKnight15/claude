@@ -71,7 +71,7 @@ export function Hero() {
             className="group flex items-center gap-4 text-xs font-medium tracking-[0.24em] text-silver-300 uppercase transition-colors hover:text-snow"
           >
             <span className="relative h-12 w-px overflow-hidden bg-white/15" aria-hidden="true">
-              <span className="absolute inset-0 animate-scroll-cue bg-gold-300" />
+              <span className="absolute inset-0 animate-scroll-cue bg-brand-300" />
             </span>
             Role para explorar
             <ArrowDown className="size-3.5 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
@@ -80,7 +80,7 @@ export function Hero() {
           <ul aria-label="Alguns dos nossos serviços" className="hidden items-center gap-10 md:flex">
             {highlights.map((service, index) => (
               <li key={service.id} className="flex items-baseline gap-3">
-                <span className="font-display text-[0.6875rem] text-gold-300 tabular-nums">0{index + 1}</span>
+                <span className="font-display text-[0.6875rem] text-brand-300 tabular-nums">0{index + 1}</span>
                 <span className="text-sm text-silver-300">{service.title}</span>
               </li>
             ))}

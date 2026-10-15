@@ -13,7 +13,7 @@ interface SectionHeadingProps {
   className?: string
 }
 
-/** Título de seção padronizado: rótulo dourado, título expandido e subtítulo opcional. */
+/** Título de seção padronizado: rótulo na cor da marca, título expandido e subtítulo opcional. */
 export function SectionHeading({
   id,
   eyebrow,

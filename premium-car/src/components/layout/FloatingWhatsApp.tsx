@@ -15,8 +15,8 @@ export function FloatingWhatsApp() {
       <span className="pointer-events-none mr-3 hidden translate-x-2 rounded-full border border-white/10 bg-ink-900/90 px-4 py-2 text-xs font-medium text-snow opacity-0 shadow-card backdrop-blur transition-[opacity,transform] duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 md:block">
         Fale conosco no WhatsApp
       </span>
-      <span className="relative grid size-14 place-items-center rounded-full bg-gold-400 text-ink-950 shadow-gold transition-[transform,background-color] duration-300 group-hover:scale-105 group-hover:bg-gold-300 group-active:scale-95">
-        <span aria-hidden="true" className="absolute inset-0 animate-ping-soft rounded-full bg-gold-400" />
+      <span className="relative grid size-14 place-items-center rounded-full bg-brand-400 text-ink-950 shadow-accent transition-[transform,background-color] duration-300 group-hover:scale-105 group-hover:bg-brand-300 group-active:scale-95">
+        <span aria-hidden="true" className="absolute inset-0 animate-ping-soft rounded-full bg-brand-400" />
         <MessageCircle className="relative size-6" strokeWidth={1.8} />
       </span>
     </a>

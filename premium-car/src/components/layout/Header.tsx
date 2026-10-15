@@ -33,7 +33,7 @@ export function Header() {
         )}
       >
         <a href="#inicio" aria-label="Premium Car — voltar ao início" className="rounded-sm">
-          <Logo />
+          <Logo className={cn('transition-[height] duration-500', scrolled ? 'h-12' : 'h-14 lg:h-16')} />
         </a>
 
         <nav aria-label="Navegação principal" className="hidden lg:block">
@@ -47,7 +47,7 @@ export function Header() {
                     aria-current={current ? 'location' : undefined}
                     className={cn(
                       'relative block rounded-full px-4 py-2 text-[0.8125rem] font-medium tracking-wide transition-colors duration-300',
-                      'after:absolute after:inset-x-4 after:-bottom-0.5 after:h-px after:origin-left after:bg-gold-300 after:transition-transform after:duration-500 after:ease-[var(--ease-out-expo)]',
+                      'after:absolute after:inset-x-4 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand-300 after:transition-transform after:duration-500 after:ease-[var(--ease-out-expo)]',
                       current
                         ? 'text-snow after:scale-x-100'
                         : 'text-silver-300 after:scale-x-0 hover:text-snow hover:after:scale-x-100',

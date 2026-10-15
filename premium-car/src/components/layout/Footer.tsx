@@ -22,7 +22,7 @@ function Pending() {
 function ContactItem({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
     <div className="flex gap-4">
-      <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-full border border-white/10 text-gold-300">
+      <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-full border border-white/10 text-brand-300">
         {icon}
       </span>
       <div className="min-w-0">
@@ -51,7 +51,7 @@ export function Footer() {
       <Container className="py-20 sm:py-24 lg:py-28">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
           <Reveal className="lg:col-span-4">
-            <Logo />
+            <Logo className="h-20" />
             <h2 id="contato-title" className="sr-only">
               Contato
             </h2>
@@ -77,7 +77,7 @@ export function Footer() {
                     href={whatsappUrl(whatsappMessages.schedule)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="transition-colors hover:text-gold-200"
+                    className="transition-colors hover:text-brand-200"
                   >
                     {site.whatsapp.display}
                   </a>
@@ -87,7 +87,7 @@ export function Footer() {
               </ContactItem>
               <ContactItem icon={<Phone className={iconClass} strokeWidth={1.5} />} label="Telefone">
                 {phone ? (
-                  <a href={`tel:${phone.tel}`} className="transition-colors hover:text-gold-200">
+                  <a href={`tel:${phone.tel}`} className="transition-colors hover:text-brand-200">
                     {phone.display}
                   </a>
                 ) : (
@@ -135,7 +135,7 @@ export function Footer() {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="inline-block py-1 text-[0.9375rem] text-silver-300 transition-colors hover:text-gold-200"
+                      className="inline-block py-1 text-[0.9375rem] text-silver-300 transition-colors hover:text-brand-200"
                     >
                       {item.label}
                     </a>
@@ -159,7 +159,7 @@ export function Footer() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${label} da Premium Car`}
-                          className={`${shared} border-white/15 text-snow transition-colors hover:border-gold-400/50 hover:text-gold-200`}
+                          className={`${shared} border-white/15 text-snow transition-colors hover:border-brand-400/50 hover:text-brand-200`}
                         >
                           <Icon className={iconClass} />
                         </a>

@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 
-type Variant = 'gold' | 'outline' | 'ghost'
+type Variant = 'brand' | 'outline' | 'ghost'
 type Size = 'md' | 'lg'
 
 interface ButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -13,9 +13,9 @@ interface ButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 const variants: Record<Variant, string> = {
-  gold: 'sheen bg-gold-400 text-ink-950 hover:bg-gold-300 hover:shadow-gold active:bg-gold-500',
+  brand: 'sheen bg-brand-400 text-ink-950 hover:bg-brand-300 hover:shadow-accent active:bg-brand-500',
   outline: 'border border-white/20 text-snow hover:border-white/45 hover:bg-white/[0.06] active:bg-white/10',
-  ghost: 'text-snow hover:text-gold-200',
+  ghost: 'text-snow hover:text-brand-200',
 }
 
 const sizes: Record<Size, string> = {
@@ -25,7 +25,7 @@ const sizes: Record<Size, string> = {
 
 /** Botão como link (todas as ações do site levam a uma seção ou ao WhatsApp). */
 export function Button({
-  variant = 'gold',
+  variant = 'brand',
   size = 'md',
   icon,
   external,

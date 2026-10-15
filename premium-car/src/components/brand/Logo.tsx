@@ -1,28 +1,42 @@
-import { site } from '../../config/site'
 import { cn } from '../../lib/cn'
-import { Emblem } from './Emblem'
+import { MONOGRAM_PATH } from './Monogram'
 
 interface LogoProps {
   className?: string
-  /** Exibe a linha "Estética automotiva" abaixo do nome. */
-  withTagline?: boolean
 }
 
-/** Logotipo tipográfico: monograma dourado + nome em versão expandida. */
-export function Logo({ className, withTagline = true }: LogoProps) {
+/**
+ * Logotipo oficial da Premium Car (monograma laranja + nome + "Estética automotiva"), na mesma composição
+ * do original. Versão para fundo escuro: o nome, preto no original, aparece em branco.
+ * O texto usa a fonte do site com largura fixa (`textLength`) para manter as proporções do desenho.
+ */
+export function Logo({ className }: LogoProps) {
   return (
-    <span className={cn('inline-flex items-center gap-3', className)}>
-      <Emblem className="size-8 shrink-0 text-gold-300" />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[0.95rem] font-bold tracking-[0.2em] text-snow uppercase [font-stretch:125%]">
-          Premium <span className="text-gold-300">Car</span>
-        </span>
-        {withTagline && (
-          <span className="mt-1.5 font-display text-[0.5625rem] font-medium tracking-[0.42em] text-silver-400 uppercase [font-stretch:110%]">
-            {site.tagline}
-          </span>
-        )}
-      </span>
-    </span>
+    <svg
+      viewBox="0 0 508 158"
+      role="img"
+      aria-label="Premium Car — Estética automotiva"
+      className={cn('h-11 w-auto', className)}
+    >
+      <path d={MONOGRAM_PATH} className="fill-brand-400" />
+      <text
+        x="95"
+        y="131"
+        textLength="411"
+        lengthAdjust="spacingAndGlyphs"
+        className="fill-snow font-display text-[43px] font-extrabold [font-stretch:125%]"
+      >
+        PREMIUM CAR
+      </text>
+      <text
+        x="96"
+        y="156"
+        textLength="242"
+        lengthAdjust="spacingAndGlyphs"
+        className="fill-silver-300 font-display text-[20px] font-medium [font-stretch:110%]"
+      >
+        ESTÉTICA AUTOMOTIVA
+      </text>
+    </svg>
   )
 }
