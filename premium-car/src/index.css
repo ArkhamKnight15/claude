@@ -1,0 +1,304 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/inter/wght.css';
+
+@theme {
+  /* Texto e interface */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Títulos e marca — Archivo com eixo de largura (versões expandidas) */
+  --font-display: 'Archivo Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Preto profundo e grafite: superfícies */
+  --color-ink-950: #070708;
+  --color-ink-900: #0b0b0d;
+  --color-ink-850: #101013;
+  --color-ink-800: #151518;
+  --color-ink-700: #1d1e22;
+  --color-ink-600: #2a2b30;
+  --color-ink-500: #3a3b41;
+
+  /* Prata e branco: texto */
+  --color-snow: #f4f3ef;
+  --color-silver-200: #dcdcdf;
+  --color-silver-300: #c3c3c8;
+  --color-silver-400: #a4a4aa;
+  --color-silver-500: #8b8b92;
+
+  /* Dourado metálico: destaques pontuais */
+  --color-gold-100: #f4ead2;
+  --color-gold-200: #e8d6aa;
+  --color-gold-300: #d9bf84;
+  --color-gold-400: #c7a662;
+  --color-gold-500: #ad8b47;
+  --color-gold-600: #8a6c33;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -24px rgb(0 0 0 / 0.7);
+  --shadow-gold: 0 10px 30px -12px rgb(199 166 98 / 0.55);
+
+  --animate-scroll-cue: scroll-cue 2.4s var(--ease-in-out-quart) infinite;
+  --animate-ping-soft: ping-soft 2.6s ease-out infinite;
+
+  @keyframes scroll-cue {
+    0% {
+      transform: translate3d(0, -100%, 0);
+    }
+    55%,
+    100% {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.45;
+    }
+    80%,
+    100% {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-ink-900);
+    color: var(--color-silver-400);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-snow);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-400);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-300);
+    outline-offset: 3px;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Classes próprias ficam em `components` para que os utilitários do Tailwind possam sobrescrevê-las. */
+@layer components {
+  /* Títulos expandidos, no espírito das marcas automotivas */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 0.98;
+    text-transform: uppercase;
+  }
+
+  /* Dourado metálico: gradiente curto e contido, só em palavras de destaque */
+  .text-metal {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold-500) 0%,
+      var(--color-gold-200) 38%,
+      var(--color-gold-400) 62%,
+      var(--color-gold-300) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Rótulo de seção */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-gold-300);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  /* Revelação ao rolar — controlada pelo componente <Reveal /> */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 24px), 0);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Entrada da primeira dobra, sem depender de scroll */
+  .enter {
+    animation: enter 1s var(--ease-out-expo) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Leve aproximação da foto do hero ao carregar */
+  .hero-photo {
+    animation: hero-photo 2.6s var(--ease-out-expo) both;
+  }
+
+  @keyframes hero-photo {
+    from {
+      transform: scale(1.08);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Reflexo que atravessa o botão no hover */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+    transform: translate3d(-120%, 0, 0);
+    transition: transform 0.7s var(--ease-out-expo);
+    pointer-events: none;
+  }
+
+  .sheen:hover::after {
+    transform: translate3d(120%, 0, 0);
+  }
+
+  /* Textura sutil de granulação para superfícies escuras */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Fundo exibido enquanto a foto carrega ou quando ela não está disponível */
+  .photo-fallback {
+    background:
+      linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 0.05) 48%, transparent 60%),
+      radial-gradient(120% 80% at 70% 20%, var(--color-ink-600), var(--color-ink-800) 55%, var(--color-ink-900));
+  }
+
+  /* Diálogos nativos (<dialog>) */
+  .dialog {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    background: transparent;
+    color: inherit;
+    overflow: hidden;
+  }
+
+  .dialog[open] {
+    animation: fade-in 0.35s var(--ease-out-expo);
+  }
+
+  .dialog::backdrop {
+    background-color: rgb(4 4 5 / 0.92);
+    backdrop-filter: blur(8px);
+    animation: fade-in 0.35s ease;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* Carrossel horizontal (mobile) sem barra de rolagem visível */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
