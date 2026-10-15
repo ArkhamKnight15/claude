@@ -37,6 +37,13 @@ const socialNetworks = Object.keys(site.social) as SocialNetwork[]
 const iconClass = 'size-[1.125rem]'
 const year = new Date().getFullYear()
 
+/** Telefone para ligação: o fixo, se houver; senão, o número do WhatsApp. */
+const phone = site.phone
+  ? { display: site.phone, tel: `+55${site.phone.replace(/\D/g, '')}` }
+  : site.whatsapp.display
+    ? { display: site.whatsapp.display, tel: `+${site.whatsapp.number.replace(/\D/g, '')}` }
+    : null
+
 /** Contato e rodapé (seção "Contato" da navegação). */
 export function Footer() {
   return (
@@ -79,9 +86,9 @@ export function Footer() {
                 )}
               </ContactItem>
               <ContactItem icon={<Phone className={iconClass} strokeWidth={1.5} />} label="Telefone">
-                {site.phone ? (
-                  <a href={`tel:+55${site.phone.replace(/\D/g, '')}`} className="transition-colors hover:text-gold-200">
-                    {site.phone}
+                {phone ? (
+                  <a href={`tel:${phone.tel}`} className="transition-colors hover:text-gold-200">
+                    {phone.display}
                   </a>
                 ) : (
                   <Pending />
@@ -103,8 +110,14 @@ export function Footer() {
               <ContactItem icon={<Clock className={iconClass} strokeWidth={1.5} />} label="Horário">
                 {site.hours.length > 0 ? (
                   site.hours.map((slot) => (
-                    <span key={slot.days} className="block">
-                      {slot.days}: <span className="text-silver-300">{slot.hours}</span>
+                    <span key={`${slot.days}-${slot.hours}`} className="block">
+                      {slot.days ? (
+                        <>
+                          {slot.days}: <span className="text-silver-300">{slot.hours}</span>
+                        </>
+                      ) : (
+                        slot.hours
+                      )}
                     </span>
                   ))
                 ) : (

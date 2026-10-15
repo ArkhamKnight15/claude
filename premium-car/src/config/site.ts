@@ -13,7 +13,8 @@ interface SiteConfig {
   whatsapp: { number: string; display: string }
   phone: string
   address: string[]
-  hours: { days: string; hours: string }[]
+  /** `days` é opcional: sem ele, exibe apenas o horário. */
+  hours: { days?: string; hours: string }[]
   social: Record<SocialNetwork, string>
 }
 
@@ -22,21 +23,21 @@ export const site: SiteConfig = {
   tagline: 'Estética automotiva',
 
   whatsapp: {
-    /**
-     * PLACEHOLDER — número do WhatsApp em formato internacional, apenas dígitos:
-     * código do país + DDD + número. Exemplo: '5511987654321'.
-     */
-    number: '',
-    /** Exibição amigável do número. PLACEHOLDER — exemplo: '(11) 98765-4321'. */
-    display: '',
+    /** Formato internacional, apenas dígitos: código do país + DDD + número. */
+    number: '5521967283192',
+    /** Exibição amigável do número. */
+    display: '(21) 96728-3192',
   },
 
-  /** PLACEHOLDER — telefone fixo para exibição. Exemplo: '(11) 3456-7890'. */
+  /**
+   * PLACEHOLDER — telefone fixo, se houver. Exemplo: '(21) 3456-7890'.
+   * Vazio: o rodapé exibe o número do WhatsApp, que também recebe ligações.
+   */
   phone: '',
-  /** PLACEHOLDER — endereço completo, uma linha por item. */
-  address: [],
-  /** PLACEHOLDER — horários de atendimento. Exemplo: { days: 'Seg. a sex.', hours: '8h às 18h' }. */
-  hours: [],
+  /** Endereço, uma linha por item. PLACEHOLDER: bairro, cidade e CEP ainda não informados. */
+  address: ['Rua Doutor Crespo, 579'],
+  /** Horários de atendimento. PLACEHOLDER: dias da semana ainda não informados. */
+  hours: [{ hours: '8h às 18h' }],
 
   /** PLACEHOLDER — informe a URL completa de cada perfil (ex.: 'https://instagram.com/seuperfil'). */
   social: {
