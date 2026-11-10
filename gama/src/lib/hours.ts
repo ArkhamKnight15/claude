@@ -18,9 +18,10 @@ function toMinutes(time: string): number {
   return hours * 60 + minutes
 }
 
-/** "22:00" → "22h"; "22:30" → "22h30"; "00:00" → "0h". */
+/** "22:00" → "22h"; "08:30" → "8h30"; "00:00" → "meia-noite". */
 export function formatTime(time: string): string {
   const [hours, minutes] = time.split(':').map(Number)
+  if (hours === 0 && minutes === 0) return 'meia-noite'
   return `${hours}h${minutes ? String(minutes).padStart(2, '0') : ''}`
 }
 

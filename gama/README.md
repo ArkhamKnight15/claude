@@ -56,7 +56,12 @@ src/
 
 **Dados da loja:** ficam em `src/data/store.ts`: nome, WhatsApp, Instagram, endereço, links de mapa e horários.
 
-> ⚠️ **Confirme os horários antes de publicar.** Os valores de `schedule` e `hours` em `src/data/store.ts` são provisórios e alimentam o selo "Aberto agora".
+Os horários seguem o perfil da loja no Google Maps. Se mudarem, atualize os dois blocos em `src/data/store.ts`:
+
+- `schedule`: alimenta o selo "Aberto agora";
+- `hours`: é o texto exibido no site.
+
+Atualize também `openingHoursSpecification` em `index.html`, usado pelo Google.
 
 **Mensagens do WhatsApp:**
 

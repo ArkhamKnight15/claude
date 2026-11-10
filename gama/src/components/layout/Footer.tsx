@@ -103,6 +103,8 @@ export function Footer() {
                     {address.street}
                     <br />
                     {address.district}, {address.city} – {address.state}
+                    <br />
+                    CEP {address.zip}
                   </span>
                 </a>
               </li>

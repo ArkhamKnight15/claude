@@ -80,6 +80,8 @@ export function Location() {
               <p className="mt-2 text-lg font-semibold text-ink-950">{address.street}</p>
               <p className="text-[0.9375rem] text-body">
                 {address.district}, {address.city} – {address.state}
+                <br />
+                CEP {address.zip}
               </p>
             </address>
 
@@ -93,7 +95,7 @@ export function Location() {
                 {store.hours.map((slot) => (
                   <div key={slot.days} className="flex justify-between gap-4 border-b border-line pb-2 last:border-0">
                     <dt className="text-body">{slot.days}</dt>
-                    <dd className="font-medium text-ink-950">{slot.time}</dd>
+                    <dd className="shrink-0 text-right font-medium whitespace-nowrap text-ink-950">{slot.time}</dd>
                   </div>
                 ))}
               </dl>
