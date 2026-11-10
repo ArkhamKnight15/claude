@@ -51,14 +51,15 @@ export function AgeGate() {
       {({ close }) => (
         <div
           ref={contentRef}
-          className="grain relative overflow-hidden rounded-t-[1.75rem] bg-ink-950 px-6 pt-10 pb-[max(2rem,env(safe-area-inset-bottom))] text-center text-white shadow-elevated sm:px-10 md:rounded-[1.75rem] md:pb-10"
+          data-lenis-prevent
+          className="grain relative max-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-contain rounded-t-[1.75rem] md:max-h-[calc(100dvh-3rem)] bg-ink-950 px-6 pt-10 pb-[max(2rem,env(safe-area-inset-bottom))] text-center [@media(max-height:30rem)]:pt-6 [@media(max-height:30rem)]:pb-5 text-white shadow-elevated sm:px-10 md:rounded-[1.75rem] md:pb-10"
         >
           <div aria-hidden="true" className="absolute -top-28 left-1/2 size-72 -translate-x-1/2 rounded-full bg-wine-600/30 blur-3xl" />
-          <LogoStacked className="relative mx-auto w-28 text-white sm:w-32" />
+          <LogoStacked className="relative mx-auto w-28 text-white sm:w-32 [@media(max-height:30rem)]:w-16" />
 
           {denied ? (
             <div className="relative">
-              <h2 id={titleId} className="mt-8 font-display text-[1.75rem] leading-tight font-medium text-white">
+              <h2 id={titleId} className="mt-8 font-display [@media(max-height:30rem)]:mt-3 text-[1.75rem] leading-tight font-medium text-white">
                 Volte quando fizer 18 anos
               </h2>
               <p id={descriptionId} className="mt-3 text-[0.9375rem] leading-relaxed text-ink-200">
@@ -71,14 +72,14 @@ export function AgeGate() {
             </div>
           ) : (
             <div className="relative">
-              <h2 id={titleId} className="mt-8 font-display text-[1.875rem] leading-tight font-medium text-white">
+              <h2 id={titleId} className="mt-8 font-display [@media(max-height:30rem)]:mt-3 text-[1.875rem] leading-tight font-medium text-white">
                 Você tem 18 anos ou mais?
               </h2>
               <p id={descriptionId} className="mt-3 text-[0.9375rem] leading-relaxed text-ink-200">
                 O site da {store.name} apresenta bebidas alcoólicas e produtos de tabacaria, destinados exclusivamente a
                 maiores de idade.
               </p>
-              <div className="mt-8 grid gap-3">
+              <div className="mt-8 grid gap-3 [@media(max-height:30rem)]:mt-5 [@media(max-height:30rem)]:grid-cols-2">
                 <Button
                   variant="light"
                   size="lg"
@@ -94,7 +95,7 @@ export function AgeGate() {
                   Não
                 </Button>
               </div>
-              <p className="mt-7 flex items-center justify-center gap-2 text-xs text-ink-300">
+              <p className="mt-7 flex items-center justify-center gap-2 text-xs text-ink-300 [@media(max-height:30rem)]:mt-4">
                 <ShieldAlert aria-hidden="true" className="size-3.5 shrink-0 text-gold-300" />
                 Beba com moderação. Se beber, não dirija.
               </p>

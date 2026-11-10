@@ -39,6 +39,9 @@ function handleAnchorClick(event: MouseEvent) {
  */
 export function initSmoothScroll(): () => void {
   lenis = new Lenis({ autoRaf: true, lerp: 0.09, wheelMultiplier: 0.95 })
+  // Um modal aberto antes da inicialização (ex.: verificação de idade) já travou a página:
+  // a rolagem suave começa parada e é retomada por useScrollLock ao fechar.
+  if (document.documentElement.style.overflow === 'hidden') lenis.stop()
   document.addEventListener('click', handleAnchorClick)
 
   return () => {

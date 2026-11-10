@@ -21,6 +21,8 @@ export function Lightbox({ photos, index, onIndexChange, onClose }: LightboxProp
   const titleId = useId()
   const captionId = useId()
   const pointerStart = useRef<number | null>(null)
+  /** Evita que o clique gerado ao fim de um arrasto com mouse feche a galeria. */
+  const swiped = useRef(false)
   const thumbsRef = useRef<HTMLUListElement>(null)
   const open = index !== null
   const current = index ?? 0
@@ -62,7 +64,8 @@ export function Lightbox({ photos, index, onIndexChange, onClose }: LightboxProp
     if (pointerStart.current === null) return
     const delta = event.clientX - pointerStart.current
     pointerStart.current = null
-    if (Math.abs(delta) > SWIPE_THRESHOLD_PX) go(delta < 0 ? 1 : -1)
+    swiped.current = Math.abs(delta) > SWIPE_THRESHOLD_PX
+    if (swiped.current) go(delta < 0 ? 1 : -1)
   }
 
   return (
@@ -98,6 +101,10 @@ export function Lightbox({ photos, index, onIndexChange, onClose }: LightboxProp
               onPointerDown={handlePointerDown}
               onPointerUp={handlePointerUp}
               onClick={(event) => {
+                if (swiped.current) {
+                  swiped.current = false
+                  return
+                }
                 if (event.target === event.currentTarget) close()
               }}
             >

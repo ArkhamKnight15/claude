@@ -29,12 +29,14 @@ export function Hero() {
       </div>
 
       <Container className="grid items-center gap-20 lg:grid-cols-12 lg:gap-12">
-        <div className="scroll-exit lg:col-span-6">
-          <p className="enter inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-ink-800 shadow-soft ring-1 ring-ink-950/5">
+        <div className="scroll-exit min-w-0 lg:col-span-6">
+          <p className="enter inline-flex max-w-full items-center gap-2.5 rounded-full bg-white/80 py-1.5 pr-4 pl-1.5 text-[0.8125rem] font-medium text-ink-800 shadow-soft ring-1 ring-ink-950/5">
             <span className="rounded-full bg-ink-950 px-2.5 py-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.06em] whitespace-nowrap text-white uppercase">
               Asa Sul · DF
             </span>
-            <OpenBadge />
+            {/* Texto curto no celular para o selo nunca alargar a coluna */}
+            <OpenBadge compact className="sm:hidden" />
+            <OpenBadge className="hidden sm:inline-flex" />
           </p>
 
           <RevealText
@@ -86,7 +88,7 @@ export function Hero() {
           </ul>
         </div>
 
-        <div style={enterDelay(200)} className="enter lg:col-span-6 lg:pl-6">
+        <div style={enterDelay(200)} className="enter min-w-0 lg:col-span-6 lg:pl-6">
           <div className="parallax [--parallax:28px]">
             <HeroVisual />
           </div>

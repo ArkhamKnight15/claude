@@ -73,9 +73,8 @@ export function Footer() {
               <ul className="mt-5 space-y-3">
                 {services.map((service) => (
                   <li key={service.id}>
-                    <a {...whatsappLinkProps(service.message)} className={linkClasses}>
+                    <a href="#servicos" className={linkClasses}>
                       {service.title}
-                      <span className="sr-only"> (consultar no WhatsApp, abre em nova aba)</span>
                     </a>
                   </li>
                 ))}

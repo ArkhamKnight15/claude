@@ -14,8 +14,8 @@ export function OpenBadge({ tone = 'dark', compact = false, className }: OpenBad
   const dot = status.open ? 'bg-success-500' : tone === 'dark' ? 'bg-ink-400' : 'bg-ink-300'
 
   return (
-    <span className={cn('inline-flex items-center gap-2 whitespace-nowrap', className)}>
-      <span aria-hidden="true" className="relative flex size-2">
+    <span className={cn('inline-flex items-baseline gap-2', className)}>
+      <span aria-hidden="true" className="relative flex size-2 shrink-0 self-center">
         {status.open && <span className={cn('absolute inset-0 animate-pulse-ring rounded-full', dot)} />}
         <span className={cn('relative size-2 rounded-full', dot)} />
       </span>

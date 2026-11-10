@@ -43,7 +43,13 @@ export function Dialog({
 
   useEffect(() => {
     const dialog = dialogRef.current
-    if (!dialog || !open || dialog.open) return
+    if (!dialog) return
+    // Fechado por fora (o pai mudou `open`): fecha também o <dialog> nativo para não deixar o fundo preso.
+    if (!open) {
+      if (dialog.open) dialog.close()
+      return
+    }
+    if (dialog.open) return
 
     dialog.showModal()
     const target = initialFocus ? dialog.querySelector<HTMLElement>(initialFocus) : null
