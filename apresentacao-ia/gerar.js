@@ -376,27 +376,24 @@ async function marcarPortugues(file) {
     const s = conteudo("Anthropic e Claude", "Do geral para o específico", "Conheça o Claude", 10);
     texto(s, "Uma família de modelos com nomes de poesia, do mais rápido ao mais forte:", { x: M, y: 2.05, w: 11.9, h: 0.45, fontSize: 18 });
     const fam = [
-      ["Haiku", "poema curtinho", "o mais rápido"],
-      ["Sonnet", "soneto", "o equilibrado"],
-      ["Opus", "“grande obra”", "o avançado"],
-      ["Fable 5.2", "lançado em nov/2026", "o mais forte"],
+      [Lu.LuZap, "Haiku", "poema curtinho", "o mais rápido"],
+      [Lu.LuScale, "Sonnet", "soneto", "o equilibrado"],
+      [Lu.LuCrown, "Opus", "“grande obra”", "o avançado"],
+      [Lu.LuStar, "Fable 5.2", "lançado em nov/2026", "o mais forte"],
     ];
-    const cw = 2.8, gap = 0.233;
+    const cw = 2.8, gap = 0.233, y0 = 2.75, ch = 3.75;
     for (let i = 0; i < 4; i++) {
       const x = M + i * (cw + gap), dest = i === 3;
-      cartao(s, x, 2.7, cw, 1.75, dest ? C.accent1 : C.background1);
-      texto(s, fam[i][0], { x: x + 0.3, y: 2.9, w: cw - 0.6, h: 0.55, fontSize: 26, bold: true, color: dest ? C.background1 : C.text1, fontFace: THEME.headFontFace, valign: "middle" });
-      texto(s, fam[i][1], { x: x + 0.3, y: 3.45, w: cw - 0.6, h: 0.3, fontSize: 13, italic: true, color: dest ? C.background1 : C.accent5 });
-      texto(s, fam[i][2], { x: x + 0.3, y: 3.8, w: cw - 0.6, h: 0.4, fontSize: 16, bold: true, color: dest ? C.background1 : C.accent1 });
+      cartao(s, x, y0, cw, ch, dest ? C.accent1 : C.background1);
+      await circulo(s, fam[i][0], x + 0.3, y0 + 0.35, 0.9, { fill: dest ? C.background1 : C.background2 });
+      texto(s, fam[i][1], { x: x + 0.3, y: y0 + 1.45, w: cw - 0.6, h: 0.6, fontSize: 28, bold: true, color: dest ? C.background1 : C.text1, fontFace: THEME.headFontFace, valign: "middle" });
+      texto(s, fam[i][2], { x: x + 0.3, y: y0 + 2.05, w: cw - 0.6, h: 0.3, fontSize: 13, italic: true, color: dest ? C.background1 : C.accent5 });
+      texto(s, fam[i][3], { x: x + 0.3, y: y0 + 2.45, w: cw - 0.6, h: 0.4, fontSize: 17, bold: true, color: dest ? C.background1 : C.accent1 });
+      for (let k = 0; k < 4; k++) {
+        s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: x + 0.3 + k * 0.55, y: y0 + 3.15, w: 0.45, h: 0.14, rectRadius: 0.07, line: { type: "none" }, objectName: "Nível de força", fill: { color: k <= i ? (dest ? C.background1 : C.accent1) : (dest ? "D98A6C" : C.accent6) } });
+      }
     }
-    texto(s, "Dica para usar qualquer IA melhor", { x: M, y: 4.8, w: 11.9, h: 0.4, fontSize: 18, bold: true, color: C.text1 });
-    const dicas = [[Lu.LuUser, "Diga quem você é", "“Sou do 1º ano…”"], [Lu.LuTarget, "Diga o que quer", "“Explique as 3 causas…”"], [Lu.LuListChecks, "Diga o formato", "“…em tópicos curtos”"]];
-    for (let i = 0; i < 3; i++) {
-      const x = M + i * 4.1;
-      await circulo(s, dicas[i][0], x, 5.4, 0.85, { fill: C.background1 });
-      texto(s, [{ text: dicas[i][1], options: { bold: true, color: C.text1, breakLine: true } }, { text: dicas[i][2], options: { fontSize: 14, italic: true, color: C.accent5 } }], { x: x + 1.05, y: 5.4, w: 2.9, h: 0.85, valign: "middle", fontSize: 17 });
-    }
-    s.addNotes("O Claude é uma família de modelos com nomes de poesia: Haiku, o mais rápido; Sonnet, o equilibrado; Opus, o avançado; e o Fable 5.2, o mais forte, lançado em novembro. E uma dica para usar qualquer IA: diga quem você é, o que você quer e em que formato.");
+    s.addNotes("O Claude é uma família de modelos com nomes de poesia: Haiku, o mais rápido; Sonnet, o equilibrado; Opus, o avançado; e o Fable 5.2, o mais forte, lançado em novembro.");
   }
 
   // 10 — Obrigado
@@ -405,7 +402,7 @@ async function marcarPortugues(file) {
     const s = pres.addSlide({ masterName: "CAPA", sectionTitle: "Encerramento" });
     s.addText("Conclusão", { x: M, y: 1.8, w: 6, h: 0.4, fontSize: 16, italic: true, color: C.accent1, fontFace: THEME.headFontFace, margin: 0, isTextBox: true });
     s.addText("Obrigado!", { placeholder: "title" });
-    s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.", { placeholder: "body" });
+    texto(s, "A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.", { x: M, y: 3.55, w: 6.4, h: 1.0, fontSize: 20, color: C.accent5 });
     await foto(s, "ceu.jpg", 7.55, 0.7, 5.08, 6.1, { alt: "Ilustração de um céu com nuvens e lua (Anthropic)", raio: 0.35, pos: "centre" });
     texto(s, "Fontes: Artificial Analysis e Arena (arena.ai), nov/2026 · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
     s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado!");

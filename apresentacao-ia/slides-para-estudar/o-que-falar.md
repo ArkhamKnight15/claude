@@ -14,7 +14,7 @@ Tempo total: uns **8 a 10 minutos**.
 | **7. Cuidados** | "Mas ela cria **vídeos falsos**, **erra** e pode ser **mal usada**. Por isso: sempre confira." |
 | **8. Empregos** | "**40%** dos empregos vão ser afetados, mas afetado não é demitido: a IA mais **ajuda** do que substitui." |
 | **9. Anthropic** | "A Anthropic cria o Claude. Foi criada em **2021** pelos irmãos **Dario e Daniela Amodei** para fazer uma IA **segura**." |
-| **10. Claude** | "O Claude tem nomes de poesia: **Haiku, Sonnet, Opus e Fable**, do mais rápido ao mais forte. E uma dica: diga quem você é, o que quer e em que formato." |
+| **10. Claude** | "O Claude tem nomes de poesia: **Haiku, Sonnet, Opus e Fable**, do mais rápido ao mais forte." |
 | **11. Obrigado** | "A IA é uma ótima ferramenta, desde que a gente use com cuidado. Obrigado!" |
 
 ## Só 5 números
