@@ -1,4 +1,4 @@
-// Gera "IA - Anthropic - Claude.pptx" (10 slides, visual leve e acolhedor)
+// Gera "IA - Anthropic - Claude.pptx" (11 slides, visual leve e acolhedor)
 // Uso: NODE_PATH=<node_modules com pptxgenjs, jszip, react, react-dom, react-icons, sharp> PPTX_SKILL_DIR=<skill pptx> node gerar.js
 const fs = require("fs");
 const path = require("path");
@@ -42,7 +42,7 @@ pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFac
 const C = pres.SchemeColor;
 
 const M = 0.7;
-const TOTAL = 10;
+const TOTAL = 11;
 
 // ---------- Utilitários ----------
 async function icon(Comp, hex) {
@@ -121,6 +121,34 @@ function conteudo(sec, kicker, titulo, n) {
   return s;
 }
 
+
+// Gráfico de colunas desenhado com formas: ícone + nome em cima de cada barra
+async function ranking(slide, itens, base) {
+  const x0 = M, w = 8.3, yBase = 6.45, hMax = 3.05, n = itens.length;
+  const bw = 1.25, gap = (w - n * bw) / (n - 1);
+  const topo = Math.max(...itens.map((i) => i[3]));
+  slide.addShape(pres.shapes.LINE, { x: x0, y: yBase, w, h: 0, line: { color: C.accent6, width: 1.25 }, objectName: "Linha de base" });
+  for (let i = 0; i < n; i++) {
+    const [Ic, nome, emp, pts] = itens[i];
+    const x = x0 + i * (bw + gap);
+    const h = Math.max(0.5, hMax * (pts - base) / (topo - base));
+    const y = yBase - h;
+    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: bw, h: h + 0.15, rectRadius: 0.12, fill: { color: i === 0 ? C.accent1 : C.text1 }, line: { type: "none" }, objectName: "Barra " + nome });
+    slide.addShape(pres.shapes.RECTANGLE, { x, y: yBase, w: bw, h: 0.2, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Base reta" });
+    texto(slide, String(pts).replace(/(\d)(\d{3})$/, "$1.$2"), { x, y: y + 0.12, w: bw, h: 0.35, align: "center", fontSize: 15, bold: true, color: C.background1 });
+    texto(slide, `${1 + itens.filter((o) => o[3] > pts).length}º`, { x, y: yBase - 0.48, w: bw, h: 0.35, align: "center", fontSize: 13, color: i === 0 ? C.background1 : C.accent6 });
+    await circulo(slide, Ic, x + bw / 2 - 0.3, y - 1.32, 0.6, { fill: C.background1, hex: i === 0 ? HEX.accent1 : HEX.dk1 });
+    texto(slide, [{ text: nome, options: { bold: true, color: C.text1, fontSize: 15, breakLine: true } }, { text: emp, options: { fontSize: 10, color: C.accent5 } }], { x: x - 0.15, y: y - 0.68, w: bw + 0.3, h: 0.6, align: "center", valign: "bottom" });
+  }
+}
+
+function explicacao(slide, titulo, corpo, extra) {
+  cartao(slide, 9.45, 2.05, 3.18, 4.6);
+  texto(slide, titulo, { x: 9.7, y: 2.3, w: 2.7, h: 0.75, fontSize: 18, bold: true, color: C.text1, fontFace: THEME.headFontFace });
+  texto(slide, corpo, { x: 9.7, y: 3.1, w: 2.7, h: 2.0, fontSize: 14 });
+  texto(slide, extra, { x: 9.7, y: 5.15, w: 2.7, h: 1.3, fontSize: 13, italic: true, color: C.accent1 });
+}
+
 // pptxgenjs grava o texto como inglês (en-US); o PowerPoint/Google então oferece
 // traduzir e troca nomes como "Deep Blue" e "Anthropic". Marca tudo como pt-BR.
 async function marcarPortugues(file) {
@@ -196,32 +224,40 @@ async function marcarPortugues(file) {
     s.addNotes("Separei três momentos. Em 1950, Alan Turing perguntou se máquinas poderiam pensar. Em 1997, o Deep Blue, da IBM, venceu o campeão mundial de xadrez. E em 2022 veio o ChatGPT, que chegou a 100 milhões de pessoas em uns dois meses.");
   }
 
-  // 4 — Gigantes de hoje
+  // 4 — Ranking das IAs de texto (gráfico de colunas no estilo "pódio")
   pres.addSection({ title: "A IA hoje" });
   {
-    const s = conteudo("A IA hoje", "A IA hoje", "Quem são os gigantes da IA", 4);
-    const gig = [
-      ["ChatGPT", "OpenAI · EUA", "O mais famoso. Hoje usa o modelo GPT-6."],
-      ["Gemini", "Google · EUA", "Está no Google e no Android. Modelo atual: Gemini 4."],
-      ["Claude", "Anthropic · EUA", "Focado em segurança. O Claude Fable 5.2 lidera vários rankings."],
-      ["DeepSeek", "China", "Aberto: qualquer pessoa pode baixar e usar."],
-    ];
-    const cw = 2.8, gap = 0.233;
-    for (let i = 0; i < 4; i++) {
-      const x = M + i * (cw + gap), dest = i === 2;
-      cartao(s, x, 2.1, cw, 3.55, dest ? C.text1 : C.background1);
-      await circulo(s, [Lu.LuMessageCircle, Lu.LuGem, Lu.LuFeather, Lu.LuFish][i], x + 0.3, 2.4, 0.85, { fill: dest ? C.accent1 : C.background2, hex: dest ? "FFFFFF" : HEX.accent1 });
-      texto(s, gig[i][0], { x: x + 0.3, y: 3.45, w: cw - 0.6, h: 0.55, fontSize: 26, bold: true, color: dest ? C.background1 : C.text1, fontFace: THEME.headFontFace, valign: "middle" });
-      texto(s, gig[i][1], { x: x + 0.3, y: 4.0, w: cw - 0.6, h: 0.3, fontSize: 13, bold: true, color: dest ? C.accent4 : C.accent1 });
-      texto(s, gig[i][2], { x: x + 0.3, y: 4.4, w: cw - 0.6, h: 1.1, fontSize: 14, color: dest ? C.background1 : C.text2 });
-    }
-    texto(s, [{ text: "Curiosidade: ", options: { bold: true, color: C.accent1 } }, { text: "os rankings mudam quase toda semana. Em novembro de 2026, o Claude Fable 5.2, o Gemini 4 e o GPT-6 disputam o 1º lugar." }], { x: M, y: 6.0, w: 11.9, h: 0.6, fontSize: 15, valign: "middle" });
-    s.addNotes("Hoje as maiores IAs são o ChatGPT, da OpenAI; o Gemini, do Google; o Claude, da Anthropic; e o DeepSeek, da China. Elas disputam o primeiro lugar quase toda semana.");
+    const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As IAs mais fortes do mundo hoje", 4);
+    await ranking(s, [
+      [Lu.LuGem, "Gemini", "Google", 1549],
+      [Lu.LuInfinity, "Meta AI", "Meta", 1545],
+      [Lu.LuAsterisk, "Claude", "Anthropic", 1540],
+      [Lu.LuMessageCircle, "ChatGPT", "OpenAI", 1531],
+      [Lu.LuMoon, "Kimi", "Moonshot · China", 1528],
+    ], 1450);
+    explicacao(s, "Como esse ranking funciona?", "No site Arena, as pessoas fazem uma pergunta, recebem duas respostas sem saber de qual IA elas são e votam na melhor. Milhões de votos viram uma pontuação.", "Mostra o melhor modelo de cada empresa. A diferença entre eles é bem pequena: o 1º lugar muda quase toda semana.");
+    texto(s, "Fonte: Arena (arena.ai), ranking de texto, 22/11/2026. Barras a partir de 1.450 pontos.", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
+    s.addNotes("Este é um ranking real das IAs mais fortes, do site Arena. Lá as pessoas fazem uma pergunta, recebem duas respostas sem saber de qual IA são e votam na melhor. Em novembro de 2026, o Gemini, do Google, está em primeiro, seguido pela IA da Meta, o Claude, o ChatGPT e o Kimi, que é chinês. A diferença entre eles é bem pequena, e o primeiro lugar muda quase toda semana.");
+  }
+
+  // 5 — Ranking das IAs de imagem
+  {
+    const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As IAs que mais acertam na hora de criar imagens", 5);
+    await ranking(s, [
+      [Lu.LuImage, "GPT Image", "OpenAI · ChatGPT", 1429],
+      [Lu.LuLayoutGrid, "MAI Image", "Microsoft · Copilot", 1385],
+      [Lu.LuBanana, "Nano Banana", "Google · Gemini", 1325],
+      [Lu.LuSprout, "Seedream", "ByteDance · China", 1256],
+      [Lu.LuPalette, "Qwen-Image", "Alibaba · China", 1256],
+    ], 1150);
+    explicacao(s, "Você escreve, a IA desenha", "Basta descrever a imagem (“um gato astronauta na Lua”) e a IA cria do zero. O ranking funciona igual: pessoas votam na melhor imagem sem saber qual IA fez.", "E o Midjourney? Ele é famoso por imagens artísticas, mas não participa desse ranking.");
+    texto(s, "Fonte: Arena (arena.ai), ranking de texto para imagem, nov/2026. Barras a partir de 1.150 pontos.", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
+    s.addNotes("E estas são as IAs que criam imagens. Você descreve o que quer, tipo um gato astronauta na Lua, e ela desenha do zero. Em primeiro está o GPT Image, que fica dentro do ChatGPT. Depois vem o da Microsoft, que está no Copilot, e o Nano Banana, do Google, que está no Gemini. Depois vêm duas chinesas, o Seedream e o Qwen. O Midjourney, que é bem famoso, não participa desse ranking.");
   }
 
   // 5 — O que já faz
   {
-    const s = conteudo("A IA hoje", "A IA hoje", "O que a IA já consegue fazer", 5);
+    const s = conteudo("A IA hoje", "A IA hoje", "O que a IA já consegue fazer", 6);
     const feitos = [
       [Lu.LuPill, "Ajudar a criar remédios", "O AlphaFold descobriu a forma de milhões de proteínas e ganhou o Nobel de Química em 2024."],
       [Lu.LuMedal, "Medalha de ouro em matemática", "Em 2025, a IA resolveu provas da Olimpíada Internacional de Matemática."],
@@ -240,7 +276,7 @@ async function marcarPortugues(file) {
   // 6 — Cuidados
   pres.addSection({ title: "Cuidados" });
   {
-    const s = conteudo("Cuidados", "Nem tudo são flores", "Três cuidados que precisamos ter", 6);
+    const s = conteudo("Cuidados", "Nem tudo são flores", "Três cuidados que precisamos ter", 7);
     const cuid = [
       [Lu.LuVenetianMask, "Vídeos falsos", "A IA cria vídeos e vozes falsos (deepfakes). Uma empresa perdeu US$ 25 milhões num golpe assim."],
       [Lu.LuCircleHelp, "A IA também erra", "Às vezes ela inventa coisas com muita confiança. Sempre confira em outra fonte."],
@@ -260,7 +296,7 @@ async function marcarPortugues(file) {
 
   // 7 — Empregos
   {
-    const s = conteudo("Cuidados", "A pergunta que todo mundo faz", "A IA vai roubar nossos empregos?", 7);
+    const s = conteudo("Cuidados", "A pergunta que todo mundo faz", "A IA vai roubar nossos empregos?", 8);
     cartao(s, M, 2.1, 4.6, 4.45, C.text1);
     texto(s, "40%", { x: M + 0.4, y: 2.45, w: 3.8, h: 1.4, fontSize: 88, bold: true, color: C.accent4, fontFace: THEME.headFontFace, valign: "middle" });
     texto(s, "dos empregos do mundo vão ser afetados pela IA.", { x: M + 0.4, y: 3.95, w: 3.8, h: 1.0, fontSize: 20, color: C.background1, fontFace: THEME.headFontFace });
@@ -276,7 +312,7 @@ async function marcarPortugues(file) {
   // 8 — Anthropic
   pres.addSection({ title: "Anthropic e Claude" });
   {
-    const s = conteudo("Anthropic e Claude", "Do geral para o específico", "Anthropic: a empresa que cria o Claude", 8);
+    const s = conteudo("Anthropic e Claude", "Do geral para o específico", "Anthropic: a empresa que cria o Claude", 9);
     await foto(s, "farol.jpg", M, 2.1, 4.0, 4.45, { alt: "Ilustração de um farol à noite (Anthropic)", legenda: "Ilustração: Anthropic" });
     texto(s, "Criada em 2021 pelos irmãos Dario e Daniela Amodei. A ideia principal: fazer uma IA útil e segura.", { x: 5.15, y: 2.1, w: 7.48, h: 1.0, fontSize: 20, color: C.text1, fontFace: THEME.headFontFace });
     const ideias = [
@@ -294,7 +330,7 @@ async function marcarPortugues(file) {
 
   // 9 — Claude
   {
-    const s = conteudo("Anthropic e Claude", "Do geral para o específico", "Conheça o Claude", 9);
+    const s = conteudo("Anthropic e Claude", "Do geral para o específico", "Conheça o Claude", 10);
     texto(s, "Uma família de modelos com nomes de poesia, do mais rápido ao mais forte:", { x: M, y: 2.05, w: 11.9, h: 0.45, fontSize: 18 });
     const fam = [
       ["Haiku", "poema curtinho", "o mais rápido"],
@@ -328,7 +364,7 @@ async function marcarPortugues(file) {
     s.addText("Obrigado!", { placeholder: "title" });
     s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.\nPerguntas?", { placeholder: "body" });
     await foto(s, "ceu.jpg", 7.55, 0.7, 5.08, 6.1, { alt: "Ilustração de um céu com nuvens e lua (Anthropic)", raio: 0.35, pos: "centre" });
-    texto(s, "Fontes: Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
+    texto(s, "Fontes: Arena (arena.ai, nov/2026) · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
     s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado! Alguém tem alguma pergunta?");
   }
 
