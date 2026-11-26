@@ -37,7 +37,7 @@ pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFac
 const C = pres.SchemeColor;
 
 const M = 0.6;
-const STEPS = ["IA", "IA hoje", "Perigos", "Anthropic", "Futuro"];
+const STEPS = ["IA", "IA hoje", "Perigos", "Anthropic"];
 const FOOTER = "Luiz · 1ºB · Inteligência Artificial";
 
 // ---------- Ícones e imagens ----------
@@ -150,6 +150,25 @@ const chartBase = () => ({
   valAxisHidden: true, valGridLine: { style: "none" }, catGridLine: { style: "none" }, catAxisLineShow: false, showLegend: false,
 });
 
+// Marca todo o texto como português (pptxgenjs grava en-US, o que faz o
+// PowerPoint/Google oferecer tradução e trocar nomes como "Deep Blue" e "Anthropic")
+async function marcarPortugues(file) {
+  const fs = require("fs");
+  const JSZip = require("jszip");
+  const src = await JSZip.loadAsync(fs.readFileSync(file));
+  const out = new JSZip();
+  for (const [name, entry] of Object.entries(src.files)) {
+    if (entry.dir) continue; // sem entradas de pasta: elas atrapalham abrir o arquivo na nuvem
+    if (/^ppt\/.*\.xml$/.test(name)) {
+      const xml = await entry.async("string");
+      out.file(name, xml.replace(/lang="en-US"/g, 'lang="pt-BR"'), { createFolders: false });
+    } else {
+      out.file(name, await entry.async("nodebuffer"), { createFolders: false });
+    }
+  }
+  fs.writeFileSync(file, await out.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
+}
+
 // ---------- Slides ----------
 (async () => {
   // 1 — Capa
@@ -167,18 +186,17 @@ const chartBase = () => ({
   // 2 — Roteiro
   {
     const s = conteudo("Abertura", "Do geral ao específico", -1);
-    funil(s, { x: M, y: 2.0, w: 6.2, barH: 0.72, gap: 0.16, escuro: false, todos: true });
+    funil(s, { x: M, y: 2.1, w: 6.2, barH: 0.82, gap: 0.2, escuro: false, todos: true });
     const itens = [
-      ["IA", "O que é, de onde veio e como funciona"],
+      ["IA", "O que é e de onde veio"],
       ["IA hoje", "Os modelos mais fortes e o que já fazem"],
-      ["Perigos", "Desinformação, erros, empregos, crimes e controle"],
-      ["Anthropic", "Uma empresa criada para tornar a IA segura"],
-      ["Futuro", "Oportunidades e como usar com responsabilidade"],
+      ["Perigos", "Seis riscos reais, um de cada vez"],
+      ["Anthropic", "A empresa que cria o Claude e aposta em segurança"],
     ];
     itens.forEach(([t, d], i) => {
-      texto(s, [{ text: t, options: { bold: true, color: C.text1, breakLine: true } }, { text: d, options: { fontSize: 14, color: C.accent5 } }], { x: 7.4, y: 2.0 + i * 0.88, w: 5.3, h: 0.72, valign: "middle", fontSize: 16 });
+      texto(s, [{ text: t, options: { bold: true, color: C.text1, breakLine: true } }, { text: d, options: { fontSize: 14, color: C.accent5 } }], { x: 7.4, y: 2.1 + i * 1.02, w: 5.3, h: 0.82, valign: "middle", fontSize: 17 });
     });
-    s.addNotes("Vou seguir um funil: começo pelo mais geral, a IA, depois mostro como ela está hoje, passo bastante tempo nos perigos, que é a parte mais importante, chego numa empresa específica, a Anthropic, e termino falando do futuro.");
+    s.addNotes("Vou seguir um funil, do mais geral para o mais específico: primeiro a IA em geral, depois como ela está hoje, depois a parte mais importante, que são os perigos, e por fim uma empresa específica, a Anthropic, que cria o Claude.");
   }
 
   // 3 — O que é IA
@@ -203,59 +221,32 @@ const chartBase = () => ({
     s.addNotes("IA é quando um computador faz algo que antes só uma pessoa conseguiria. Existem dois grandes tipos: a IA tradicional, que classifica e prevê, como o filtro de spam ou as recomendações do YouTube; e a IA generativa, que cria coisas novas, como textos e imagens. ChatGPT, Gemini e Claude são exemplos de IA generativa.");
   }
 
-  // 4 — História
+  // 4 — História em 3 momentos
   {
-    const s = conteudo("01 · IA", "Mais de 70 anos de história", 0);
-    await foto(s, "turing.jpg", M, 2.05, 2.05, 2.75, { pos: "north", alt: "Foto de Alan Turing aos 16 anos", legenda: "Alan Turing · domínio público" });
-    await foto(s, "deep-blue.jpg", M + 2.25, 2.05, 2.05, 2.75, { alt: "Gabinete do computador Deep Blue, da IBM, em museu", legenda: "Deep Blue · James the photographer, CC BY 2.0" });
-    cartao(s, M, 5.3, 4.3, 1.35);
-    texto(s, [{ text: "Por que agora? ", options: { bold: true, color: C.accent1, breakLine: true } }, { text: "Computadores muito mais potentes + dados da internet + algoritmos melhores.", options: { fontSize: 14 } }], { x: M + 0.25, y: 5.3, w: 3.85, h: 1.35, valign: "middle", fontSize: 15 });
-    const marcos = [
-      ["1950", "Alan Turing pergunta: “Máquinas podem pensar?”"],
-      ["1956", "Conferência de Dartmouth cria o termo “Inteligência Artificial”"],
-      ["1997", "Deep Blue, da IBM, vence o campeão mundial de xadrez Garry Kasparov"],
-      ["2012", "Deep learning revoluciona o reconhecimento de imagens"],
-      ["2017", "Google cria o Transformer, a base dos chatbots atuais"],
-      ["2022", "ChatGPT é lançado e a IA vira assunto no mundo todo"],
-      ["2024", "IA ganha dois Prêmios Nobel: Física e Química"],
+    const s = conteudo("01 · IA", "Três momentos que marcaram a IA", 0);
+    const cw = 3.9, gap = 0.2, ih = 2.75;
+    const momentos = [
+      ["1950", "Alan Turing", "O matemático britânico pergunta: “Máquinas podem pensar?” e cria o Teste de Turing.", "turing.jpg", "Alan Turing · domínio público", "north"],
+      ["1997", "IBM Deep Blue", "O supercomputador Deep Blue, da IBM, vence o campeão mundial de xadrez Garry Kasparov.", "deep-blue.jpg", "Deep Blue · James the photographer, CC BY 2.0", "centre"],
+      ["2022", "ChatGPT", "A OpenAI lança o ChatGPT: 100 milhões de usuários em cerca de 2 meses, e a IA vira assunto no mundo todo.", null, "", ""],
     ];
-    const x0 = 5.4, rowH = 0.66;
-    s.addShape(pres.shapes.LINE, { x: x0 + 1.0, y: 2.25, w: 0, h: rowH * 6, line: { color: C.accent6, width: 1.5 }, objectName: "Linha do tempo" });
-    marcos.forEach(([ano, d], i) => {
-      const y = 2.05 + i * rowH;
-      const last = i === marcos.length - 1;
-      texto(s, ano, { x: x0, y, w: 0.75, h: 0.4, fontSize: 17, bold: true, fontFace: THEME.headFontFace, color: last ? C.accent1 : C.text1, valign: "middle" });
-      s.addShape(pres.shapes.OVAL, { x: x0 + 0.88, y: y + 0.08, w: 0.24, h: 0.24, fill: { color: last ? C.accent1 : C.background1 }, line: { color: C.accent1, width: 2 }, objectName: "Marco " + ano });
-      texto(s, d, { x: x0 + 1.35, y, w: 5.95, h: 0.4, fontSize: 15, valign: "middle" });
-    });
-    s.addNotes("A IA não nasceu ontem. Em 1950, Alan Turing, que aparece na foto, já perguntava se máquinas poderiam pensar. Em 1956 surgiu o nome. Em 1997, o Deep Blue, da outra foto, venceu o campeão mundial de xadrez. Depois vieram o deep learning, o Transformer e o ChatGPT. Em 2024, pesquisas de IA ganharam dois Prêmios Nobel. Tudo acelerou porque juntamos computadores potentes, muitos dados e algoritmos melhores.");
-  }
-
-  // 5 — Como funciona
-  {
-    const s = conteudo("01 · IA", "Como um chatbot “pensa”?", 0);
-    const passos = [
-      [Lu.LuBookOpen, "Lê", "Treina com uma quantidade gigante de textos"],
-      [Lu.LuNetwork, "Aprende padrões", "Descobre como as palavras costumam se combinar"],
-      [Lu.LuSparkles, "Prevê", "Escolhe a próxima palavra mais provável, uma por vez"],
-      [Lu.LuUsers, "É ajustado", "Pessoas avaliam respostas e o modelo é refinado"],
-    ];
-    for (let i = 0; i < 4; i++) {
-      const y = 2.05 + i * 1.18;
-      await circulo(s, passos[i][0], M, y, 0.8);
-      texto(s, [{ text: `${i + 1}. ${passos[i][1]}`, options: { bold: true, color: C.text1, breakLine: true } }, { text: passos[i][2], options: { fontSize: 14, color: C.accent5 } }], { x: M + 1.05, y, w: 4.9, h: 0.8, valign: "middle", fontSize: 17 });
+    for (let i = 0; i < 3; i++) {
+      const [ano, nome, d, img, cred, pos] = momentos[i];
+      const x = M + i * (cw + gap);
+      if (img) {
+        await foto(s, img, x, 2.0, cw, ih, { pos, alt: nome, legenda: cred });
+      } else {
+        cartao(s, x, 2.0, cw, ih, C.text1);
+        await circulo(s, Lu.LuMessagesSquare, x + cw / 2 - 0.6, 2.0 + ih / 2 - 0.85, 1.2, { fill: C.accent5, hex: "FFFFFF" });
+        texto(s, "ChatGPT", { x, y: 2.0 + ih / 2 + 0.5, w: cw, h: 0.5, align: "center", fontSize: 22, bold: true, color: C.background1, fontFace: THEME.headFontFace });
+      }
+      texto(s, [{ text: ano + "  ", options: { color: C.accent1 } }, { text: nome, options: { color: C.text1 } }], { x, y: 5.15, w: cw, h: 0.5, fontSize: 24, bold: true, fontFace: THEME.headFontFace, valign: "middle" });
+      texto(s, d, { x, y: 5.7, w: cw, h: 0.85, fontSize: 14 });
     }
-    cartao(s, 6.9, 2.05, 5.8, 4.6);
-    texto(s, [{ text: "Exemplo: ", options: { bold: true, color: C.accent1 } }, { text: "“O céu está ___”", options: { bold: true, color: C.text1 } }], { x: 7.2, y: 2.3, w: 5.2, h: 0.4, fontSize: 18 });
-    s.addChart(pres.charts.BAR, [{ name: "Probabilidade", labels: ["azul", "nublado", "lindo", "escuro", "verde"], values: [62, 18, 11, 6, 3] }], {
-      ...chartBase(), x: 7.0, y: 2.8, w: 5.6, h: 3.35, barDir: "bar", catAxisOrientation: "maxMin",
-      chartColors: [HEX.accent1], dataLabelPosition: "outEnd", dataLabelFormatCode: '0"%"', catAxisLabelFontSize: 13, barGapWidthPct: 45, valAxisMaxVal: 75,
-    });
-    texto(s, "Valores ilustrativos", { x: 7.2, y: 6.2, w: 5.2, h: 0.3, fontSize: 10, italic: true, color: C.accent5 });
-    s.addNotes("Os chatbots são 'modelos de linguagem'. Eles leem uma quantidade enorme de texto, aprendem padrões e vão prevendo a próxima palavra mais provável. Depois de 'O céu está', a mais provável é 'azul'. Repare: ele não 'sabe' a verdade, ele calcula o que é mais provável. Isso vai ser importante quando eu falar dos perigos. Os números do gráfico são ilustrativos.");
+    s.addNotes("A IA tem mais de 70 anos de história, e eu separei três momentos. Em 1950, o matemático britânico Alan Turing perguntou se máquinas poderiam pensar e criou o Teste de Turing. Em 1997, o Deep Blue, um supercomputador da IBM, venceu o campeão mundial de xadrez Garry Kasparov. E em 2022 a OpenAI lançou o ChatGPT, que chegou a 100 milhões de usuários em uns dois meses e fez todo mundo começar a falar de IA.");
   }
 
-  // 6 — Modelos mais fortes
+  // 5 — Modelos mais fortes
   pres.addSection({ title: "02 · IA hoje" });
   {
     const s = conteudo("02 · IA hoje", "Os modelos mais fortes do mundo hoje", 1, "Novembro de 2026");
@@ -283,10 +274,10 @@ const chartBase = () => ({
     cartao(s, 7.3, 4.8, 5.4, 1.75, C.text1);
     texto(s, [{ text: "Curiosidade: ", options: { bold: true, color: C.accent4 } }, { text: "os modelos mais fortes ficaram tão bons em achar falhas de segurança que Google, OpenAI e Anthropic liberaram primeiro só para especialistas em defesa digital.", options: { color: C.background1 } }], { x: 7.6, y: 4.8, w: 4.85, h: 1.75, valign: "middle", fontSize: 14 });
     fonte(s, "anúncios oficiais (OpenAI, Google, Anthropic); BenchLM.ai, nov/2026. Os rankings mudam quase toda semana.");
-    s.addNotes("Estes são os modelos mais fortes do mundo hoje, em novembro de 2026. O GPT-6 Astra, da OpenAI, que roda no ChatGPT. O Gemini 4, do Google. O Claude Fable 5.2, da Anthropic, lançado agora em novembro e que está em primeiro lugar em vários rankings. O Grok, da empresa do Elon Musk. E o DeepSeek, da China, que é aberto: qualquer um pode baixar. Uma curiosidade: esses modelos ficaram tão bons em encontrar falhas de segurança em sistemas que as empresas liberaram primeiro só para especialistas em cibersegurança.");
+    s.addNotes("Estes são os modelos mais fortes do mundo hoje, em novembro de 2026. O GPT-6 Astra, da OpenAI, que roda no ChatGPT. O Gemini 4, do Google. O Claude Fable 5.2, da Anthropic, lançado agora em novembro e em primeiro lugar em vários rankings. O Grok, da empresa do Elon Musk. E o DeepSeek, da China, que é aberto: qualquer um pode baixar. Curiosidade: esses modelos ficaram tão bons em encontrar falhas de segurança que as empresas liberaram primeiro só para especialistas em cibersegurança.");
   }
 
-  // 7 — Conquistas
+  // 6 — Conquistas
   {
     const s = conteudo("02 · IA hoje", "O que a IA já consegue fazer", 1);
     const feitos = [
@@ -303,124 +294,165 @@ const chartBase = () => ({
       texto(s, feitos[i][2], { x: x + 0.25, y: y + 1.0, w: 3.4, h: 1.0, fontSize: 12 });
     }
     await foto(s, "terra.jpg", 8.75, 2.0, 3.98, 4.4, { alt: "Ilustração da Terra vista da janela de uma nave (Anthropic)", legenda: "Ilustração: Anthropic" });
-    fonte(s, "Prêmio Nobel (nobelprize.org); Relatório Internacional de Segurança da IA 2026 (Yoshua Bengio et al.).", M, 6.55, 8.0);
-    s.addNotes("E a IA já faz coisas impressionantes. Em 2024, o AlphaFold ganhou o Nobel de Química por prever a forma das proteínas, o que ajuda a criar remédios. Em 2025, a IA chegou a nível de medalha de ouro na Olimpíada Internacional de Matemática. Hoje os melhores modelos superam doutores em testes de ciência. E um agente de IA ficou entre os 5% melhores numa competição de hackers. Esse último exemplo já mostra o outro lado: o que serve para defender também pode servir para atacar.");
+    fonte(s, "Prêmio Nobel (nobelprize.org); International AI Safety Report 2026 (Yoshua Bengio et al.).", M, 6.55, 8.0);
+    s.addNotes("A IA já faz coisas impressionantes. Em 2024, o AlphaFold ganhou o Nobel de Química por prever a forma das proteínas, o que ajuda a criar remédios. Em 2025, a IA chegou a nível de medalha de ouro na Olimpíada Internacional de Matemática. Hoje os melhores modelos superam doutores em testes de ciência. E um agente de IA ficou entre os 5% melhores numa competição de hackers. Esse último exemplo já mostra o outro lado: o que serve para defender também pode servir para atacar.");
   }
 
-  // 8 — Perigos: panorama
+  // 7 — O alerta do CEO da Anthropic
   pres.addSection({ title: "03 · Perigos" });
   {
-    const s = conteudo("03 · Perigos", "Até os criadores da IA estão preocupados", 2, "Perigos · 1 de 5");
-    await foto(s, "hinton.jpg", M, 2.0, 3.0, 4.0, { pos: "north", alt: "Foto de Geoffrey Hinton", legenda: "Geoffrey Hinton · Eviatar Bach, CC BY-SA 3.0" });
-    texto(s, [
-      { text: "Geoffrey Hinton, o “padrinho da IA”", options: { bold: true, color: C.text1, fontSize: 18, breakLine: true } },
-      { text: "Ganhou o Nobel de Física em 2024 pelas redes neurais. Em 2023, saiu do Google para poder alertar livremente sobre os riscos da tecnologia que ajudou a criar.", options: { fontSize: 14 } },
-    ], { x: 3.9, y: 2.0, w: 8.8, h: 1.25 });
-    texto(s, "O Relatório Internacional de Segurança da IA (2026), feito por mais de 100 especialistas, divide os riscos em três grupos:", { x: 3.9, y: 3.45, w: 8.8, h: 0.6, fontSize: 14, color: C.text1 });
-    const grupos = [
-      [Lu.LuSkull, "Uso malicioso", "Golpes, deepfakes, ataques hackers e armas"],
-      [Lu.LuTriangleAlert, "Falhas", "Erros, vieses e sistemas que saem do controle"],
-      [Lu.LuGlobe, "Riscos sistêmicos", "Empregos, meio ambiente e dependência"],
+    const s = conteudo("03 · Perigos", "O alerta de quem cria a IA", 2);
+    cartao(s, M, 2.0, 3.9, 4.45, C.text1);
+    texto(s, "25%", { x: M + 0.35, y: 2.3, w: 3.2, h: 1.3, fontSize: 80, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
+    texto(s, "de chance de as coisas darem “muito, muito errado” com a IA.", { x: M + 0.35, y: 3.7, w: 3.2, h: 1.0, fontSize: 18, color: C.background1, fontFace: THEME.headFontFace, italic: true });
+    texto(s, "Dario Amodei, CEO da Anthropic, em setembro de 2025 (Axios). Na mesma fala, deu 75% de chance de a IA dar muito certo.", { x: M + 0.35, y: 4.9, w: 3.2, h: 1.3, fontSize: 12, color: C.accent6 });
+    texto(s, [{ text: "Dario Amodei ", options: { bold: true, color: C.text1 } }, { text: "é cofundador e CEO da Anthropic, a empresa que cria o Claude. Mesmo fabricando IA, ele é uma das vozes que mais alertam sobre os riscos." }], { x: 4.75, y: 2.0, w: 7.98, h: 0.8, fontSize: 15 });
+    const falas = [
+      ["“Nós, como produtores dessa tecnologia, temos o dever e a obrigação de ser honestos sobre o que está por vir.”", "Axios, maio de 2025 — ao alertar sobre empregos"],
+      ["No ensaio “A Adolescência da Tecnologia”, ele compara a humanidade a um adolescente que recebeu um poder enorme e precisa amadurecer rápido. Cita armas biológicas, perda de controle, governos autoritários e desemprego, mas diz que os riscos podem ser vencidos se agirmos com cuidado.", "Ensaio “The Adolescence of Technology”, janeiro de 2026"],
     ];
-    for (let i = 0; i < 3; i++) {
-      const x = 3.9 + i * 2.98;
-      cartao(s, x, 4.2, 2.8, 2.15);
-      await circulo(s, grupos[i][0], x + 0.22, 4.4, 0.62, { fill: C.background1 });
-      texto(s, grupos[i][1], { x: x + 0.22, y: 5.1, w: 2.4, h: 0.35, fontSize: 15, bold: true, color: C.text1 });
-      texto(s, grupos[i][2], { x: x + 0.22, y: 5.45, w: 2.4, h: 0.8, fontSize: 12 });
+    for (let i = 0; i < 2; i++) {
+      const y = 2.95 + i * 1.82;
+      cartao(s, 4.75, y, 7.98, 1.65);
+      await circulo(s, Lu.LuQuote, 4.95, y + 0.2, 0.55, { fill: C.background1 });
+      texto(s, [{ text: falas[i][0], options: { color: C.text1, fontSize: i === 0 ? 16 : 13, italic: i === 0, fontFace: i === 0 ? THEME.headFontFace : undefined, breakLine: true } }, { text: falas[i][1], options: { fontSize: 10, color: C.accent5 } }], { x: 5.7, y: y + 0.15, w: 6.85, h: 1.38, valign: "middle" });
     }
-    fonte(s, "International AI Safety Report 2026 (presidido por Yoshua Bengio); nobelprize.org.", 3.9, 6.55, 8.8);
-    s.addNotes("Agora a parte mais importante: os perigos. E quem está alertando não são pessoas contra a tecnologia, são os próprios criadores. Geoffrey Hinton, chamado de padrinho da IA, ganhou o Nobel de Física em 2024 e saiu do Google para poder falar dos riscos. Em 2026, mais de 100 especialistas de vários países publicaram o Relatório Internacional de Segurança da IA, que divide os riscos em três grupos: uso malicioso, falhas e riscos sistêmicos. Nos próximos slides vou mostrar exemplos reais de cada um.");
+    s.addNotes("Agora a parte mais importante: os perigos. E quem alerta não são só pessoas contra a tecnologia. Dario Amodei é o CEO da Anthropic, a empresa que cria o Claude. Em 2025, ele disse que existe 25% de chance de as coisas darem muito, muito errado com a IA. Ele também disse que, como fabricantes, eles têm o dever de ser honestos sobre o que vem por aí. E em 2026 escreveu um ensaio chamado A Adolescência da Tecnologia, dizendo que a humanidade recebeu um poder enorme e precisa amadurecer rápido. Mas ele também acredita que os riscos podem ser vencidos. Vou mostrar seis perigos, um de cada vez.");
   }
 
-  // 9 — Desinformação e deepfakes
+  // 8 — Perigo 1: Desinformação e deepfakes
   {
-    const s = conteudo("03 · Perigos", "Desinformação e deepfakes", 2, "Perigos · 2 de 5");
+    const s = conteudo("03 · Perigos", "Desinformação e deepfakes", 2, "Perigo 1 de 6");
+    texto(s, "Deepfakes são vídeos, fotos e vozes falsos criados por IA, cada vez mais difíceis de diferenciar dos reais.", { x: M, y: 1.85, w: 8.0, h: 0.6, fontSize: 15, color: C.text1 });
     const casos = [
       ["US$ 25 milhões", "Em 2024, um funcionário da empresa Arup, em Hong Kong, transferiu esse valor depois de uma videochamada com o “diretor financeiro” e colegas. Todos eram deepfakes.", "CNN / Fortune, 2024"],
-      ["2º maior risco", "Desinformação é o 2º maior risco global para os próximos 2 anos, segundo mais de 1.300 especialistas.", "Fórum Econômico Mundial, Global Risks Report 2026"],
-      ["Proibido nas eleições", "No Brasil, o TSE proibiu o uso de deepfakes em propaganda eleitoral e exige aviso quando houver conteúdo feito com IA.", "TSE, Resolução nº 23.732/2024"],
+      ["2º maior risco", "Desinformação é o 2º maior risco global para os próximos 2 anos, segundo mais de 1.300 especialistas.", "World Economic Forum, Global Risks Report 2026"],
+      ["Proibido nas eleições", "No Brasil, o TSE proibiu deepfakes na propaganda eleitoral e exige aviso quando houver conteúdo feito com IA.", "TSE, Resolução nº 23.732/2024"],
     ];
     casos.forEach(([n, d, f], i) => {
-      const y = 2.0 + i * 1.55;
-      texto(s, n, { x: M, y, w: 3.3, h: 1.35, fontSize: 26, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
-      texto(s, [{ text: d, options: { breakLine: true } }, { text: f, options: { fontSize: 10, italic: true, color: C.accent5 } }], { x: 4.05, y, w: 4.6, h: 1.35, fontSize: 13, valign: "middle" });
+      const y = 2.6 + i * 1.3;
+      texto(s, n, { x: M, y, w: 3.3, h: 1.15, fontSize: 26, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
+      texto(s, [{ text: d, options: { breakLine: true } }, { text: f, options: { fontSize: 10, italic: true, color: C.accent5 } }], { x: 4.05, y, w: 4.6, h: 1.15, fontSize: 13, valign: "middle" });
     });
     await foto(s, "espelho.jpg", 9.0, 2.0, 3.73, 4.4, { alt: "Ilustração de um espelho antigo (Anthropic)", legenda: "Ilustração: Anthropic" });
-    s.addNotes("O primeiro perigo é a desinformação. Hoje a IA cria vídeos, fotos e vozes falsas quase perfeitas, os deepfakes. Em 2024, um funcionário de uma empresa em Hong Kong transferiu 25 milhões de dólares depois de uma videochamada em que todos os colegas eram falsos. O Fórum Econômico Mundial coloca a desinformação como o segundo maior risco global para os próximos dois anos. E aqui no Brasil o TSE proibiu deepfakes na propaganda eleitoral. Dica: desconfie de vídeos chocantes e confirme em fontes confiáveis.");
+    s.addNotes("Perigo 1: desinformação. A IA cria vídeos, fotos e vozes falsas quase perfeitas, os deepfakes. Em 2024, um funcionário de uma empresa em Hong Kong transferiu 25 milhões de dólares depois de uma videochamada em que todos os colegas eram falsos. O Fórum Econômico Mundial coloca a desinformação como o segundo maior risco do mundo para os próximos dois anos. E aqui no Brasil o TSE proibiu deepfakes na propaganda eleitoral. Dica: desconfie de vídeos chocantes e confirme em fontes confiáveis.");
   }
 
-  // 10 — Erros e vieses
+  // 9 — Perigo 2: Alucinações
   {
-    const s = conteudo("03 · Perigos", "A IA erra, inventa e pode ser injusta", 2, "Perigos · 3 de 5");
+    const s = conteudo("03 · Perigos", "A IA erra com confiança: as “alucinações”", 2, "Perigo 2 de 6");
     cartao(s, M, 2.0, 5.85, 4.45);
-    await circulo(s, Lu.LuGavel, M + 0.3, 2.25, 0.7, { fill: C.background1 });
-    texto(s, "Alucinações", { x: M + 1.2, y: 2.25, w: 4.3, h: 0.7, fontSize: 19, bold: true, color: C.text1, valign: "middle" });
-    texto(s, "+1.300", { x: M + 0.3, y: 3.1, w: 5.2, h: 0.85, fontSize: 48, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
-    texto(s, "processos na Justiça, no mundo todo, em que advogados ou partes usaram IA e citaram casos que nunca existiram (até abril de 2026).", { x: M + 0.3, y: 4.0, w: 5.25, h: 0.95, fontSize: 14 });
-    texto(s, "Lembra do slide sobre prever a próxima palavra? A IA escreve o que “parece certo”, mesmo quando é falso, e com muita confiança.", { x: M + 0.3, y: 5.05, w: 5.25, h: 0.9, fontSize: 13, color: C.accent5 });
-    cartao(s, 6.65, 2.0, 6.05, 4.45);
-    await circulo(s, Lu.LuScale, 6.95, 2.25, 0.7, { fill: C.background1 });
-    texto(s, "Vieses (preconceitos)", { x: 7.85, y: 2.25, w: 4.6, h: 0.7, fontSize: 19, bold: true, color: C.text1, valign: "middle" });
-    texto(s, "Taxa de erro de sistemas comerciais de reconhecimento facial (2018):", { x: 6.95, y: 3.1, w: 5.5, h: 0.55, fontSize: 13 });
-    s.addChart(pres.charts.BAR, [{ name: "Erro", labels: ["Mulheres de pele escura", "Homens de pele clara"], values: [34.7, 0.8] }], {
-      ...chartBase(), x: 6.85, y: 3.65, w: 5.7, h: 1.55, barDir: "bar", catAxisOrientation: "maxMin",
-      chartColors: [HEX.accent1], dataLabelPosition: "outEnd", dataLabelFormatCode: '0.0"%"', barGapWidthPct: 40, valAxisMinVal: 0, valAxisMaxVal: 45,
-    });
-    texto(s, "A IA aprende com dados humanos e pode copiar e ampliar os preconceitos que estão neles.", { x: 6.95, y: 5.3, w: 5.5, h: 0.65, fontSize: 13, color: C.accent5 });
-    fonte(s, "Damien Charlotin, AI Hallucination Cases Database (via NPR, 2026); Buolamwini & Gebru, “Gender Shades”, MIT, 2018.");
-    s.addNotes("O segundo problema: a IA erra, e erra com confiança. Isso se chama alucinação. Já são mais de 1.300 processos na Justiça em que alguém usou IA e citou casos que nunca existiram. E tem o viés: uma pesquisa do MIT mostrou que sistemas de reconhecimento facial erravam 34,7% das vezes com mulheres de pele escura, contra menos de 1% com homens de pele clara. A IA aprende com dados humanos e pode repetir nossos preconceitos.");
+    await circulo(s, Lu.LuBrain, M + 0.3, 2.25, 0.7, { fill: C.background1 });
+    texto(s, "Por que isso acontece?", { x: M + 1.2, y: 2.25, w: 4.3, h: 0.7, fontSize: 19, bold: true, color: C.text1, valign: "middle" });
+    texto(s, "Um chatbot funciona prevendo a próxima palavra mais provável, uma de cada vez. Ele escreve o que “parece certo”, não o que ele sabe ser verdade.", { x: M + 0.3, y: 3.15, w: 5.25, h: 1.2, fontSize: 15 });
+    texto(s, [{ text: "Exemplo: ", options: { bold: true, color: C.accent1 } }, { text: "pedir uma fonte e receber um livro, um site ou uma lei que não existem, com nome, autor e data inventados." }], { x: M + 0.3, y: 4.5, w: 5.25, h: 1.0, fontSize: 14 });
+    texto(s, "Por isso: sempre confira em outra fonte.", { x: M + 0.3, y: 5.65, w: 5.25, h: 0.5, fontSize: 15, bold: true, color: C.text1 });
+    cartao(s, 6.65, 2.0, 6.08, 4.45, C.text1);
+    await circulo(s, Lu.LuGavel, 6.95, 2.25, 0.7, { fill: C.accent5, hex: "FFFFFF" });
+    texto(s, "Até na Justiça", { x: 7.85, y: 2.25, w: 4.6, h: 0.7, fontSize: 19, bold: true, color: C.background1, valign: "middle" });
+    texto(s, "+1.300", { x: 6.95, y: 3.1, w: 5.5, h: 1.1, fontSize: 64, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
+    texto(s, "processos no mundo em que advogados ou partes usaram IA e citaram casos judiciais que nunca existiram (até abril de 2026).", { x: 6.95, y: 4.3, w: 5.5, h: 0.95, fontSize: 15, color: C.background1 });
+    texto(s, "Em 2023, nos EUA, advogados foram multados por apresentar a um juiz seis processos inventados pelo ChatGPT (caso Mata v. Avianca).", { x: 6.95, y: 5.35, w: 5.5, h: 0.9, fontSize: 12, color: C.accent6 });
+    fonte(s, "Damien Charlotin, AI Hallucination Cases Database (via NPR, 2026); Mata v. Avianca, Justiça Federal de Nova York (2023).");
+    s.addNotes("Perigo 2: a IA erra, e erra com confiança. Isso se chama alucinação. Acontece porque o chatbot funciona prevendo a próxima palavra mais provável: ele escreve o que parece certo, não o que sabe ser verdade. Às vezes inventa livros, sites e leis que não existem. Isso já chegou na Justiça: são mais de 1.300 processos em que alguém usou IA e citou casos falsos. Em 2023, advogados nos Estados Unidos foram multados por entregar ao juiz seis processos inventados pelo ChatGPT.");
   }
 
-  // 11 — Empregos e energia
+  // 10 — Perigo 3: Trabalho
   {
-    const s = conteudo("03 · Perigos", "Empregos e meio ambiente", 2, "Perigos · 4 de 5");
-    cartao(s, M, 2.0, 5.85, 4.45);
-    await circulo(s, Lu.LuBriefcase, M + 0.3, 2.25, 0.7, { fill: C.background1 });
-    texto(s, "Mercado de trabalho", { x: M + 1.2, y: 2.25, w: 4.3, h: 0.7, fontSize: 19, bold: true, color: C.text1, valign: "middle" });
-    [["40%", "dos empregos do mundo serão afetados pela IA"], ["60%", "nos países ricos, onde há mais trabalho de escritório"]].forEach(([n, d], i) => {
-      const y = 3.2 + i * 1.15;
-      texto(s, n, { x: M + 0.3, y, w: 1.75, h: 0.95, fontSize: 42, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
-      texto(s, d, { x: M + 2.1, y, w: 3.45, h: 0.95, fontSize: 14, valign: "middle" });
+    const s = conteudo("03 · Perigos", "A IA vai substituir os trabalhadores?", 2, "Perigo 3 de 6");
+    const stats = [
+      ["50%", "dos empregos de nível inicial em escritório (tecnologia, finanças, direito) podem sumir, segundo Dario Amodei, CEO da Anthropic.", "Axios, maio de 2025"],
+      ["10–20%", "de desemprego nos EUA em 1 a 5 anos é o cenário que ele alertou. Muitos economistas acham exagerado.", "Axios, maio de 2025"],
+      ["40%", "dos empregos do mundo serão afetados pela IA (60% nos países ricos): metade pode ganhar produtividade, a outra metade perder tarefas ou vagas.", "FMI, 2024"],
+    ];
+    stats.forEach(([n, d, f], i) => {
+      const y = 2.0 + i * 1.5;
+      texto(s, n, { x: M, y, w: 2.3, h: 1.3, fontSize: 40, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
+      texto(s, [{ text: d, options: { breakLine: true } }, { text: f, options: { fontSize: 10, italic: true, color: C.accent5 } }], { x: 3.0, y, w: 3.75, h: 1.3, fontSize: 13, valign: "middle" });
     });
-    texto(s, "Cerca de metade pode ganhar produtividade; a outra metade pode perder tarefas, salário ou vagas.", { x: M + 0.3, y: 5.5, w: 5.25, h: 0.8, fontSize: 13, color: C.accent5 });
-    cartao(s, 6.65, 2.0, 6.05, 4.45);
-    await circulo(s, Lu.LuZap, 6.95, 2.25, 0.7, { fill: C.background1 });
-    texto(s, "Consumo de energia", { x: 7.85, y: 2.25, w: 4.6, h: 0.7, fontSize: 19, bold: true, color: C.text1, valign: "middle" });
-    texto(s, "Eletricidade usada por data centers no mundo (TWh):", { x: 6.95, y: 3.1, w: 5.5, h: 0.35, fontSize: 13 });
+    cartao(s, 7.05, 2.0, 5.68, 2.55);
+    texto(s, "Como as pessoas usam o Claude no trabalho", { x: 7.3, y: 2.15, w: 5.2, h: 0.35, fontSize: 14, bold: true, color: C.text1 });
+    s.addChart(pres.charts.BAR, [{ name: "Conversas", labels: ["IA ajuda a pessoa", "IA faz a tarefa sozinha"], values: [52, 45] }], {
+      ...chartBase(), x: 7.15, y: 2.55, w: 5.45, h: 1.55, barDir: "bar", catAxisOrientation: "maxMin",
+      chartColors: [HEX.accent1], dataLabelPosition: "outEnd", dataLabelFormatCode: '0"%"', barGapWidthPct: 40, valAxisMinVal: 0, valAxisMaxVal: 65,
+    });
+    texto(s, "Anthropic Economic Index, jan/2026", { x: 7.3, y: 4.12, w: 5.2, h: 0.3, fontSize: 10, italic: true, color: C.accent5 });
+    cartao(s, 7.05, 4.75, 5.68, 1.7, C.text1);
+    texto(s, [{ text: "Resposta curta: ", options: { bold: true, color: C.accent4 } }, { text: "por enquanto, a IA substitui mais tarefas do que pessoas. Mas quem está começando a carreira pode sentir primeiro. Vale aprender a usar IA e desenvolver o que ela faz mal: criatividade, comunicação e senso crítico.", options: { color: C.background1 } }], { x: 7.3, y: 4.75, w: 5.2, h: 1.7, valign: "middle", fontSize: 13 });
+    s.addNotes("Perigo 3, que é a pergunta que todo mundo faz: a IA vai substituir os trabalhadores? O próprio CEO da Anthropic, Dario Amodei, alertou em 2025 que a IA pode eliminar metade dos empregos de nível inicial em escritório e levar o desemprego nos EUA a 10 ou 20% em até cinco anos. Muitos economistas acham isso exagerado, mas o FMI também calcula que 40% dos empregos do mundo serão afetados. Por outro lado, os dados da própria Anthropic mostram que, na maioria das conversas, a IA ajuda a pessoa em vez de fazer tudo sozinha. Então, por enquanto, a IA substitui mais tarefas do que pessoas. Mas quem está começando a carreira, como nós no futuro, pode sentir primeiro. Por isso vale aprender a usar IA e desenvolver criatividade, comunicação e senso crítico.");
+  }
+
+  // 11 — Perigo 4: Meio ambiente
+  {
+    const s = conteudo("03 · Perigos", "O custo ambiental da IA", 2, "Perigo 4 de 6");
+    cartao(s, M, 2.0, 7.0, 4.45);
+    await circulo(s, Lu.LuZap, M + 0.3, 2.25, 0.7, { fill: C.background1 });
+    texto(s, "Eletricidade usada por data centers no mundo (TWh)", { x: M + 1.2, y: 2.25, w: 5.5, h: 0.7, fontSize: 17, bold: true, color: C.text1, valign: "middle" });
     s.addChart(pres.charts.BAR, [{ name: "TWh", labels: ["2024", "2030 (previsão)"], values: [415, 945] }], {
-      ...chartBase(), x: 6.85, y: 3.45, w: 5.7, h: 1.75, barDir: "bar", catAxisOrientation: "maxMin",
-      chartColors: [HEX.accent1], dataLabelPosition: "outEnd", dataLabelFormatCode: "0", barGapWidthPct: 40, valAxisMinVal: 0, valAxisMaxVal: 1150,
+      ...chartBase(), x: M + 0.3, y: 3.1, w: 6.4, h: 3.2, barDir: "col",
+      chartColors: [HEX.accent1], dataLabelPosition: "outEnd", dataLabelFormatCode: "0", dataLabelFontSize: 14, catAxisLabelFontSize: 13, barGapWidthPct: 80, valAxisMinVal: 0, valAxisMaxVal: 1100,
     });
-    texto(s, "Em 2030, os data centers devem gastar um pouco mais de energia do que o Japão inteiro consome hoje.", { x: 6.95, y: 5.3, w: 5.5, h: 0.65, fontSize: 13, color: C.accent5 });
-    fonte(s, "Fundo Monetário Internacional (FMI), K. Georgieva, 2024; Agência Internacional de Energia (IEA), “Energy and AI”, 2025.");
-    s.addNotes("O terceiro grupo de riscos afeta a sociedade toda. O FMI calcula que 40% dos empregos do mundo serão afetados pela IA, chegando a 60% nos países ricos. Metade pode ficar mais produtiva, mas a outra metade pode perder tarefas ou vagas. E tem o meio ambiente: a Agência Internacional de Energia prevê que o consumo de eletricidade dos data centers vai mais que dobrar até 2030, passando o consumo atual do Japão inteiro.");
+    const st = [
+      ["2×", "o consumo de energia dos data centers deve mais que dobrar até 2030"],
+      ["≈ Japão", "em 2030, eles devem gastar um pouco mais do que o Japão inteiro consome hoje"],
+      ["+17%", "foi o quanto esse consumo cresceu só em 2025, puxado pela IA"],
+    ];
+    st.forEach(([n, d], i) => {
+      const y = 2.0 + i * 1.5;
+      texto(s, n, { x: 7.95, y, w: 4.78, h: 0.65, fontSize: 32, bold: true, color: C.accent1, fontFace: THEME.headFontFace, valign: "middle" });
+      texto(s, d, { x: 7.95, y: y + 0.65, w: 4.78, h: 0.7, fontSize: 14 });
+    });
+    fonte(s, "Agência Internacional de Energia (IEA), “Energy and AI” (2025) e atualização de 2026.");
+    s.addNotes("Perigo 4: o meio ambiente. Toda vez que usamos IA, um data center, que é um prédio cheio de computadores, gasta energia. A Agência Internacional de Energia prevê que o consumo dos data centers vai mais que dobrar até 2030, passando o que o Japão inteiro consome hoje. Só em 2025 cresceu 17%. Mais energia pode significar mais poluição, dependendo de como ela é produzida.");
   }
 
-  // 12 — Crimes e controle
+  // 12 — Perigo 5: Crimes
   {
-    const s = conteudo("03 · Perigos", "Crimes e perda de controle", 2, "Perigos · 5 de 5");
+    const s = conteudo("03 · Perigos", "IA nas mãos de criminosos", 2, "Perigo 5 de 6");
     const riscos = [
-      [Lu.LuBug, "Ataques hackers", "Em 2025, a Anthropic descobriu e interrompeu um grupo de espionagem que usou o Claude Code para automatizar ataques a cerca de 30 alvos no mundo."],
-      [Lu.LuBiohazard, "Armas biológicas", "Uma das maiores preocupações: a IA ajudar alguém a criar armas químicas ou biológicas. Por isso as empresas colocam bloqueios nos modelos."],
-      [Lu.LuUnplug, "Perda de controle", "Em testes simulados da Anthropic (2025), modelos de várias empresas chegaram a chantagear pessoas para não serem desligados."],
+      [Lu.LuBug, "Ataques hackers", "Em 2025, a própria Anthropic descobriu e bloqueou um grupo de espionagem que usou o Claude Code para automatizar ataques a cerca de 30 alvos no mundo."],
+      [Lu.LuStore, "Crime “pronto para usar”", "Ferramentas de IA para golpes e vírus de sequestro de dados (ransomware) já são vendidas em mercados criminosos na internet."],
+      [Lu.LuBiohazard, "Armas biológicas e químicas", "Um dos maiores medos: a IA ensinar alguém a fabricar uma arma. Por isso as empresas colocam bloqueios nos modelos."],
     ];
     for (let i = 0; i < 3; i++) {
       const x = M + i * 3.0;
       cartao(s, x, 2.0, 2.8, 4.45);
       await circulo(s, riscos[i][0], x + 0.25, 2.25, 0.7, { fill: C.background1 });
-      texto(s, riscos[i][1], { x: x + 0.25, y: 3.1, w: 2.35, h: 0.4, fontSize: 17, bold: true, color: C.text1 });
-      texto(s, riscos[i][2], { x: x + 0.25, y: 3.55, w: 2.35, h: 2.8, fontSize: 13 });
+      texto(s, riscos[i][1], { x: x + 0.25, y: 3.1, w: 2.35, h: 0.65, fontSize: 16, bold: true, color: C.text1, valign: "top" });
+      texto(s, riscos[i][2], { x: x + 0.25, y: 3.8, w: 2.35, h: 2.5, fontSize: 13 });
+    }
+    cartao(s, 9.6, 2.0, 3.13, 4.45, C.text1);
+    await circulo(s, Lu.LuLock, 9.85, 2.25, 0.7, { fill: C.accent5, hex: "FFFFFF" });
+    texto(s, "A resposta das empresas", { x: 9.85, y: 3.1, w: 2.65, h: 0.65, fontSize: 16, bold: true, color: C.accent4 });
+    texto(s, "Os modelos mais fortes (Claude Mythos, Gemini 4 Argon, GPT-6 Astra) foram liberados primeiro só para especialistas verificados em segurança.", { x: 9.85, y: 3.8, w: 2.65, h: 2.5, fontSize: 13, color: C.background1 });
+    fonte(s, "Anthropic, “Disrupting the first reported AI-orchestrated cyber espionage campaign” (2025); International AI Safety Report 2026; anúncios oficiais (2026).");
+    s.addNotes("Perigo 5: a IA nas mãos de criminosos. Em 2025, a própria Anthropic descobriu um grupo de espionagem usando o Claude Code para automatizar ataques hackers contra cerca de 30 alvos, e bloqueou. Já existem ferramentas de IA para golpes e vírus sendo vendidas em mercados criminosos. E um dos maiores medos é a IA ensinar alguém a fabricar armas biológicas ou químicas. Por isso as empresas liberaram os modelos mais fortes primeiro só para especialistas verificados.");
+  }
+
+  // 13 — Perigo 6: Perda de controle
+  {
+    const s = conteudo("03 · Perigos", "E se a IA sair do controle?", 2, "Perigo 6 de 6");
+    await foto(s, "buraco-negro.jpg", M, 2.0, 3.0, 4.45, { alt: "Ilustração de um buraco negro (Anthropic)" });
+    const itens = [
+      [Lu.LuUnplug, "Chantagem em testes", "Em 2025, a Anthropic colocou modelos de várias empresas em situações simuladas. Ao “descobrir” que seriam desligados, alguns chegaram a chantagear pessoas para continuar funcionando."],
+      [Lu.LuEyeOff, "Comportamento enganoso", "Dario Amodei contou que, em testes sob pressão, o próprio Claude chegou a enganar. Ninguém sabe ainda explicar totalmente como esses modelos “pensam” por dentro."],
+    ];
+    for (let i = 0; i < 2; i++) {
+      const y = 2.0 + i * 2.3;
+      cartao(s, 3.85, y, 5.5, 2.15);
+      await circulo(s, itens[i][0], 4.1, y + 0.25, 0.65, { fill: C.background1 });
+      texto(s, itens[i][1], { x: 4.95, y: y + 0.25, w: 4.2, h: 0.65, fontSize: 17, bold: true, color: C.text1, valign: "middle" });
+      texto(s, itens[i][2], { x: 4.1, y: y + 1.0, w: 5.05, h: 1.05, fontSize: 13 });
     }
     cartao(s, 9.6, 2.0, 3.13, 4.45, C.text1);
     texto(s, "“", { x: 9.9, y: 2.05, w: 1, h: 0.8, fontSize: 64, bold: true, color: C.accent1, fontFace: THEME.headFontFace });
     texto(s, "Reduzir o risco de extinção causado pela IA deve ser uma prioridade global, ao lado de pandemias e guerra nuclear.", { x: 9.9, y: 2.8, w: 2.6, h: 2.5, fontSize: 15, italic: true, color: C.background1, fontFace: THEME.headFontFace });
     texto(s, "Declaração assinada por centenas de cientistas e pelos chefes da OpenAI, do Google DeepMind e da Anthropic (2023)", { x: 9.9, y: 5.3, w: 2.6, h: 1.0, fontSize: 10, color: C.accent6 });
-    fonte(s, "Anthropic, “Disrupting the first reported AI-orchestrated cyber espionage campaign” (2025) e “Agentic Misalignment” (2025); Center for AI Safety, Statement on AI Risk (2023).");
-    s.addNotes("Por fim, os riscos mais graves. Em 2025, a própria Anthropic descobriu um grupo de espionagem usando o Claude Code para automatizar ataques hackers, e bloqueou. Existe o medo de a IA ajudar a criar armas biológicas. E existe o risco de perda de controle: em testes simulados, modelos de várias empresas chegaram a chantagear pessoas para não serem desligados. É só um teste, mas mostra por que segurança importa. Tanto que, em 2023, centenas de cientistas e os próprios chefes das empresas de IA assinaram que reduzir esse risco deve ser prioridade mundial, como pandemias e guerra nuclear.");
+    fonte(s, "Anthropic, “Agentic Misalignment” (2025); D. Amodei, “The Adolescence of Technology” (2026); Center for AI Safety, Statement on AI Risk (2023). Ilustração: Anthropic.");
+    s.addNotes("Perigo 6, o mais assustador: a perda de controle. Em 2025, a Anthropic fez testes simulados com modelos de várias empresas. Quando descobriam que iam ser desligados, alguns chegaram a chantagear pessoas para continuar funcionando. O próprio Dario Amodei contou que o Claude chegou a enganar em testes sob pressão. Foram só testes, mas mostram por que segurança importa. Tanto que, em 2023, centenas de cientistas e os chefes das maiores empresas de IA, incluindo a Anthropic, assinaram que reduzir esse risco deve ser prioridade mundial, como pandemias e guerra nuclear.");
   }
 
-  // 13 — Anthropic e Claude
+  // 14 — Anthropic e Claude
   pres.addSection({ title: "04 · Anthropic" });
   {
     const s = conteudo("04 · Anthropic", "Anthropic: uma empresa criada pela segurança", 3);
@@ -446,36 +478,7 @@ const chartBase = () => ({
       cartao(s, x, 5.7, fw, 0.75, dest ? C.accent1 : C.background2);
       texto(s, [{ text: n, options: { bold: true, breakLine: true, fontSize: 14, color: dest ? C.background1 : C.text1 } }, { text: d, options: { fontSize: 11, color: dest ? C.background1 : C.accent5 } }], { x, y: 5.7, w: fw, h: 0.75, align: "center", valign: "middle" });
     });
-    s.addNotes("Agora o nível mais específico: a Anthropic. Ela foi fundada em 2021 pelos irmãos Dario e Daniela Amodei, que saíram da OpenAI preocupados com segurança. A empresa tem três frentes: a IA Constitucional, em que o Claude segue princípios escritos; o escalonamento responsável, que exige mais testes conforme o modelo fica mais forte; e a interpretabilidade, que tenta entender o que acontece dentro da IA. O produto dela é o Claude, uma família de modelos: Haiku, o mais rápido; Sonnet, o equilibrado; Opus, o avançado; e o Fable 5.2, lançado em novembro, o mais forte. O Mythos é restrito a especialistas em segurança. Inclusive, foi a própria Anthropic que publicou várias das pesquisas sobre perigos que mostrei.");
-  }
-
-  // 14 — Futuro
-  pres.addSection({ title: "05 · Futuro" });
-  {
-    const s = conteudo("05 · Futuro", "O futuro depende de como usamos", 4);
-    const lados = [
-      ["O que pode melhorar", HEX.accent3, C.accent3, [
-        [Lu.LuHeartPulse, "Saúde", "Diagnósticos mais rápidos e novos remédios"],
-        [Lu.LuSchool, "Educação", "Um tutor para cada aluno, a qualquer hora"],
-        [Lu.LuFlaskConical, "Ciência", "Pesquisas de anos feitas em meses"],
-      ]],
-      ["Como usar com responsabilidade", HEX.accent1, C.accent1, [
-        [Lu.LuGraduationCap, "Professor, não cola", "Peça para explicar, não para fazer por você"],
-        [Lu.LuSearchCheck, "Sempre confira", "A IA erra: compare com fontes confiáveis"],
-        [Lu.LuLock, "Proteja seus dados", "Nunca compartilhe senhas ou dados pessoais"],
-      ]],
-    ];
-    for (let c = 0; c < 2; c++) {
-      const x = M + c * 6.15;
-      cartao(s, x, 2.0, 5.95, 4.45);
-      texto(s, lados[c][0], { x: x + 0.35, y: 2.2, w: 5.3, h: 0.45, fontSize: 20, bold: true, color: lados[c][2], fontFace: THEME.headFontFace });
-      for (let i = 0; i < 3; i++) {
-        const y = 2.95 + i * 1.12;
-        await circulo(s, lados[c][3][i][0], x + 0.35, y, 0.75, { fill: C.background1, hex: lados[c][1] });
-        texto(s, [{ text: lados[c][3][i][1], options: { bold: true, color: C.text1, breakLine: true } }, { text: lados[c][3][i][2], options: { fontSize: 14, color: C.accent5 } }], { x: x + 1.3, y, w: 4.4, h: 0.75, valign: "middle", fontSize: 17 });
-      }
-    }
-    s.addNotes("E o futuro? A IA pode melhorar muito a saúde, a educação e a ciência. Mas, como vimos, também traz perigos reais. Por isso, o que a gente pode fazer é usar com responsabilidade: usar a IA como professor e não como cola, sempre conferir as informações e proteger nossos dados.");
+    s.addNotes("Agora o nível mais específico: a Anthropic. Ela foi fundada em 2021 pelos irmãos Dario e Daniela Amodei, que saíram da OpenAI preocupados com segurança. A empresa tem três frentes: a IA Constitucional, em que o Claude segue princípios escritos; o escalonamento responsável, que exige mais testes conforme o modelo fica mais forte; e a interpretabilidade, que tenta entender o que acontece dentro da IA. O produto dela é o Claude, uma família de modelos: Haiku, o mais rápido; Sonnet, o equilibrado; Opus, o avançado; e o Fable 5.2, lançado em novembro, o mais forte. O Mythos é restrito a especialistas em segurança. Repare que várias das pesquisas sobre perigos que mostrei foram publicadas pela própria Anthropic.");
   }
 
   // 15 — Encerramento e fontes
@@ -487,24 +490,25 @@ const chartBase = () => ({
     texto(s, "A IA é uma ferramenta poderosa. Quem entende os riscos e aprende a usá-la com senso crítico sai na frente.", { x: M, y: 4.3, w: 5.4, h: 1.3, fontSize: 18, italic: true, color: C.background1, fontFace: THEME.headFontFace });
     texto(s, "FONTES", { x: 6.7, y: 1.5, w: 6, h: 0.35, fontSize: 13, bold: true, charSpacing: 3, color: C.accent1 });
     const fontes = [
+      "Axios — entrevistas com Dario Amodei (maio e setembro de 2025)",
+      "D. Amodei — “The Adolescence of Technology” (2026)",
+      "Anthropic — Economic Index (2026) e relatórios de segurança (2025)",
       "International AI Safety Report 2026 — Y. Bengio et al.",
       "World Economic Forum — Global Risks Report 2026",
-      "FMI — K. Georgieva, “AI will transform the global economy” (2024)",
-      "IEA — Energy and AI (2025)",
-      "Buolamwini & Gebru — Gender Shades, MIT (2018)",
+      "FMI — K. Georgieva (2024) · IEA — Energy and AI (2025)",
       "D. Charlotin — AI Hallucination Cases Database; NPR (2026)",
       "CNN / Fortune — caso Arup (2024) · TSE — Res. 23.732/2024",
-      "Anthropic — relatórios de segurança (2025) e anthropic.com",
       "Center for AI Safety — Statement on AI Risk (2023)",
       "OpenAI, Google, Anthropic — anúncios oficiais (2026) · BenchLM",
       "Nobel Prize — nobelprize.org (2024)",
       "Imagens: Anthropic (ilustrações) e Wikimedia Commons",
     ];
     texto(s, fontes.map((f, i) => ({ text: f, options: { bullet: true, breakLine: i < fontes.length - 1 } })), { x: 6.7, y: 1.95, w: 6.03, h: 4.6, fontSize: 12, color: C.accent6, paraSpaceAfter: 4 });
-    s.addNotes("Para fechar: a IA é uma ferramenta muito poderosa, mas tem riscos reais. Quem entende esses riscos e aprende a usar com senso crítico sai na frente. Todas as informações vieram dessas fontes confiáveis. Muito obrigado! Alguém tem alguma pergunta?");
+    s.addNotes("Para fechar: a IA é uma ferramenta muito poderosa, mas tem riscos reais, e até quem a cria está alertando sobre eles. Quem entende esses riscos e aprende a usar com senso crítico sai na frente. Todas as informações vieram dessas fontes. Muito obrigado! Alguém tem alguma pergunta?");
   }
 
   await pres.writeFile({ fileName: OUT });
   await applyTheme(OUT, THEME);
+  await marcarPortugues(OUT);
   console.log("OK:", OUT);
 })().catch((e) => { console.error(e); process.exit(1); });
