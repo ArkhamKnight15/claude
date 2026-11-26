@@ -405,10 +405,10 @@ async function marcarPortugues(file) {
     const s = pres.addSlide({ masterName: "CAPA", sectionTitle: "Encerramento" });
     s.addText("Conclusão", { x: M, y: 1.8, w: 6, h: 0.4, fontSize: 16, italic: true, color: C.accent1, fontFace: THEME.headFontFace, margin: 0, isTextBox: true });
     s.addText("Obrigado!", { placeholder: "title" });
-    s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.\nPerguntas?", { placeholder: "body" });
+    s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.", { placeholder: "body" });
     await foto(s, "ceu.jpg", 7.55, 0.7, 5.08, 6.1, { alt: "Ilustração de um céu com nuvens e lua (Anthropic)", raio: 0.35, pos: "centre" });
     texto(s, "Fontes: Artificial Analysis e Arena (arena.ai), nov/2026 · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
-    s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado! Alguém tem alguma pergunta?");
+    s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado!");
   }
 
   await pres.writeFile({ fileName: OUT });
