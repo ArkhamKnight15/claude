@@ -138,7 +138,40 @@ async function ranking(slide, itens, base) {
     texto(slide, pts.toLocaleString("pt-BR"), { x, y: y + 0.12, w: bw, h: 0.35, align: "center", fontSize: 15, bold: true, color: C.background1 });
     texto(slide, `${1 + itens.filter((o) => o[3] > pts).length}º`, { x, y: yBase - 0.48, w: bw, h: 0.35, align: "center", fontSize: 13, color: i === 0 ? C.background1 : C.accent6 });
     await circulo(slide, Ic, x + bw / 2 - 0.3, y - 1.32, 0.6, { fill: C.background1, hex: i === 0 ? HEX.accent1 : HEX.dk1 });
-    texto(slide, [{ text: nome, options: { bold: true, color: C.text1, fontSize: 15, breakLine: true } }, { text: emp, options: { fontSize: 10, color: C.accent5 } }], { x: x - 0.15, y: y - 0.68, w: bw + 0.3, h: 0.6, align: "center", valign: "bottom" });
+    texto(slide, [{ text: nome, options: { bold: true, color: C.text1, fontSize: 13, breakLine: true } }, { text: emp, options: { fontSize: 10, color: C.accent5 } }], { x: x - 0.22, y: y - 0.68, w: bw + 0.44, h: 0.6, align: "center", valign: "bottom" });
+  }
+}
+
+// Gráfico de 10 colunas: cada barra na cor da marca, com o logo num círculo branco em cima
+const LOGOS = path.join(__dirname, "logos");
+async function logo(nome) {
+  const svg = fs.readFileSync(path.join(LOGOS, nome + ".svg"));
+  const buf = await sharp(svg, { density: 600 }).resize(256, 256, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+  return "image/png;base64," + buf.toString("base64");
+}
+const claro = (hex) => {
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.55;
+};
+async function ranking10(slide, itens, base) {
+  const x0 = M, w = 11.93, yBase = 6.1, hMax = 2.7, n = itens.length;
+  const bw = 0.92, gap = (w - n * bw) / (n - 1);
+  const topo = Math.max(...itens.map((i) => i[3]));
+  slide.addShape(pres.shapes.LINE, { x: x0, y: yBase, w, h: 0, line: { color: C.accent6, width: 1.25 }, objectName: "Linha de base" });
+  for (let i = 0; i < n; i++) {
+    const [lg, nome, sub, pts, cor] = itens[i];
+    const x = x0 + i * (bw + gap);
+    const h = Math.max(0.55, hMax * (pts - base) / (topo - base));
+    const y = yBase - h;
+    const txt = claro(cor) ? HEX.dk1 : "FFFFFF";
+    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: bw, h: h + 0.12, rectRadius: 0.1, fill: { color: cor }, line: { type: "none" }, objectName: "Barra " + nome });
+    slide.addShape(pres.shapes.RECTANGLE, { x, y: yBase, w: bw, h: 0.16, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Base reta" });
+    texto(slide, pts.toLocaleString("pt-BR"), { x, y: y + 0.08, w: bw, h: 0.3, align: "center", fontSize: 12, bold: true, color: txt });
+    texto(slide, `${1 + itens.filter((o) => o[3] > pts).length}º`, { x, y: yBase - 0.36, w: bw, h: 0.28, align: "center", fontSize: 11, color: txt });
+    const d = 0.56;
+    slide.addShape(pres.shapes.OVAL, { x: x + bw / 2 - d / 2, y: y - 1.22, w: d, h: d, fill: { color: C.background1 }, line: { color: C.accent6, width: 0.75 }, objectName: "Fundo do logo" });
+    slide.addImage({ data: await logo(lg), x: x + bw / 2 - d / 2 + 0.11, y: y - 1.22 + 0.11, w: d - 0.22, h: d - 0.22, altText: "Logo " + nome });
+    texto(slide, [{ text: nome, options: { bold: true, color: C.text1, fontSize: 11, breakLine: true } }, { text: sub, options: { fontSize: 8, color: C.accent5 } }], { x: x - 0.14, y: y - 0.62, w: bw + 0.28, h: 0.56, align: "center", valign: "bottom" });
   }
 }
 
@@ -224,35 +257,45 @@ async function marcarPortugues(file) {
     s.addNotes("Separei três momentos. Em 1950, Alan Turing perguntou se máquinas poderiam pensar. Em 1997, o Deep Blue, da IBM, venceu o campeão mundial de xadrez. E em 2022 veio o ChatGPT, que chegou a 100 milhões de pessoas em uns dois meses.");
   }
 
-  // 4 — Ranking das IAs de texto (gráfico de colunas no estilo "pódio")
+  // 4 — Ranking das IAs de texto: 10 IAs, cada coluna na cor e com o logo da marca
   pres.addSection({ title: "A IA hoje" });
   {
-    const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As IAs mais fortes do mundo hoje", 4);
-    await ranking(s, [
-      [Lu.LuAsterisk, "Claude", "Anthropic", 93.3],
-      [Lu.LuGem, "Gemini", "Google", 91.8],
-      [Lu.LuMessageCircle, "ChatGPT", "OpenAI", 90.8],
-      [Lu.LuFish, "DeepSeek", "China", 70.1],
-      [Lu.LuMoon, "Kimi", "Moonshot · China", 69.9],
+    const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As 10 IAs mais inteligentes do mundo", 4);
+    await ranking10(s, [
+      ["claude-color", "Claude", "Fable 5.2", 64.8, "D97757"],
+      ["openai", "ChatGPT", "GPT-6.2 Astra", 62.2, "10A37F"],
+      ["gemini-color", "Gemini", "Gemini 4 Neon", 61.5, "3C7BF0"],
+      ["metaai-color", "Meta AI", "Muse Wonder", 49.7, "0866FF"],
+      ["kimi-color", "Kimi", "K3.1 Pro · China", 46, "1783FF"],
+      ["grok", "Grok", "Grok 4.7 · xAI", 35.3, "1A1A1A"],
+      ["qwen-color", "Qwen", "3.8 Max · China", 33.6, "6A5CF5"],
+      ["deepseek-color", "DeepSeek", "V4.1 · China", 32, "4D6BFE"],
+      ["zhipu-color", "GLM", "5.3 · China", 32, "3859FF"],
+      ["minimax-color", "MiniMax", "M3.1 · China", 28.9, "E2167E"],
     ], 0);
-    explicacao(s, "Como esse ranking funciona?", "O BenchLM junta os resultados de dezenas de provas (matemática, programação, ciência e raciocínio) e dá uma nota geral de 0 a 100.", "O Claude Fable 5.2, lançado em novembro, ficou em 1º lugar. Mas o pódio muda rápido: Gemini e ChatGPT estão logo atrás.");
-    texto(s, "Fonte: BenchLM.ai, ranking geral, 23/11/2026 (nota de 0 a 100, melhor modelo de cada empresa).", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
-    s.addNotes("Este é um ranking real, do site BenchLM, que junta os resultados de dezenas de provas de matemática, programação, ciência e raciocínio e dá uma nota de 0 a 100. Em novembro de 2026, o primeiro lugar é do Claude Fable 5.2, da Anthropic, com 93,3. Logo atrás vêm o Gemini, do Google, e o ChatGPT, da OpenAI. Depois aparecem as chinesas DeepSeek e Kimi.");
+    texto(s, [{ text: "Como funciona: ", options: { bold: true, color: C.accent1 } }, { text: "um laboratório independente aplica as mesmas provas difíceis (ciência, matemática e programação) em todas as IAs e dá uma nota de 0 a 100." }], { x: M, y: 6.3, w: 11.9, h: 0.3, fontSize: 13 });
+    texto(s, "Fonte: Artificial Analysis Intelligence Index, nov/2026, melhor modelo de cada empresa. Do 4º lugar em diante, notas aproximadas (capturas de datas e versões diferentes).", { x: M, y: 6.62, w: 11.9, h: 0.25, fontSize: 9, italic: true, color: C.accent5 });
+    s.addNotes("Este é um ranking real, do Artificial Analysis, um laboratório independente que aplica as mesmas provas difíceis em todas as IAs e dá uma nota de 0 a 100. Em novembro de 2026, o primeiro lugar é do Claude, da Anthropic, com 64,8. Depois vêm o ChatGPT e o Gemini, bem perto. Repare que metade das 10 são chinesas: Kimi, Qwen, DeepSeek, GLM e MiniMax.");
   }
 
-  // 5 — Ranking das IAs de imagem
+  // 5 — Ranking das IAs de imagem: 10 IAs
   {
-    const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As IAs que mais acertam na hora de criar imagens", 5);
-    await ranking(s, [
-      [Lu.LuImage, "GPT Image", "OpenAI · ChatGPT", 1429],
-      [Lu.LuLayoutGrid, "MAI Image", "Microsoft · Copilot", 1385],
-      [Lu.LuBanana, "Nano Banana", "Google · Gemini", 1325],
-      [Lu.LuSprout, "Seedream", "ByteDance · China", 1256],
-      [Lu.LuPalette, "Qwen-Image", "Alibaba · China", 1256],
-    ], 1150);
-    explicacao(s, "Você escreve, a IA desenha", "Basta descrever a imagem (“um gato astronauta na Lua”) e a IA cria do zero. O ranking funciona igual: pessoas votam na melhor imagem sem saber qual IA fez.", "E o Midjourney? Ele é famoso por imagens artísticas, mas não participa desse ranking.");
-    texto(s, "Fonte: Arena (arena.ai), ranking de texto para imagem, nov/2026. Barras a partir de 1.150 pontos.", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
-    s.addNotes("E estas são as IAs que criam imagens. Você descreve o que quer, tipo um gato astronauta na Lua, e ela desenha do zero. Em primeiro está o GPT Image, que fica dentro do ChatGPT. Depois vem o da Microsoft, que está no Copilot, e o Nano Banana, do Google, que está no Gemini. Depois vêm duas chinesas, o Seedream e o Qwen. O Midjourney, que é bem famoso, não participa desse ranking.");
+    const s = conteudo("A IA hoje", "Ranking real · 2026", "As 10 melhores IAs para criar imagens", 5);
+    await ranking10(s, [
+      ["openai", "GPT Image", "OpenAI · ChatGPT", 1429, "10A37F"],
+      ["microsoft-color", "MAI Image", "Microsoft · Copilot", 1385, "0078D4"],
+      ["nanobanana-color", "Nano Banana", "Google · Gemini", 1325, "F2B81F"],
+      ["grok", "Grok Imagine", "xAI", 1316, "1A1A1A"],
+      ["bytedance-color", "Seedream", "ByteDance · China", 1256, "3C8CFF"],
+      ["qwen-color", "Qwen-Image", "Alibaba · China", 1256, "6A5CF5"],
+      ["ideogram", "Ideogram", "Ideogram", 1199, "4A4A4A"],
+      ["luma-color", "Luma", "Luma AI", 1183, "7B5CFF"],
+      ["hunyuan-color", "Hunyuan", "Tencent · China", 1152, "0055E9"],
+      ["flux", "FLUX", "Black Forest Labs", 1145, "6B6B6B"],
+    ], 1050);
+    texto(s, [{ text: "Como funciona: ", options: { bold: true, color: C.accent1 } }, { text: "você descreve a imagem, duas IAs desenham e as pessoas votam na melhor sem saber qual fez. O Midjourney não participa do ranking." }], { x: M, y: 6.3, w: 11.9, h: 0.3, fontSize: 13 });
+    texto(s, "Fonte: Arena (arena.ai), ranking de texto para imagem, ago–nov/2026, melhor modelo de cada empresa. Notas aproximadas; barras a partir de 1.050 pontos.", { x: M, y: 6.62, w: 11.9, h: 0.25, fontSize: 9, italic: true, color: C.accent5 });
+    s.addNotes("E estas são as 10 melhores IAs para criar imagens. Você descreve o que quer e ela desenha do zero. No ranking, duas IAs desenham e as pessoas votam na melhor sem saber qual fez. Em primeiro está o GPT Image, que fica dentro do ChatGPT. Depois vêm o da Microsoft e o Nano Banana, do Google. O Midjourney, que é famoso, não participa desse ranking.");
   }
 
   // 5 — O que já faz
@@ -364,7 +407,7 @@ async function marcarPortugues(file) {
     s.addText("Obrigado!", { placeholder: "title" });
     s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.\nPerguntas?", { placeholder: "body" });
     await foto(s, "ceu.jpg", 7.55, 0.7, 5.08, 6.1, { alt: "Ilustração de um céu com nuvens e lua (Anthropic)", raio: 0.35, pos: "centre" });
-    texto(s, "Fontes: BenchLM.ai e Arena (arena.ai), nov/2026 · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
+    texto(s, "Fontes: Artificial Analysis e Arena (arena.ai), nov/2026 · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
     s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado! Alguém tem alguma pergunta?");
   }
 

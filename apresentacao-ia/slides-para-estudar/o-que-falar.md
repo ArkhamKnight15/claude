@@ -8,7 +8,7 @@ Tempo total: uns **8 a 10 minutos**.
 | **1. Capa** | "Sou o Luiz, do 1ºB, e vou falar sobre Inteligência Artificial." |
 | **2. O que é IA** | "IA é quando o computador **aprende com exemplos** e faz coisas que antes só pessoas faziam. Tem a IA que **reconhece** (filtro de spam, YouTube) e a que **cria** (ChatGPT, Claude)." |
 | **3. História** | "Três momentos: **Alan Turing** em 1950, o **Deep Blue** da IBM, que venceu o campeão de xadrez em 1997, e o **ChatGPT** em 2022." |
-| **4. IAs mais fortes** | "Num ranking que junta várias provas de inteligência, o **Claude está em 1º lugar**, com o Gemini e o ChatGPT logo atrás." |
+| **4. IAs mais fortes** | "Num ranking independente com provas difíceis, o **Claude está em 1º lugar**, com o ChatGPT e o Gemini logo atrás." |
 | **5. IAs de imagem** | "Você descreve e a IA desenha. Para criar imagens, a 1ª é a do **ChatGPT**, e o **Nano Banana** é a do Google." |
 | **6. O que já faz** | "A IA já ajudou a criar **remédios** (ganhou um Nobel) e tirou **ouro na Olimpíada de Matemática**." |
 | **7. Cuidados** | "Mas ela cria **vídeos falsos**, **erra** e pode ser **mal usada**. Por isso: sempre confira." |
@@ -19,12 +19,12 @@ Tempo total: uns **8 a 10 minutos**.
 
 ## Só 5 números
 - **1950 · 1997 · 2022**: Turing, Deep Blue, ChatGPT
-- **93,3**: nota do Claude, 1º lugar no ranking BenchLM (nov/2026)
+- **64,8**: nota do Claude, 1º lugar no ranking do Artificial Analysis (nov/2026)
 - **2021**: criação da Anthropic
 - **40%**: empregos afetados pela IA
 - **US$ 25 milhões**: golpe com vídeo falso
 
 ## Se perguntarem
-- **"O Claude é mesmo o melhor?"** "Depende do ranking. Neste, que mede provas de matemática, programação e ciência, ele está em 1º. Em outros, o Gemini aparece um pouco à frente."
+- **"O Claude é mesmo o melhor?"** "Neste ranking independente, que aplica as mesmas provas em todas as IAs, ele está em 1º. Em outros rankings a ordem muda um pouco."
 - **"Você usou IA para fazer?"** "Sim, usei o Claude para ajudar a montar, mas as informações têm fontes reais, que estão no último slide."
 - **Não sabe a resposta?** "Boa pergunta! Não sei com certeza, mas posso pesquisar e te falar depois."
