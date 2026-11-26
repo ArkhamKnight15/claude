@@ -135,7 +135,7 @@ async function ranking(slide, itens, base) {
     const y = yBase - h;
     slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: bw, h: h + 0.15, rectRadius: 0.12, fill: { color: i === 0 ? C.accent1 : C.text1 }, line: { type: "none" }, objectName: "Barra " + nome });
     slide.addShape(pres.shapes.RECTANGLE, { x, y: yBase, w: bw, h: 0.2, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Base reta" });
-    texto(slide, String(pts).replace(/(\d)(\d{3})$/, "$1.$2"), { x, y: y + 0.12, w: bw, h: 0.35, align: "center", fontSize: 15, bold: true, color: C.background1 });
+    texto(slide, pts.toLocaleString("pt-BR"), { x, y: y + 0.12, w: bw, h: 0.35, align: "center", fontSize: 15, bold: true, color: C.background1 });
     texto(slide, `${1 + itens.filter((o) => o[3] > pts).length}º`, { x, y: yBase - 0.48, w: bw, h: 0.35, align: "center", fontSize: 13, color: i === 0 ? C.background1 : C.accent6 });
     await circulo(slide, Ic, x + bw / 2 - 0.3, y - 1.32, 0.6, { fill: C.background1, hex: i === 0 ? HEX.accent1 : HEX.dk1 });
     texto(slide, [{ text: nome, options: { bold: true, color: C.text1, fontSize: 15, breakLine: true } }, { text: emp, options: { fontSize: 10, color: C.accent5 } }], { x: x - 0.15, y: y - 0.68, w: bw + 0.3, h: 0.6, align: "center", valign: "bottom" });
@@ -229,15 +229,15 @@ async function marcarPortugues(file) {
   {
     const s = conteudo("A IA hoje", "Ranking real · novembro de 2026", "As IAs mais fortes do mundo hoje", 4);
     await ranking(s, [
-      [Lu.LuGem, "Gemini", "Google", 1549],
-      [Lu.LuInfinity, "Meta AI", "Meta", 1545],
-      [Lu.LuAsterisk, "Claude", "Anthropic", 1540],
-      [Lu.LuMessageCircle, "ChatGPT", "OpenAI", 1531],
-      [Lu.LuMoon, "Kimi", "Moonshot · China", 1528],
-    ], 1450);
-    explicacao(s, "Como esse ranking funciona?", "No site Arena, as pessoas fazem uma pergunta, recebem duas respostas sem saber de qual IA elas são e votam na melhor. Milhões de votos viram uma pontuação.", "Mostra o melhor modelo de cada empresa. A diferença entre eles é bem pequena: o 1º lugar muda quase toda semana.");
-    texto(s, "Fonte: Arena (arena.ai), ranking de texto, 22/11/2026. Barras a partir de 1.450 pontos.", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
-    s.addNotes("Este é um ranking real das IAs mais fortes, do site Arena. Lá as pessoas fazem uma pergunta, recebem duas respostas sem saber de qual IA são e votam na melhor. Em novembro de 2026, o Gemini, do Google, está em primeiro, seguido pela IA da Meta, o Claude, o ChatGPT e o Kimi, que é chinês. A diferença entre eles é bem pequena, e o primeiro lugar muda quase toda semana.");
+      [Lu.LuAsterisk, "Claude", "Anthropic", 93.3],
+      [Lu.LuGem, "Gemini", "Google", 91.8],
+      [Lu.LuMessageCircle, "ChatGPT", "OpenAI", 90.8],
+      [Lu.LuFish, "DeepSeek", "China", 70.1],
+      [Lu.LuMoon, "Kimi", "Moonshot · China", 69.9],
+    ], 0);
+    explicacao(s, "Como esse ranking funciona?", "O BenchLM junta os resultados de dezenas de provas (matemática, programação, ciência e raciocínio) e dá uma nota geral de 0 a 100.", "O Claude Fable 5.2, lançado em novembro, ficou em 1º lugar. Mas o pódio muda rápido: Gemini e ChatGPT estão logo atrás.");
+    texto(s, "Fonte: BenchLM.ai, ranking geral, 23/11/2026 (nota de 0 a 100, melhor modelo de cada empresa).", { x: M, y: 6.6, w: 8.3, h: 0.28, fontSize: 10, italic: true, color: C.accent5 });
+    s.addNotes("Este é um ranking real, do site BenchLM, que junta os resultados de dezenas de provas de matemática, programação, ciência e raciocínio e dá uma nota de 0 a 100. Em novembro de 2026, o primeiro lugar é do Claude Fable 5.2, da Anthropic, com 93,3. Logo atrás vêm o Gemini, do Google, e o ChatGPT, da OpenAI. Depois aparecem as chinesas DeepSeek e Kimi.");
   }
 
   // 5 — Ranking das IAs de imagem
@@ -364,7 +364,7 @@ async function marcarPortugues(file) {
     s.addText("Obrigado!", { placeholder: "title" });
     s.addText("A IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico.\nPerguntas?", { placeholder: "body" });
     await foto(s, "ceu.jpg", 7.55, 0.7, 5.08, 6.1, { alt: "Ilustração de um céu com nuvens e lua (Anthropic)", raio: 0.35, pos: "centre" });
-    texto(s, "Fontes: Arena (arena.ai, nov/2026) · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
+    texto(s, "Fontes: BenchLM.ai e Arena (arena.ai), nov/2026 · Anthropic (anthropic.com) · FMI (2024) · Axios (2025) · CNN e Fortune (2024) · International AI Safety Report (2026) · nobelprize.org · anúncios da OpenAI e do Google (2026). Imagens: Anthropic e Wikimedia Commons.", { x: M, y: 6.3, w: 6.4, h: 0.6, fontSize: 10, color: C.accent5 });
     s.addNotes("Pra fechar: a IA é uma ótima ferramenta, desde que a gente use com cuidado e senso crítico. Obrigado! Alguém tem alguma pergunta?");
   }
 
